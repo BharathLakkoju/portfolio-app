@@ -1,29 +1,168 @@
-# Create T3 App
+# Developer Portfolio + Blog System
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A modern, content-driven developer portfolio built with Next.js, featuring MDX-powered blogging, project showcases, and a clean, animated UI.
 
-## What's next? How do I make an app with this?
+---
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## ✨ Features
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- ⚡ Built with Next.js App Router
+- 📝 MDX-based blogging system
+- 🧩 Modular content architecture (profile, projects, skills, experience)
+- 🎨 Minimal UI with smooth animations (Framer Motion)
+- 📱 Fully responsive layout
+- 📊 Dynamic project filtering
+- 📬 Contact form integration
+- 🌐 SEO-optimized metadata
+- 🧱 Reusable UI component system
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+---
 
-## Learn More
+## 🧱 Tech Stack
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Animations:** Framer Motion
+- **Content:** MDX + JSON
+- **UI Components:** Custom + Radix patterns
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+---
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## 📁 Project Structure
 
-## How do I deploy this?
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+src/
+app/                # Routes (pages, blog, projects, etc.)
+components/         # UI & layout components
+lib/                # Data, utilities, blog logic
+styles/             # Global styles
+env.js              # Environment config
+
+content/
+blogs/              # MDX blog posts
+
+````
+
+---
+
+## ⚙️ Core Concepts
+
+### Content-Driven Architecture
+
+All portfolio content is managed via structured data:
+
+- `profile` → personal details
+- `skills` → categorized tech stack
+- `projects` → portfolio projects
+- `experience` → work history
+- `education` → academic background
+
+---
+
+### Blogging System
+
+- Uses MDX for writing posts
+- Supports:
+  - Tags
+  - SEO metadata
+  - Read time estimation
+- Auto-generates routes via `[slug]`
+
+---
+
+### Project Showcase
+
+- Categorized filtering (Full Stack, AI, Tools, etc.)
+- Each project includes:
+  - Description
+  - Tech stack
+  - GitHub + Live links
+
+---
+
+### UI & Animations
+
+- Smooth entrance animations using Framer Motion
+- Staggered component rendering
+- Minimal, typography-focused design
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/yourusername/portfolio.git
+cd portfolio
+````
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run locally
+
+```bash
+npm run dev
+```
+
+---
+
+## 📝 Adding Content
+
+### Add a Blog Post
+
+Create a new `.mdx` file inside:
+
+```
+/content/blogs/
+```
+
+Example frontmatter:
+
+```md
+---
+title: "My Blog Post"
+date: "2025-01-01"
+description: "Short description"
+tags: ["nextjs", "react"]
+---
+```
+
+---
+
+### Update Portfolio Data
+
+Modify:
+
+```
+src/lib/data.ts
+```
+
+---
+
+## 📬 Contact Form
+
+* Uses Formspree for handling submissions
+* Replace:
+
+```ts
+https://formspree.io/f/YOUR_FORM_ID
+```
+
+with your actual endpoint
+
+---
+
+## 🎯 Use Cases
+
+* Personal developer portfolio
+* Technical blog
+* Resume website
+* Indie hacker landing page
+* SaaS personal branding
