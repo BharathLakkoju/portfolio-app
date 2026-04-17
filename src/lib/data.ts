@@ -33,21 +33,10 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    id: "waigenie",
-    name: "Waigenie.tech",
-    description:
-      "Full-stack SaaS platform — an AI-powered software testing toolkit with 5 AI tools in a protected dashboard: IdeaForge, AutoScribe, CucumberCraft, DomDetective, and WebTrekker. Credit-based billing via Razorpay, full auth (email, Google, GitHub OAuth), and complete marketing site.",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Auth.js", "Prisma", "PostgreSQL", "Zustand", "shadcn/ui", "Razorpay"],
-    github: null,
-    live: null,
-    category: "fullstack",
-    featured: true,
-  },
-  {
     id: "greensource",
     name: "GreenSource",
     description:
-      "Microservices-based agricultural marketplace — 7 Node.js services behind an API gateway, 3 React frontends, MongoDB Atlas, JWT auth, and live Mandi price data. Farmers list produce, consumers order, delivery agents track, admins manage.",
+    "Microservices-based agricultural marketplace — 7 Node.js services behind an API gateway, 3 React frontends, MongoDB Atlas, JWT auth, and live Mandi price data. Farmers list produce, consumers order, delivery agents track, admins manage.",
     tech: ["TypeScript", "React", "Node.js", "Express", "MongoDB", "Redux", "Microservices", "JWT", "Vite"],
     github: "https://github.com/BharathLakkoju/greensource",
     live: null,
@@ -58,7 +47,7 @@ export const projects: Project[] = [
     id: "flatmate",
     name: "Flatmate",
     description:
-      "Full-stack shared living management app — expense splitting, grocery lists, meal planner with OCR receipt scanning, task manager, household calendar, and Google Gemini AI integration. Includes Vitest unit tests and Playwright E2E tests.",
+    "Full-stack shared living management app — expense splitting, grocery lists, meal planner with OCR receipt scanning, task manager, household calendar, and Google Gemini AI integration. Includes Vitest unit tests and Playwright E2E tests.",
     tech: ["Next.js", "TypeScript", "Supabase", "Drizzle ORM", "Zustand", "shadcn/ui", "Framer Motion", "Playwright", "Vitest"],
     github: "https://github.com/BharathLakkoju/flatmate",
     live: "https://adjustyouflat.vercel.app",
@@ -69,12 +58,23 @@ export const projects: Project[] = [
     id: "atsprecise",
     name: "ATS Precision",
     description:
-      "AI-powered ATS resume evaluator — upload your resume, paste a job description, and get a precision compatibility score with keyword gap analysis, section-by-section feedback, and role-specific improvement suggestions. PDF report download included.",
+    "AI-powered ATS resume evaluator — upload your resume, paste a job description, and get a precision compatibility score with keyword gap analysis, section-by-section feedback, and role-specific improvement suggestions. PDF report download included.",
     tech: ["Next.js", "TypeScript", "Supabase", "Drizzle ORM", "Framer Motion", "Radix UI", "Zustand", "Zod"],
     github: "https://github.com/BharathLakkoju/atsprecise",
     live: "https://atsprecise.vercel.app",
     category: "ai",
     featured: false,
+  },
+  {
+    id: "waigenie",
+    name: "Waigenie.tech",
+    description:
+      "Full-stack SaaS platform — an AI-powered software testing toolkit with 5 AI tools in a protected dashboard: IdeaForge, AutoScribe, CucumberCraft, DomDetective, and WebTrekker. Credit-based billing via Razorpay, full auth (email, Google, GitHub OAuth), and complete marketing site.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Auth.js", "Prisma", "PostgreSQL", "Zustand", "shadcn/ui", "Razorpay"],
+    github: null,
+    live: null,
+    category: "fullstack",
+    featured: true,
   },
   {
     id: "job-hunter",
