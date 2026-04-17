@@ -70,7 +70,7 @@ export function ProjectCard({
           {project.description}
         </p>
         <div className="flex flex-wrap gap-1">
-          {project.tech.slice(0, 5).map((tech) => (
+          {project.tech.map((tech) => (
             <span
               key={tech}
               className="text-[10px] font-mono text-text-secondary border border-border rounded px-1.5 py-0.5"
@@ -78,11 +78,11 @@ export function ProjectCard({
               {tech}
             </span>
           ))}
-          {project.tech.length > 5 && (
+          {/* {project.tech.length > 5 && (
             <span className="text-[10px] font-mono text-text-muted border border-border rounded px-1.5 py-0.5">
               +{project.tech.length - 5}
             </span>
-          )}
+          )} */}
         </div>
       </CardContent>
     </Card>

@@ -6,7 +6,7 @@ import { formatDate } from "~/lib/utils";
 import { Badge } from "~/components/ui/badge";
 import { AnimatedSection } from "~/components/shared/AnimatedSection";
 import { Calendar, Clock, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { Button } from "~/components/ui/button";
 
 type Props = {

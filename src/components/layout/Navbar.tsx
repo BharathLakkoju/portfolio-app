@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";

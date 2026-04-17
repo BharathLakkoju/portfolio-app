@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Mail, ArrowRight } from "lucide-react";
@@ -161,25 +161,15 @@ export default function HomePage() {
             className="mt-10 pt-6 border-t border-border flex flex-wrap items-center gap-6 text-sm"
           >
             <div>
-              <span className="font-semibold text-text-primary">
-                2+
-              </span>
-              <span className="text-text-muted ml-1.5">
-                years experience
-              </span>
+              <span className="font-semibold text-text-primary">2+</span>
+              <span className="text-text-muted ml-1.5">years experience</span>
             </div>
             <div>
-              <span className="font-semibold text-text-primary">
-                8+
-              </span>
-              <span className="text-text-muted ml-1.5">
-                projects built
-              </span>
+              <span className="font-semibold text-text-primary">8+</span>
+              <span className="text-text-muted ml-1.5">projects built</span>
             </div>
             <div className="hidden sm:block">
-              <span className="text-text-muted">
-                Currently at
-              </span>
+              <span className="text-text-muted">Currently at</span>
               <span className="text-text-secondary ml-1.5 font-medium">
                 {profile.company}
               </span>
@@ -202,7 +192,7 @@ export default function HomePage() {
               View all <ArrowRight size={11} />
             </Link>
           </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex flex-col gap-6">
             {featuredProjects.map((project, i) => (
               <ProjectCard key={project.id} project={project} index={i} />
             ))}

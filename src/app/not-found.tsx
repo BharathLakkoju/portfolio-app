@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { motion } from "framer-motion";
 import { Home, ArrowLeft } from "lucide-react";
 import { Button } from "~/components/ui/button";
@@ -17,7 +17,8 @@ export default function NotFound() {
           <p className="text-8xl font-bold text-border mb-4">404</p>
           <h1 className="text-2xl font-bold mb-3">Page not found</h1>
           <p className="text-text-muted mb-8 max-w-sm mx-auto">
-            The page you&apos;re looking for doesn&apos;t exist or has been moved.
+            The page you&apos;re looking for doesn&apos;t exist or has been
+            moved.
           </p>
           <div className="flex items-center justify-center gap-4">
             <Button asChild>

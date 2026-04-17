@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { Navbar } from "~/components/layout/Navbar";
 import { Footer } from "~/components/layout/Footer";
+import { PageTransitionProvider } from "~/components/shared/PageTransitionContext";
 import { profile } from "~/lib/data";
 
 export const metadata: Metadata = {
@@ -12,7 +13,15 @@ export const metadata: Metadata = {
     template: `%s | ${profile.name}`,
   },
   description: profile.bio,
-  keywords: ["Full Stack Developer", "React", "Next.js", "TypeScript", "AI Engineer", "Hyderabad", "Bharath Lakkoju"],
+  keywords: [
+    "Full Stack Developer",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "AI Engineer",
+    "Hyderabad",
+    "Bharath Lakkoju",
+  ],
   authors: [{ name: profile.name }],
   creator: profile.name,
   openGraph: {
@@ -54,11 +63,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background text-text-primary antialiased">
-        <div className="relative flex min-h-screen flex-col">
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
+        <PageTransitionProvider>
+          <div className="relative flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </PageTransitionProvider>
       </body>
     </html>
   );

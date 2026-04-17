@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { Calendar, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { formatDate } from "~/lib/utils";

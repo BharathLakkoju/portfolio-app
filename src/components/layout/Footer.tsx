@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "~/components/shared/Icons";
 import { profile } from "~/lib/data";

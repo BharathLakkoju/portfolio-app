@@ -7,6 +7,7 @@ import {
 } from "~/components/shared/AnimatedSection";
 import { SkillCard } from "~/components/shared/SkillCard";
 import { profile, skills, experience, education } from "~/lib/data";
+import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 
 export const metadata: Metadata = {
   title: "About",
@@ -52,10 +53,8 @@ export default function AboutPage() {
           <div className="space-y-3 text-sm text-text-secondary leading-relaxed border-t border-border pt-10">
             <p>
               Full Stack Developer and AI Engineer currently at{" "}
-              <span className="text-text-primary">
-                UST Global
-              </span>{" "}
-              in Hyderabad. I specialise in building production-grade web
+              <span className="text-text-primary">UST Global</span> in
+              Hyderabad. I specialise in building production-grade web
               applications using the modern JavaScript ecosystem.
             </p>
             <p>
@@ -65,17 +64,26 @@ export default function AboutPage() {
             </p>
             <p>
               Open-source side projects:{" "}
-              <span className="text-text-primary">
+              <Link
+                href="https://github.com/bharathlakkoju/gitprofolio"
+                className="text-text-primary border-dashed border-b border-text-primary"
+              >
                 GitProfolio
-              </span>
+              </Link>
               ,{" "}
-              <span className="text-text-primary">
-                SwiftMedia
-              </span>
+              <Link
+                href="https://github.com/bharathlakkoju/flatmate"
+                className="text-text-primary border-dashed border-b border-text-primary"
+              >
+                Flatmate
+              </Link>
               , and{" "}
-              <span className="text-text-primary">
+              <Link
+                href="https://github.com/bharathlakkoju/atsprecise"
+                className="text-text-primary border-dashed border-b border-text-primary"
+              >
                 ATS Precision
-              </span>
+              </Link>
               .
             </p>
           </div>
@@ -107,15 +115,13 @@ export default function AboutPage() {
             <div className="space-y-4">
               {experience.map((exp, i) => (
                 <AnimatedSection key={i} delay={i * 0.08}>
-                  <div className="rounded-lg border border-border bg-surface p-5">
+                  <div className="rounded-lg">
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between mb-3">
                       <div>
                         <p className="text-sm font-semibold text-text-primary">
                           {exp.title}
                         </p>
-                        <p className="text-xs text-accent">
-                          {exp.company}
-                        </p>
+                        <p className="text-xs text-accent">{exp.company}</p>
                       </div>
                       <div className="flex flex-col gap-0.5 text-[10px] text-text-muted sm:text-right">
                         <span className="flex items-center gap-1 sm:justify-end">
@@ -155,15 +161,13 @@ export default function AboutPage() {
             <div className="space-y-4">
               {education.map((edu, i) => (
                 <AnimatedSection key={i} delay={i * 0.08}>
-                  <div className="rounded-lg border border-border bg-surface p-5">
+                  <div className="rounded-lg">
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                         <p className="text-sm font-semibold text-text-primary">
                           {edu.degree}
                         </p>
-                        <p className="text-xs text-accent">
-                          {edu.institution}
-                        </p>
+                        <p className="text-xs text-accent">{edu.institution}</p>
                       </div>
                       <div className="text-[10px] text-text-muted sm:text-right">
                         <div>{edu.year}</div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { getAllPosts } from "~/lib/blog";
 import { formatDate } from "~/lib/utils";
 
