@@ -1,0 +1,603 @@
+{
+  "exportVersion": 1,
+  "exportedAt": "2026-04-17T13:38:39.942Z",
+  "user": {
+    "id": "784a2139-1f43-4aa7-a458-a318b4f0261d",
+    "email": "lbh.lbharath@gmail.com"
+  },
+  "counts": {
+    "evaluations": 2,
+    "hasProfile": true
+  },
+  "profile": {
+    "id": "4d77eb77-1c56-48d8-8e71-9a165f1a158e",
+    "user_id": "784a2139-1f43-4aa7-a458-a318b4f0261d",
+    "name": "Bharath Lakkoju",
+    "email": "lbh.lbharath@gmail.com",
+    "phone": "+917032380489",
+    "location": "Hyderabad, India",
+    "linkedin": "linkedin.com/in/bharathlakkoju",
+    "github": "github.com/bharathlakkoju",
+    "summary": "Full Stack Developer with 2+ years of experience architecting scalable web applications and integrating AI-driven predictive analytics. Proficient in React, Next.js, Redux, Node.js, TypeScript, PostgreSQL, and MongoDB, with a proven track record of reducing API latency by 40% and increasing user engagement by 60%. Adept at CI/CD pipelines, automated testing, and cross-functional Agile collaboration to deliver high-performance, responsive platforms aligned with IoT and data automation objectives.",
+    "experience": [
+      {
+        "dates": "Sep 2024 - Present",
+        "title": "Developer I",
+        "bullets": [
+          "Architected and deployed a full-stack health tracking application using React Native, Node.js, and PostgreSQL, implementing a reward system that increased user engagement by 60% and improved data intake by 98%.",
+          "Engineered a scalable Angular and Node.js microservices architecture with WCS data integration, deploying an automated digitization banner that reduced manual processing overhead by 75% and streamlined RESTful API workflows.",
+          "Developed and integrated an AI-powered chatbot leveraging predictive analytics and LLM APIs, boosting monthly active users by 40% and enhancing real-time customer support capabilities.",
+          "Spearheaded the migration of legacy Java Spring services to Node.js and NestJS microservices, establishing API security standards, implementing comprehensive unit testing, and improving system maintainability by 35%.",
+          "Collaborated with cross-functional product and design teams in Agile sprints, conducting rigorous code reviews and optimizing CI/CD pipelines to achieve 99% deployment uptime and accelerate feature delivery."
+        ],
+        "company": "UST Global",
+        "location": "Hyderabad, India"
+      }
+    ],
+    "skills": [
+      {
+        "items": [
+          "TypeScript",
+          "JavaScript",
+          "Python",
+          "SQL"
+        ],
+        "category": "Programming Languages"
+      },
+      {
+        "items": [
+          "React.js",
+          "Next.js",
+          "Redux",
+          "Tailwind CSS",
+          "Zustand",
+          "HTML5/CSS3",
+          "Responsive Design"
+        ],
+        "category": "Frontend"
+      },
+      {
+        "items": [
+          "Node.js",
+          "Express.js",
+          "RESTful APIs",
+          "Microservices",
+          "API Security",
+          "GraphQL"
+        ],
+        "category": "Backend & APIs"
+      },
+      {
+        "items": [
+          "PostgreSQL",
+          "MongoDB",
+          "MySQL",
+          "Prisma ORM",
+          "Drizzle ORM"
+        ],
+        "category": "Databases"
+      },
+      {
+        "items": [
+          "OpenAI",
+          "Claude AI",
+          "Gemini API",
+          "LLM Integration"
+        ],
+        "category": "AI/ML & Data"
+      },
+      {
+        "items": [
+          "CI/CD Pipelines",
+          "Docker",
+          "Git",
+          "JIRA",
+          "Confluence",
+          "Agile/Scrum"
+        ],
+        "category": "DevOps & Tools"
+      }
+    ],
+    "projects": [
+      {
+        "link": "https://github.com/BharathLakkoju/salarywise",
+        "name": "SalaryWise",
+        "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript / JSX, Vercel",
+        "bullets": [
+          "Web app for job seekers to explore and compare salary benchmarks across roles (Frontend, Backend, fullstack, Data, DevOps), companies, and Indian cities",
+          "SEO-optimized blog with editorial salary insights and career advice articles",
+          "Sitemap and robots.txt configuration for search engine visibility",
+          "Google AdSense monetization integration (ads.txt)",
+          "Fast, minimal UI focused on readability and quick lookups"
+        ],
+        "website": "https://salarywises.vercel.app"
+      },
+      {
+        "link": "https://github.com/BharathLakkoju/swiftmedia",
+        "name": "SwiftMedia",
+        "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript, Framer Motion, Vercel",
+        "bullets": [
+          "Privacy-first, browser-based media processing suite — all conversions happen client-side with zero server uploads",
+          "Image compression tool supporting JPEG, PNG, and WebP with quality control",
+          "Video compression powered by FFmpeg compiled to WebAssembly, running fully in-browser",
+          "PDF compression to reduce file sizes for sharing",
+          "PDF merger to combine multiple PDFs into a single document",
+          "Image-to-PDF converter supporting multiple images at once",
+          "Pages for DMCA, Privacy Policy, and Terms of Service"
+        ],
+        "website": "https://swiftmedia.vercel.app"
+      },
+      {
+        "link": "https://github.com/BharathLakkoju/faviconverter",
+        "name": "FaviConverter",
+        "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript, Vercel",
+        "bullets": [
+          "Browser-native favicon toolkit — all image conversion runs client-side with zero file uploads",
+          "Image-to-favicon converter (PNG/JPG/SVG → .ico + multi-size PNG set)",
+          "SVG-to-favicon and SVG-to-ICO dedicated converters",
+          "General favicon generator with live preview",
+          "Auto-generates a .zip bundle containing all required favicon sizes (16×16, 32×32, 48×48, 180×180, etc.)",
+          "SEO-focused guide pages: how to set up favicons in Next.js App Router and React/Vite",
+          "Tutorial article on how to create a favicon from scratch"
+        ],
+        "website": "https://faviconverter.vercel.app"
+      },
+      {
+        "link": "https://github.com/BharathLakkoju/calcalorie",
+        "name": "CalCalorie",
+        "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript, Vercel",
+        "bullets": [
+          "Calorie calculator that computes TDEE (Total Daily Energy Expenditure) based on age, weight, height, gender, and activity level",
+          "Macro calculator that breaks daily calorie targets into protein, carbohydrate, and fat grams",
+          "Educational content explaining BMR vs TDEE concepts",
+          "Blog with articles tailored to an Indian audience: calorie deficit, muscle-gain foods, BMR vs TDEE explained",
+          "FAQ page covering common nutrition tracking questions",
+          "Dark mode toggle via next-themes",
+          "Medical disclaimer and privacy policy pages",
+          "SEO-optimized sitemap and robots configuration"
+        ],
+        "website": "https://calcalorie.vercel.app"
+      },
+      {
+        "link": "https://github.com/BharathLakkoju/flatmate",
+        "name": "Flatmate",
+        "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript, Supabase (PostgreSQL + Auth), Drizzle ORM, Zustand, OpenRouter AI Integration, shadcn/ui, Base UI, Framer Motion, Vitest + Testing Library, Playwright (E2E)",
+        "bullets": [
+          "Full-stack shared living management app with Supabase authentication (email + OAuth)",
+          "Expense tracker for splitting and logging household costs between flatmates",
+          "Collaborative grocery list with per-flatmate item assignment and check-off",
+          "Meal planner with OCR-powered receipt scanning (Tesseract.js) for automatic meal logging",
+          "Task manager for assigning and tracking household chores",
+          "Shared household calendar for events and reminders",
+          "Google Gemini AI integration for intelligent household suggestions",
+          "Per-user profile and household settings pages",
+          "Unit test suite (Vitest + Testing Library) and end-to-end tests (Playwright)"
+        ],
+        "website": "https://adjustyourflat.vercel.app"
+      },
+      {
+        "link": "https://github.com/BharathLakkoju/cresume",
+        "name": "ATS Precision",
+        "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript, Supabase SSR + supabase-js, Drizzle ORM, Zustand, Framer Motion, Zod, Radix UI",
+        "bullets": [
+          "Deterministic ATS resume evaluator — scores a resume against a specific job description using a weighted algorithm",
+          "Supports PDF and DOCX resume uploads, parsed entirely on the server",
+          "ATS scoring engine with weighted breakdown across keyword match, skills alignment, section completeness, and formatting quality",
+          "Keyword gap analysis highlighting missing critical terms and overused filler phrases",
+          "Section-by-section feedback for Summary, Experience, Skills, and Education",
+          "Role-specific improvement suggestions ranked by impact",
+          "Download evaluation report as PDF via jspdf + html2canvas",
+          "Animated marketing landing page and evaluation flow (Framer Motion)",
+          "Supabase-ready auth scaffolding for evaluation history persistence"
+        ],
+        "website": "https://cresume-iota.vercel.app"
+      },
+      {
+        "link": "Private Repo",
+        "name": "Waigenie.tech",
+        "tech": "Next.js (App Router), React, TypeScript, Tailwind CSS, Auth.js (NextAuth v5), Prisma ORM, PostgreSQL, Zustand, shadcn/ui, Razorpay, Node.js",
+        "bullets": [
+          "Full-stack SaaS platform for Waigenie Tech — an AI-powered software testing toolkit aimed at QA engineers and development teams",
+          "5 AI testing tools in a protected dashboard: IdeaForge (test ideas), AutoScribe (test script generation), CucumberCraft (Gherkin/BDD), DomDetective (DOM locator extraction with live browser view), and WebTrekker (AI web agent)",
+          "Tech stack: Next.js (App Router), TypeScript, Tailwind CSS, Auth.js v5, Prisma + PostgreSQL, Zustand, shadcn/ui, Razorpay",
+          "Credit-based billing with Razorpay payment integration — users buy credits to run AI tools; full create/verify payment API built in",
+          "Full auth system — email/password (with strength indicator), Google OAuth, GitHub OAuth, and password reset flow",
+          "Complete SaaS shell — marketing site, per-product landing pages, pricing page, consultation booking, legal pages (privacy, terms, cancel-refund), and multi-currency pricing support"
+        ],
+        "website": "https://waigenie.tech"
+      }
+    ],
+    "education": [
+      {
+        "gpa": "8.10 / 10",
+        "year": "2020 - 2024",
+        "degree": "B. Tech Information Technology",
+        "institution": "MVGR College of Engineering"
+      }
+    ],
+    "certifications": [],
+    "awards": [
+      "Deployed 8+ full-stack web and mobile applications serving 100+ active users with 75% uptime",
+      "Increased user engagement by 60% through innovative reward system implementation",
+      "Reduced operational costs by 75% through automated digitization banner component",
+      "Led frontend team of interns, mentoring on best practices and ensuring project delivery",
+      "Achieved 95% accuracy in AI-powered insurance recommendation system"
+    ],
+    "is_complete": true,
+    "updated_at": "2026-04-05T16:13:07.756+00:00",
+    "created_at": "2026-04-02T17:48:05.026026+00:00"
+  },
+  "evaluations": [
+    {
+      "id": "3b785730-5426-4779-ad4c-5643f0e44a48",
+      "jobTitle": "Software Engineer",
+      "overallScore": 82,
+      "breakdown": {
+        "keywordMatch": 75,
+        "semanticMatch": 85,
+        "skillsAlignment": 88,
+        "experienceRelevance": 75,
+        "formattingReadability": 90
+      },
+      "suggestions": [
+        {
+          "title": "Quantify documentation contributions",
+          "detail": "Add metrics to documentation efforts, such as the number of documents created or the impact on developer onboarding.",
+          "priority": "medium"
+        },
+        {
+          "title": "Detail distributed systems experience",
+          "detail": "Provide specific examples of designing, building, or operating distributed systems, highlighting challenges and solutions.",
+          "priority": "medium"
+        },
+        {
+          "title": "Emphasize system monitoring experience",
+          "detail": "Describe any experience with system monitoring tools, incident response, or on-call responsibilities, even if in a different context.",
+          "priority": "medium"
+        },
+        {
+          "title": "Tailor summary to Azure Storage",
+          "detail": "Adjust the professional summary to directly address Azure Storage and block storage concepts, showcasing relevant skills.",
+          "priority": "high"
+        },
+        {
+          "title": "Add keywords from job description",
+          "detail": "Incorporate keywords like 'technical documentation', 'API specifications', and 'operation procedures' naturally within relevant experience bullets.",
+          "priority": "high"
+        },
+        {
+          "title": "Showcase reliability and resilience",
+          "detail": "Highlight projects where you focused on improving system reliability, resilience, or performance under high load.",
+          "priority": "medium"
+        }
+      ],
+      "missingKeywords": [
+        "Azure Storage",
+        "block storage",
+        "technical documentation",
+        "API specifications",
+        "operation procedures",
+        "DRI",
+        "on-call",
+        "degradation",
+        "downtime",
+        "interruptions"
+      ],
+      "matchedSkills": [
+        "JavaScript",
+        "Python",
+        "C#",
+        "Java",
+        "C++",
+        "React.js",
+        "Node.js",
+        "RESTful APIs",
+        "Microservices",
+        "SQL",
+        "CI/CD Pipelines",
+        "Docker",
+        "Git",
+        "Agile/Scrum",
+        "Cloud Backend Development",
+        "Large Scale Distributed Systems",
+        "Performance",
+        "Reliability",
+        "Resilience",
+        "Scale-Out"
+      ],
+      "mode": "analysis",
+      "createdAt": "2026-04-13T21:35:46.008058+00:00"
+    },
+    {
+      "id": "8c22cab7-96df-41f4-9cbc-da983b45e5ea",
+      "jobTitle": "Software Engineer",
+      "overallScore": 78,
+      "breakdown": {
+        "keywordMatch": 85,
+        "semanticMatch": 75,
+        "skillsAlignment": 80,
+        "experienceRelevance": 70,
+        "formattingReadability": 85
+      },
+      "suggestions": [
+        {
+          "title": "Quantify Cloud Storage Experience",
+          "detail": "Add metrics and details about your experience with cloud storage solutions, emphasizing scale and performance.",
+          "priority": "high"
+        },
+        {
+          "title": "Highlight On-Call/Monitoring Experience",
+          "detail": "Describe any experience you have with monitoring systems, responding to incidents, and participating in on-call rotations.",
+          "priority": "high"
+        },
+        {
+          "title": "Showcase Documentation Skills",
+          "detail": "Include examples of technical documentation, API specifications, or operational procedures you have created.",
+          "priority": "medium"
+        },
+        {
+          "title": "Emphasize Distributed Systems Experience",
+          "detail": "Provide more details about your experience designing and building large-scale distributed systems, focusing on the challenges you addressed.",
+          "priority": "medium"
+        },
+        {
+          "title": "Tailor Resume to Azure Storage",
+          "detail": "Incorporate keywords related to Azure Storage and block storage to better align with the job description.",
+          "priority": "medium"
+        },
+        {
+          "title": "Add DRI-related experience",
+          "detail": "If you have acted as a DRI or similar role, add details about your responsibilities and accomplishments.",
+          "priority": "low"
+        }
+      ],
+      "missingKeywords": [
+        "Azure Storage",
+        "block storage",
+        "technical documentation",
+        "API specifications",
+        "operation procedures",
+        "designated responsible individual",
+        "DRI",
+        "on-call",
+        "degradation",
+        "downtime",
+        "interruptions"
+      ],
+      "matchedSkills": [
+        "JavaScript",
+        "Python",
+        "C#",
+        "Java",
+        "C++",
+        "C",
+        "Large Scale Distributed Systems",
+        "Performance",
+        "Reliability",
+        "Resilience",
+        "Scale-Out",
+        "Cloud Backend Development"
+      ],
+      "mode": "analysis",
+      "createdAt": "2026-04-13T21:29:24.58054+00:00"
+    }
+  ],
+  "localData": {
+    "exportedAt": "2026-04-17T13:38:40.210Z",
+    "settings": null,
+    "currentProfile": {
+      "name": "Bharath Lakkoju",
+      "email": "lbh.lbharath@gmail.com",
+      "phone": "+917032380489",
+      "location": "Hyderabad, India",
+      "linkedin": "linkedin.com/in/bharathlakkoju",
+      "github": "github.com/bharathlakkoju",
+      "summary": "Full Stack Developer with 2+ years of experience architecting scalable web applications and integrating AI-driven predictive analytics. Proficient in React, Next.js, Redux, Node.js, TypeScript, PostgreSQL, and MongoDB, with a proven track record of reducing API latency by 40% and increasing user engagement by 60%. Adept at CI/CD pipelines, automated testing, and cross-functional Agile collaboration to deliver high-performance, responsive platforms aligned with IoT and data automation objectives.",
+      "experience": [
+        {
+          "company": "UST Global",
+          "title": "Developer I",
+          "dates": "Sep 2024 - Present",
+          "location": "Hyderabad, India",
+          "bullets": [
+            "Architected and deployed a full-stack health tracking application using React Native, Node.js, and PostgreSQL, implementing a reward system that increased user engagement by 60% and improved data intake by 98%.",
+            "Engineered a scalable Angular and Node.js microservices architecture with WCS data integration, deploying an automated digitization banner that reduced manual processing overhead by 75% and streamlined RESTful API workflows.",
+            "Developed and integrated an AI-powered chatbot leveraging predictive analytics and LLM APIs, boosting monthly active users by 40% and enhancing real-time customer support capabilities.",
+            "Spearheaded the migration of legacy Java Spring services to Node.js and NestJS microservices, establishing API security standards, implementing comprehensive unit testing, and improving system maintainability by 35%.",
+            "Collaborated with cross-functional product and design teams in Agile sprints, conducting rigorous code reviews and optimizing CI/CD pipelines to achieve 99% deployment uptime and accelerate feature delivery."
+          ]
+        }
+      ],
+      "skills": [
+        {
+          "category": "Programming Languages",
+          "items": [
+            "TypeScript",
+            "JavaScript",
+            "Python",
+            "SQL"
+          ]
+        },
+        {
+          "category": "Frontend",
+          "items": [
+            "React.js",
+            "Next.js",
+            "Redux",
+            "Tailwind CSS",
+            "Zustand",
+            "HTML5/CSS3",
+            "Responsive Design"
+          ]
+        },
+        {
+          "category": "Backend & APIs",
+          "items": [
+            "Node.js",
+            "Express.js",
+            "RESTful APIs",
+            "Microservices",
+            "API Security",
+            "GraphQL"
+          ]
+        },
+        {
+          "category": "Databases",
+          "items": [
+            "PostgreSQL",
+            "MongoDB",
+            "MySQL",
+            "Prisma ORM",
+            "Drizzle ORM"
+          ]
+        },
+        {
+          "category": "AI/ML & Data",
+          "items": [
+            "OpenAI",
+            "Claude AI",
+            "Gemini API",
+            "LLM Integration"
+          ]
+        },
+        {
+          "category": "DevOps & Tools",
+          "items": [
+            "CI/CD Pipelines",
+            "Docker",
+            "Git",
+            "JIRA",
+            "Confluence",
+            "Agile/Scrum"
+          ]
+        }
+      ],
+      "projects": [
+        {
+          "name": "SalaryWise",
+          "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript / JSX, Vercel",
+          "link": "https://github.com/BharathLakkoju/salarywise",
+          "website": "https://salarywises.vercel.app",
+          "bullets": [
+            "Web app for job seekers to explore and compare salary benchmarks across roles (Frontend, Backend, fullstack, Data, DevOps), companies, and Indian cities",
+            "SEO-optimized blog with editorial salary insights and career advice articles",
+            "Sitemap and robots.txt configuration for search engine visibility",
+            "Google AdSense monetization integration (ads.txt)",
+            "Fast, minimal UI focused on readability and quick lookups"
+          ]
+        },
+        {
+          "name": "SwiftMedia",
+          "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript, Framer Motion, Vercel",
+          "link": "https://github.com/BharathLakkoju/swiftmedia",
+          "website": "https://swiftmedia.vercel.app",
+          "bullets": [
+            "Privacy-first, browser-based media processing suite — all conversions happen client-side with zero server uploads",
+            "Image compression tool supporting JPEG, PNG, and WebP with quality control",
+            "Video compression powered by FFmpeg compiled to WebAssembly, running fully in-browser",
+            "PDF compression to reduce file sizes for sharing",
+            "PDF merger to combine multiple PDFs into a single document",
+            "Image-to-PDF converter supporting multiple images at once",
+            "Pages for DMCA, Privacy Policy, and Terms of Service"
+          ]
+        },
+        {
+          "name": "FaviConverter",
+          "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript, Vercel",
+          "link": "https://github.com/BharathLakkoju/faviconverter",
+          "website": "https://faviconverter.vercel.app",
+          "bullets": [
+            "Browser-native favicon toolkit — all image conversion runs client-side with zero file uploads",
+            "Image-to-favicon converter (PNG/JPG/SVG → .ico + multi-size PNG set)",
+            "SVG-to-favicon and SVG-to-ICO dedicated converters",
+            "General favicon generator with live preview",
+            "Auto-generates a .zip bundle containing all required favicon sizes (16×16, 32×32, 48×48, 180×180, etc.)",
+            "SEO-focused guide pages: how to set up favicons in Next.js App Router and React/Vite",
+            "Tutorial article on how to create a favicon from scratch"
+          ]
+        },
+        {
+          "name": "CalCalorie",
+          "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript, Vercel",
+          "link": "https://github.com/BharathLakkoju/calcalorie",
+          "website": "https://calcalorie.vercel.app",
+          "bullets": [
+            "Calorie calculator that computes TDEE (Total Daily Energy Expenditure) based on age, weight, height, gender, and activity level",
+            "Macro calculator that breaks daily calorie targets into protein, carbohydrate, and fat grams",
+            "Educational content explaining BMR vs TDEE concepts",
+            "Blog with articles tailored to an Indian audience: calorie deficit, muscle-gain foods, BMR vs TDEE explained",
+            "FAQ page covering common nutrition tracking questions",
+            "Dark mode toggle via next-themes",
+            "Medical disclaimer and privacy policy pages",
+            "SEO-optimized sitemap and robots configuration"
+          ]
+        },
+        {
+          "name": "Flatmate",
+          "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript, Supabase (PostgreSQL + Auth), Drizzle ORM, Zustand, OpenRouter AI Integration, shadcn/ui, Base UI, Framer Motion, Vitest + Testing Library, Playwright (E2E)",
+          "link": "https://github.com/BharathLakkoju/flatmate",
+          "website": "https://adjustyourflat.vercel.app",
+          "bullets": [
+            "Full-stack shared living management app with Supabase authentication (email + OAuth)",
+            "Expense tracker for splitting and logging household costs between flatmates",
+            "Collaborative grocery list with per-flatmate item assignment and check-off",
+            "Meal planner with OCR-powered receipt scanning (Tesseract.js) for automatic meal logging",
+            "Task manager for assigning and tracking household chores",
+            "Shared household calendar for events and reminders",
+            "Google Gemini AI integration for intelligent household suggestions",
+            "Per-user profile and household settings pages",
+            "Unit test suite (Vitest + Testing Library) and end-to-end tests (Playwright)"
+          ]
+        },
+        {
+          "name": "ATS Precision",
+          "tech": "Next.js 16 (App Router), React 19, Tailwind CSS v4, TypeScript, Supabase SSR + supabase-js, Drizzle ORM, Zustand, Framer Motion, Zod, Radix UI",
+          "link": "https://github.com/BharathLakkoju/cresume",
+          "website": "https://cresume-iota.vercel.app",
+          "bullets": [
+            "Deterministic ATS resume evaluator — scores a resume against a specific job description using a weighted algorithm",
+            "Supports PDF and DOCX resume uploads, parsed entirely on the server",
+            "ATS scoring engine with weighted breakdown across keyword match, skills alignment, section completeness, and formatting quality",
+            "Keyword gap analysis highlighting missing critical terms and overused filler phrases",
+            "Section-by-section feedback for Summary, Experience, Skills, and Education",
+            "Role-specific improvement suggestions ranked by impact",
+            "Download evaluation report as PDF via jspdf + html2canvas",
+            "Animated marketing landing page and evaluation flow (Framer Motion)",
+            "Supabase-ready auth scaffolding for evaluation history persistence"
+          ]
+        },
+        {
+          "name": "Waigenie.tech",
+          "tech": "Next.js (App Router), React, TypeScript, Tailwind CSS, Auth.js (NextAuth v5), Prisma ORM, PostgreSQL, Zustand, shadcn/ui, Razorpay, Node.js",
+          "link": "Private Repo",
+          "website": "https://waigenie.tech",
+          "bullets": [
+            "Full-stack SaaS platform for Waigenie Tech — an AI-powered software testing toolkit aimed at QA engineers and development teams",
+            "5 AI testing tools in a protected dashboard: IdeaForge (test ideas), AutoScribe (test script generation), CucumberCraft (Gherkin/BDD), DomDetective (DOM locator extraction with live browser view), and WebTrekker (AI web agent)",
+            "Tech stack: Next.js (App Router), TypeScript, Tailwind CSS, Auth.js v5, Prisma + PostgreSQL, Zustand, shadcn/ui, Razorpay",
+            "Credit-based billing with Razorpay payment integration — users buy credits to run AI tools; full create/verify payment API built in",
+            "Full auth system — email/password (with strength indicator), Google OAuth, GitHub OAuth, and password reset flow",
+            "Complete SaaS shell — marketing site, per-product landing pages, pricing page, consultation booking, legal pages (privacy, terms, cancel-refund), and multi-currency pricing support"
+          ]
+        }
+      ],
+      "education": [
+        {
+          "institution": "MVGR College of Engineering",
+          "degree": "B. Tech Information Technology",
+          "year": "2020 - 2024",
+          "gpa": "8.10 / 10"
+        }
+      ],
+      "certifications": [],
+      "awards": [
+        "Deployed 8+ full-stack web and mobile applications serving 100+ active users with 75% uptime",
+        "Increased user engagement by 60% through innovative reward system implementation",
+        "Reduced operational costs by 75% through automated digitization banner component",
+        "Led frontend team of interns, mentoring on best practices and ensuring project delivery",
+        "Achieved 95% accuracy in AI-powered insurance recommendation system"
+      ]
+    },
+    "sessionHistory": []
+  }
+}
