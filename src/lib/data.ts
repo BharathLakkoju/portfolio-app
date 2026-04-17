@@ -67,11 +67,11 @@ export const projects: Project[] = [
   },
   {
     id: "waigenie",
-    name: "Waigenie.tech",
+    name: "Waigenie",
     description:
       "Full-stack SaaS platform — an AI-powered software testing toolkit with 5 AI tools in a protected dashboard: IdeaForge, AutoScribe, CucumberCraft, DomDetective, and WebTrekker. Credit-based billing via Razorpay, full auth (email, Google, GitHub OAuth), and complete marketing site.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "Auth.js", "Prisma", "PostgreSQL", "Zustand", "shadcn/ui", "Razorpay"],
-    github: null,
+    github: "https://www.github.com/BharathLakkoju/waigenie-frontend",
     live: null,
     category: "fullstack",
     featured: true,
