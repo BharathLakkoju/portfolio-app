@@ -1,0 +1,192 @@
+---
+title: "Integrating AI Into Web Apps Without the Hype"
+description: "Most AI integration tutorials skip the hard parts — latency, cost, fallbacks, and UX. Here's what I've learned shipping AI features in production."
+author: "Bharath Lakkoju"
+date: "2026-04-05"
+slug: "ai-integration-web-apps"
+tags:
+  ["ai", "llm", "nextjs", "openai", "vercel-ai-sdk", "fullstack", "production"]
+readingTime: "7 min read"
+---
+
+## Integrating AI Into Web Apps Without the Hype
+
+Everyone is adding AI to their apps.
+
+Most of them are adding it badly.
+
+Not because the features are wrong — but because the integration is fragile, expensive, or unusable in practice.
+
+Here's what I've learned from building AI-powered features in production.
+
+---
+
+## The Basics Everyone Gets Right
+
+Calling an LLM API is trivially easy:
+
+```ts
+import OpenAI from "openai";
+
+const client = new OpenAI();
+
+const response = await client.chat.completions.create({
+  model: "gpt-4o-mini",
+  messages: [{ role: "user", content: prompt }],
+});
+```
+
+This works fine in a tutorial.
+
+Production is different.
+
+---
+
+## The Parts Nobody Talks About
+
+### 1. Latency Is a UX Problem
+
+LLM responses take 2–10 seconds on average.
+
+If you block your UI waiting for a response, your app feels broken.
+
+**Always stream.** The Vercel AI SDK makes this straightforward with Next.js:
+
+```ts
+import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai";
+
+export async function POST(req: Request) {
+  const { prompt } = await req.json();
+
+  const result = streamText({
+    model: openai("gpt-4o-mini"),
+    prompt,
+  });
+
+  return result.toDataStreamResponse();
+}
+```
+
+On the client, render tokens as they arrive. Users tolerate slow when they see progress.
+
+---
+
+### 2. Cost Grows Faster Than You Expect
+
+GPT-4o costs real money at scale.
+
+Rules I follow:
+
+- **Use smaller models by default.** `gpt-4o-mini` handles 80% of tasks at 10× lower cost.
+- **Cache deterministic responses.** If the same input produces the same output, cache it.
+- **Set hard usage limits.** Cap monthly spend before you go over budget.
+- **Count tokens before sending.** Reject requests above your threshold early.
+
+```ts
+import { encode } from "gpt-tokenizer";
+
+const tokens = encode(prompt).length;
+if (tokens > 4000) {
+  return new Response("Prompt too long", { status: 400 });
+}
+```
+
+---
+
+### 3. LLMs Fail. Plan for It.
+
+LLM APIs return errors, rate limits, and timeouts regularly.
+
+Every AI call needs:
+
+- **Retry with exponential backoff**
+- **A fallback path** (degraded experience, not a crash)
+- **Timeout enforcement** (don't wait indefinitely)
+
+```ts
+async function callWithRetry(fn: () => Promise<string>, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (i === retries - 1) throw err;
+      await new Promise((r) => setTimeout(r, 2 ** i * 500));
+    }
+  }
+}
+```
+
+---
+
+### 4. Prompt Engineering Is Engineering
+
+Prompts are code. Treat them as such.
+
+- Store prompts in files, not inline strings
+- Version them
+- Test them with regression inputs
+- Log inputs and outputs in development
+
+A prompt that worked last week can produce garbage after a model update.
+
+---
+
+### 5. Structured Output Is Your Friend
+
+Free-form LLM text is hard to use programmatically.
+
+Force structured output whenever possible:
+
+```ts
+import { generateObject } from "ai";
+import { z } from "zod";
+
+const { object } = await generateObject({
+  model: openai("gpt-4o-mini"),
+  schema: z.object({
+    summary: z.string(),
+    tags: z.array(z.string()),
+    sentiment: z.enum(["positive", "neutral", "negative"]),
+  }),
+  prompt: "Analyze this feedback: " + feedback,
+});
+```
+
+Zod schema + `generateObject` = typed, reliable AI output.
+
+---
+
+## When Not to Use AI
+
+AI adds latency, cost, and unpredictability.
+
+Don't use it when:
+
+- A regex or simple function works
+- The output needs to be deterministic
+- Response time is critical and streaming isn't an option
+- The feature doesn't justify the cost at scale
+
+---
+
+## My Production AI Checklist
+
+- [ ] Streaming enabled for long responses
+- [ ] Smaller model as default, larger only when needed
+- [ ] Token limit enforced before API call
+- [ ] Retry + timeout logic in place
+- [ ] Responses cached where input is deterministic
+- [ ] Prompts stored and versioned separately
+- [ ] Structured output with Zod schema
+- [ ] Usage monitoring and spend alerts configured
+
+---
+
+## Final Thought
+
+AI features can be genuinely useful.
+
+But they require the same engineering discipline as any other production system — maybe more, because the failure modes are less predictable.
+
+Build carefully. Ship confidently.

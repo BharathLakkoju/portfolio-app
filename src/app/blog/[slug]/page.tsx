@@ -67,11 +67,11 @@ export default async function BlogPostPage({ params }: Props) {
             {post.title}
           </h1>
 
-          <p className="text-lg text-[var(--color-text-secondary)] mb-6 leading-relaxed">
+          <p className="text-lg text-text-secondary mb-6 leading-relaxed">
             {post.description}
           </p>
 
-          <div className="flex items-center gap-5 text-sm text-[var(--color-text-muted)] border-y border-[var(--color-border)] py-4 mb-10">
+          <div className="flex items-center gap-5 text-sm text-text-muted border-y border-border py-4 mb-10">
             <span className="flex items-center gap-2">
               <Calendar size={14} />
               {formatDate(post.date)}
@@ -86,18 +86,25 @@ export default async function BlogPostPage({ params }: Props) {
         {/* MDX Content */}
         <AnimatedSection delay={0.2}>
           <div
-            className="prose prose-invert prose-zinc max-w-none
-            prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-[var(--color-text-primary)]
-            prose-p:text-[var(--color-text-secondary)] prose-p:leading-relaxed
-            prose-a:text-[var(--color-accent)] prose-a:no-underline hover:prose-a:underline
-            prose-strong:text-[var(--color-text-primary)] prose-strong:font-semibold
-            prose-code:font-mono prose-code:text-[var(--color-accent)] prose-code:bg-[var(--color-surface)] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:border prose-code:border-[var(--color-border)] prose-code:text-sm
-            prose-pre:bg-[var(--color-surface)] prose-pre:border prose-pre:border-[var(--color-border)] prose-pre:rounded-xl
-            prose-blockquote:border-l-[var(--color-accent)] prose-blockquote:text-[var(--color-text-muted)]
-            prose-hr:border-[var(--color-border)]
-            prose-ul:text-[var(--color-text-muted)] prose-ol:text-[var(--color-text-muted)]
-            prose-li:marker:text-[var(--color-accent)]
-          "
+            className="
+              prose prose-invert prose-zinc max-w-none
+              prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-text-primary
+              prose-h1:text-2xl prose-h1:mt-10 prose-h1:mb-4
+              prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-3 prose-h2:border-b prose-h2:border-border prose-h2:pb-2
+              prose-h3:text-base prose-h3:mt-8 prose-h3:mb-2
+              prose-p:text-text-secondary prose-p:leading-[1.85] prose-p:my-5
+              prose-a:text-accent prose-a:no-underline hover:prose-a:underline
+              prose-strong:text-text-primary prose-strong:font-semibold
+              prose-code:font-mono prose-code:text-accent prose-code:bg-surface prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:border prose-code:border-border prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+              prose-pre:bg-surface prose-pre:border prose-pre:border-border prose-pre:rounded-xl prose-pre:my-6
+              prose-blockquote:border-l-accent prose-blockquote:text-text-muted prose-blockquote:my-6
+              prose-hr:border-border prose-hr:my-8
+              prose-ul:text-text-secondary prose-ul:my-5 prose-ul:pl-6
+              prose-ol:text-text-secondary prose-ol:my-5 prose-ol:pl-6
+              prose-li:my-2 prose-li:leading-relaxed
+              prose-li:marker:text-accent
+              prose-table:text-sm prose-th:text-text-primary prose-td:text-text-secondary
+            "
           >
             <MDXRemote source={post.content} />
           </div>
@@ -106,7 +113,7 @@ export default async function BlogPostPage({ params }: Props) {
         {/* Footer */}
         <AnimatedSection
           delay={0.3}
-          className="mt-16 border-t border-[var(--color-border)] pt-8"
+          className="mt-16 border-t border-border pt-8"
         >
           <Button variant="outline" asChild>
             <Link href="/blog">

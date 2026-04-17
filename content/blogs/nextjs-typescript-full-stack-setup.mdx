@@ -1,0 +1,172 @@
+---
+title: "My Go-To Next.js + TypeScript Stack for Full Stack Apps"
+description: "A breakdown of the exact stack I use when starting a new production-ready full stack project — from folder structure to database to deployment."
+author: "Bharath Lakkoju"
+date: "2026-03-28"
+slug: "nextjs-typescript-stack"
+tags:
+  [
+    "nextjs",
+    "typescript",
+    "fullstack",
+    "web-development",
+    "postgresql",
+    "prisma",
+    "tailwindcss",
+  ]
+readingTime: "5 min read"
+---
+
+## My Go-To Next.js + TypeScript Stack for Full Stack Apps
+
+Every developer eventually lands on a personal "default stack" — the set of tools they reach for without thinking.
+
+Here's mine.
+
+---
+
+## Why a Default Stack Matters
+
+Starting a new project involves hundreds of small decisions.
+
+If you don't have defaults, you waste time re-evaluating the same trade-offs:
+
+- Which database?
+- Which ORM?
+- How to handle auth?
+- How to structure the API?
+
+A battle-tested default removes decision fatigue and lets you focus on what actually matters — the product.
+
+---
+
+## The Stack
+
+### Framework — Next.js (App Router)
+
+Next.js is the obvious choice for full stack TypeScript projects.
+
+The App Router gives you:
+
+- File-based routing
+- Server Components (no unnecessary client JS)
+- API routes in the same repo
+- Built-in image optimization and caching
+
+I use the `src/` directory layout with the `app/` folder inside.
+
+---
+
+### Language — TypeScript (strict mode)
+
+Always strict mode. Non-negotiable.
+
+```ts
+// tsconfig.json
+{
+  "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true
+  }
+}
+```
+
+`noUncheckedIndexedAccess` catches array access bugs that `strict` misses.
+
+---
+
+### Styling — Tailwind CSS + shadcn/ui
+
+Tailwind for utility classes, shadcn/ui for accessible, unstyled base components.
+
+The shadcn model (copy-paste components, own the code) is better than a dependency for production apps.
+
+---
+
+### Database — PostgreSQL on Neon
+
+Neon gives you:
+
+- Serverless Postgres (scales to zero)
+- Branching (like git for your DB)
+- Free tier that's actually usable
+
+Pair it with Drizzle ORM for a type-safe query layer that stays close to SQL.
+
+```ts
+import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+
+export const users = pgTable("users", {
+  id: text("id").primaryKey(),
+  email: text("email").notNull().unique(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+```
+
+---
+
+### Auth — Clerk or better-auth
+
+For most projects, **better-auth** is my default now.
+
+It's self-hosted, open source, and composable. No vendor lock-in, no monthly seat pricing.
+
+For projects where time-to-market is critical, Clerk is still the fastest option.
+
+---
+
+### Validation — Zod
+
+Every API boundary gets a Zod schema.
+
+```ts
+import { z } from "zod";
+
+const CreateProjectSchema = z.object({
+  name: z.string().min(1).max(100),
+  description: z.string().optional(),
+});
+```
+
+This gives you runtime safety and auto-generated TypeScript types.
+
+---
+
+### Deployment — Vercel
+
+For Next.js, Vercel is still the best deployment target.
+
+Zero config. Edge network. Preview deployments on every PR.
+
+---
+
+## Folder Structure
+
+```
+src/
+  app/           — routes, pages, layouts
+  components/    — shared UI
+  lib/           — utilities, db client, auth
+  server/        — server-only logic, actions
+  types/         — shared TypeScript types
+```
+
+The `server/` folder enforces a clear boundary between server and client code.
+
+---
+
+## What I Skip
+
+- **Redux** — Zustand or React Context is enough for most apps
+- **CSS Modules** — Tailwind handles everything
+- **REST boilerplate** — Server Actions replace most CRUD API routes
+
+---
+
+## Final Thought
+
+The best stack is the one you can move fast with and debug fast in.
+
+This combination has served me well across production apps, client projects, and side projects alike.
+
+Start here. Customize when you have a real reason to.

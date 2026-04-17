@@ -1,0 +1,213 @@
+---
+title: "How I Cut API Latency by 40% — Lessons From Production"
+description: "The specific techniques that actually moved the needle on API performance: query optimization, caching layers, connection pooling, and the mistakes I made along the way."
+author: "Bharath Lakkoju"
+date: "2026-02-14"
+slug: "api-latency-optimization"
+tags:
+  [
+    "performance",
+    "backend",
+    "postgresql",
+    "caching",
+    "nodejs",
+    "optimization",
+    "database",
+  ]
+readingTime: "6 min read"
+---
+
+## How I Cut API Latency by 40% — Lessons From Production
+
+Performance work is humbling.
+
+You assume the bottleneck is where it obviously seems to be. Then you measure. And you're wrong.
+
+Here's what actually worked when I reduced API latency by 40% on a production Node.js + PostgreSQL service.
+
+---
+
+## Step 0 — Measure First
+
+Every performance project should start with measurement, not guesses.
+
+I instrumented every route with timing middleware:
+
+```ts
+app.use((req, res, next) => {
+  const start = performance.now();
+  res.on("finish", () => {
+    const duration = performance.now() - start;
+    console.log(`${req.method} ${req.path} — ${duration.toFixed(1)}ms`);
+  });
+  next();
+});
+```
+
+After a week of data, patterns became clear. 70% of the slowest requests shared two characteristics:
+
+- They hit the database multiple times
+- They fetched significantly more data than they used
+
+---
+
+## Finding 1 — N+1 Queries Are Everywhere
+
+The most common database performance problem is also the easiest to miss in code review.
+
+**Before:**
+
+```ts
+const users = await db.query("SELECT * FROM users");
+
+for (const user of users) {
+  const orders = await db.query("SELECT * FROM orders WHERE user_id = $1", [
+    user.id,
+  ]);
+  user.orders = orders;
+}
+```
+
+This fires `N + 1` queries for `N` users.
+
+**After:**
+
+```sql
+SELECT u.*, json_agg(o.*) as orders
+FROM users u
+LEFT JOIN orders o ON o.user_id = u.id
+GROUP BY u.id;
+```
+
+One query. Same result. Often 10–50× faster.
+
+---
+
+## Finding 2 — Missing Indexes on Foreign Keys
+
+PostgreSQL does not automatically index foreign key columns.
+
+This means `WHERE user_id = $1` on a large `orders` table does a full table scan unless you add the index manually.
+
+```sql
+CREATE INDEX CONCURRENTLY idx_orders_user_id ON orders(user_id);
+```
+
+`CONCURRENTLY` builds the index without locking the table — safe for production.
+
+After adding indexes on the five most-queried foreign keys, median query time dropped by half.
+
+---
+
+## Finding 3 — SELECT \* Is Expensive
+
+Fetching full rows when you need three columns wastes:
+
+- Network bandwidth between DB and app server
+- Serialization time
+- Memory in the Node.js process
+
+**Before:**
+
+```ts
+const users = await db.query("SELECT * FROM users WHERE active = true");
+```
+
+**After:**
+
+```ts
+const users = await db.query(
+  "SELECT id, name, email FROM users WHERE active = true",
+);
+```
+
+Minor change. Meaningful improvement at scale — especially for tables with text or JSONB columns.
+
+---
+
+## Finding 4 — Connection Pooling Was Misconfigured
+
+Every database query without connection pooling opens a new TCP connection.
+
+Connection establishment is slow — often 20–50ms per request.
+
+I was using `pg` directly and creating a new `Client` per request. Switching to a `Pool` with appropriate sizing brought average DB overhead from ~35ms to ~3ms.
+
+```ts
+import { Pool } from "pg";
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  max: 10, // max connections
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
+});
+```
+
+Rule of thumb: pool size ≈ (2 × CPU cores) + effective spindle count.
+
+---
+
+## Finding 5 — Cache the Stable Data
+
+Some data changes rarely but is read frequently: config values, user roles, category lists.
+
+Hitting the database on every request for this data is wasteful.
+
+I added a simple in-memory cache with TTL for these patterns:
+
+```ts
+const cache = new Map<string, { value: unknown; expiresAt: number }>();
+
+function getCached<T>(
+  key: string,
+  ttlMs: number,
+  fn: () => Promise<T>,
+): Promise<T> {
+  const entry = cache.get(key);
+  if (entry && entry.expiresAt > Date.now()) {
+    return Promise.resolve(entry.value as T);
+  }
+  return fn().then((value) => {
+    cache.set(key, { value, expiresAt: Date.now() + ttlMs });
+    return value;
+  });
+}
+```
+
+For distributed deployments, use Redis instead — but for a single-instance service, this is enough and has zero dependencies.
+
+---
+
+## The Scorecard
+
+| Optimization                        | Latency Reduction |
+| ----------------------------------- | ----------------- |
+| Eliminated N+1 queries              | ~18%              |
+| Added missing indexes               | ~12%              |
+| Switched to SELECT specific columns | ~4%               |
+| Fixed connection pooling            | ~5%               |
+| In-memory caching for stable data   | ~3%               |
+| **Total**                           | **~42%**          |
+
+---
+
+## Mistakes I Made
+
+**Premature caching** — I cached data that changed more often than I thought. Users saw stale state. Added invalidation logic that I should have designed upfront.
+
+**Over-indexing** — Indexes speed up reads but slow down writes. I added indexes speculatively and then had to remove several when write performance degraded.
+
+**Ignoring EXPLAIN ANALYZE** — I spent time optimizing query code without reading the actual query plan. `EXPLAIN ANALYZE` immediately shows whether an index is being used and where time is being spent.
+
+---
+
+## Final Thought
+
+Performance optimization is not magic.
+
+It's measurement, hypothesis, change, re-measurement.
+
+The improvements compound. Small wins across five areas become a 40% reduction in the aggregate.
+
+Start with data. Fix the obvious things first. Measure after every change.

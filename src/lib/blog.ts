@@ -22,10 +22,11 @@ export function getAllPosts(): Omit<BlogPost, "content">[] {
 
   return files
     .map((filename) => {
-      const slug = filename.replace(/\.mdx$/, "");
       const filePath = path.join(BLOGS_DIR, filename);
       const raw = fs.readFileSync(filePath, "utf-8");
       const { data, content } = matter(raw);
+      const slug =
+        (data.slug as string) ?? filename.replace(/\.mdx$/, "");
 
       return {
         slug,
@@ -40,21 +41,44 @@ export function getAllPosts(): Omit<BlogPost, "content">[] {
 }
 
 export function getPostBySlug(slug: string): BlogPost | null {
-  const filePath = path.join(BLOGS_DIR, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) return null;
+  if (!fs.existsSync(BLOGS_DIR)) return null;
 
-  const raw = fs.readFileSync(filePath, "utf-8");
-  const { data, content } = matter(raw);
+  // First try direct filename match
+  const directPath = path.join(BLOGS_DIR, `${slug}.mdx`);
+  if (fs.existsSync(directPath)) {
+    const raw = fs.readFileSync(directPath, "utf-8");
+    const { data, content } = matter(raw);
+    return {
+      slug,
+      title: (data.title as string) ?? slug,
+      date: (data.date as string) ?? new Date().toISOString(),
+      tags: (data.tags as string[]) ?? [],
+      description: (data.description as string) ?? "",
+      readTime: estimateReadTime(content),
+      content,
+    };
+  }
 
-  return {
-    slug,
-    title: (data.title as string) ?? slug,
-    date: (data.date as string) ?? new Date().toISOString(),
-    tags: (data.tags as string[]) ?? [],
-    description: (data.description as string) ?? "",
-    readTime: estimateReadTime(content),
-    content,
-  };
+  // Then scan for a file whose frontmatter slug matches
+  const files = fs.readdirSync(BLOGS_DIR).filter((f) => f.endsWith(".mdx"));
+  for (const filename of files) {
+    const filePath = path.join(BLOGS_DIR, filename);
+    const raw = fs.readFileSync(filePath, "utf-8");
+    const { data, content } = matter(raw);
+    if ((data.slug as string) === slug) {
+      return {
+        slug,
+        title: (data.title as string) ?? slug,
+        date: (data.date as string) ?? new Date().toISOString(),
+        tags: (data.tags as string[]) ?? [],
+        description: (data.description as string) ?? "",
+        readTime: estimateReadTime(content),
+        content,
+      };
+    }
+  }
+
+  return null;
 }
 
 export function getAllSlugs(): string[] {
@@ -62,5 +86,9 @@ export function getAllSlugs(): string[] {
   return fs
     .readdirSync(BLOGS_DIR)
     .filter((f) => f.endsWith(".mdx"))
-    .map((f) => f.replace(/\.mdx$/, ""));
+    .map((f) => {
+      const raw = fs.readFileSync(path.join(BLOGS_DIR, f), "utf-8");
+      const { data } = matter(raw);
+      return (data.slug as string) ?? f.replace(/\.mdx$/, "");
+    });
 }

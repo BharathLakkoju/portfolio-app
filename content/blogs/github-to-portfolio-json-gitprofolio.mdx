@@ -1,0 +1,246 @@
+---
+title: "Stop Building Portfolios Manually — Generate Them From Your GitHub"
+description: "Your GitHub already contains everything that matters — projects, tech stack, activity, proof of work. So just import your stuff in a structured JSON to build your portfolio, saving time and effort."
+author: "Bharath Lakkoju"
+date: "2026-04-17"
+slug: "generate"
+tags:
+  [
+    "github",
+    "developer-tools",
+    "portfolio",
+    "web-development",
+    "open-source",
+    "javascript",
+    "astro",
+    "ai-tools",
+    "productivity",
+    "devtools",
+  ]
+readingTime: "6 min read"
+---
+
+Most developer portfolios are either:
+
+- outdated
+- incomplete
+- or manually curated (which means they age fast)
+
+Your GitHub already contains everything that matters — projects, tech stack, activity, proof of work.
+
+So instead of rewriting the same information again…
+
+**What if your GitHub could become your portfolio automatically?**
+
+That’s exactly what I built.
+
+---
+
+## Introducing GitProfolio
+
+👉 https://gitprofolio.vercel.app
+
+A tool that **extracts, analyzes, and converts your GitHub profile into a structured, portfolio-ready JSON**.
+
+Not just raw data — but **cleaned, enriched, and ranked information** that you can directly use for:
+
+- portfolio websites
+- resume generators
+- personal dashboards
+- AI-based developer tools
+
+---
+
+## The Problem With GitHub as a Portfolio
+
+GitHub is powerful, but it’s not structured for presentation.
+
+- Important projects get buried
+- READMEs are inconsistent
+- No clear prioritization
+- No unified tech stack view
+- No clean export format
+
+You’re forced to:
+
+- manually pick projects
+- rewrite descriptions
+- guess what matters most
+
+---
+
+## What GitProfolio Does Differently
+
+### 1. Converts GitHub → Structured JSON
+
+Instead of scraping blindly, the app builds a **clean, consistent data model**:
+
+- Profile metadata
+- Repository details
+- Tech stack
+- Topics
+- Live links
+- Rankings
+
+Everything is ready to plug into any system.
+
+---
+
+### 2. Smart Repository Scoring
+
+Not all projects are equal.
+
+GitProfolio ranks them using a scoring system:
+
+- Stars × 2
+- Forks × 1.5
+- Recency boost
+- Description quality
+- Penalizes forks & archived repos
+
+This ensures your **best work actually surfaces first**.
+
+---
+
+### 3. README Intelligence
+
+Most tools ignore README content.
+
+This one doesn’t.
+
+It:
+
+- extracts meaningful descriptions
+- detects features
+- removes markdown noise
+- truncates cleanly for readability
+
+So your projects look **clean and professional by default**.
+
+---
+
+### 4. Automatic Tech Stack Detection
+
+No manual tagging.
+
+The system:
+
+- reads GitHub language stats
+- scans README for frameworks/tools
+- normalizes technologies
+
+Result → a **real, accurate tech stack per project**.
+
+---
+
+### 5. Live Project Detection
+
+It automatically finds deployed apps from:
+
+- Vercel
+- Netlify
+- Railway
+- Render
+- and more
+
+So your portfolio includes **actual working products, not just repos**.
+
+---
+
+### 6. Top Projects Selection
+
+Instead of guessing what to showcase:
+
+- Projects are ranked
+- Top ones are extracted automatically
+
+You get a **ready-made “Top Projects” section** instantly.
+
+---
+
+### 7. AI-Powered Insights (Optional Layer)
+
+On top of raw extraction, the app can:
+
+- suggest improvements to your repos
+- generate project ideas
+- recommend contributions
+- fix missing descriptions/topics
+
+This turns your GitHub into a **growth engine, not just a portfolio**.
+
+---
+
+## Example Output Structure
+
+The output isn’t random JSON.
+
+It’s designed for real use:
+
+```json
+{
+  "profile": {...},
+  "repositories": [...],
+  "top_projects": [...]
+}
+```
+
+Each repo includes:
+
+- clean_description
+- tech_stack
+- live_links
+- importance_score
+- readme_summary
+- topics
+
+Which means you can:
+
+- plug it into a Next.js portfolio
+- feed it into an AI system
+- build dashboards instantly
+
+---
+
+## Why This Matters
+
+Developers spend hours:
+
+- building portfolios
+- maintaining them
+- updating them
+
+But the source of truth is always GitHub.
+
+GitProfolio removes that duplication.
+
+**Your GitHub becomes your portfolio. Automatically.**
+
+---
+
+## Built With a Purpose
+
+This isn’t just a scraper.
+
+It’s a **data pipeline for developer identity**:
+
+- Fetch → GitHub API
+- Analyze → README + metadata
+- Enrich → scoring + cleaning
+- Structure → consistent JSON
+- Enhance → AI insights
+
+Everything is designed to make your work:
+
+- more visible
+- more structured
+- more usable
+
+---
+
+## Final Thought
+
+Your GitHub already proves your skills.
+
+GitProfolio makes sure it’s **presented like it matters**.
+

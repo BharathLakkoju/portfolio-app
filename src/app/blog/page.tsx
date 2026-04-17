@@ -16,7 +16,7 @@ export default function BlogPage() {
     <div className="pt-24 pb-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <div className="mb-10">
-          <h1 className="text-2xl font-bold tracking-tight mb-1">Writing</h1>
+          <h1 className="text-2xl font-bold tracking-tight mb-1">Blog</h1>
           <p className="text-xs text-text-muted">
             {posts.length} {posts.length === 1 ? "post" : "posts"}
           </p>
@@ -24,8 +24,7 @@ export default function BlogPage() {
 
         {posts.length === 0 ? (
           <p className="text-sm text-text-muted py-12">
-            No posts yet. Add{" "}
-            <code className="font-mono">.mdx</code> files to{" "}
+            No posts yet. Add <code className="font-mono">.mdx</code> files to{" "}
             <code className="font-mono">/content/blogs</code>.
           </p>
         ) : (
