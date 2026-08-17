@@ -11,7 +11,7 @@ import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `Learn more about ${profile.name} — Full Stack Developer and AI Engineer.`,
+  description: `Learn more about ${profile.name} — AI Engineer and Full Stack Engineer.`,
 };
 
 export default function AboutPage() {
@@ -52,18 +52,27 @@ export default function AboutPage() {
         <AnimatedSection delay={0.05}>
           <div className="space-y-3 text-sm text-text-secondary leading-relaxed border-t border-border pt-10">
             <p>
-              Full Stack Developer and AI Engineer currently at{" "}
+              AI Engineer and Full Stack Engineer currently at{" "}
               <span className="text-text-primary">UST Global</span> in
-              Hyderabad. I specialise in building production-grade web
-              applications using the modern JavaScript ecosystem.
+              Hyderabad. I specialise in building multi-agent AI systems and
+              production-grade web applications using the modern JavaScript
+              and Python ecosystems.
             </p>
             <p>
-              My work spans microservices architectures, SaaS platforms, and
-              AI-integrated tools. I care about performance, developer
-              experience, and shipping things that work at scale.
+              My work spans AI orchestration platforms, RAG pipelines,
+              microservices architectures, and SaaS tools. I care about
+              performance, developer experience, and shipping things that
+              work at scale.
             </p>
             <p>
               Open-source side projects:{" "}
+              <Link
+                href="https://github.com/bharathlakkoju/nexusflow"
+                className="text-text-primary border-dashed border-b border-text-primary"
+              >
+                NexusFlow
+              </Link>
+              ,{" "}
               <Link
                 href="https://github.com/bharathlakkoju/gitprofolio"
                 className="text-text-primary border-dashed border-b border-text-primary"

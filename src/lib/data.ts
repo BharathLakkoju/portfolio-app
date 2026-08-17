@@ -5,9 +5,9 @@
 export const profile = {
   name: "Bharath Lakkoju",
   firstName: "Bharath",
-  title: "Full Stack Developer & AI Engineer",
+  title: "AI Engineer & Full Stack Engineer",
   tagline: "Building AI-powered products and scalable web apps",
-  bio: "Full Stack Developer with 2+ years of experience architecting scalable web applications and integrating AI-driven predictive analytics. Proficient in React, Next.js, Node.js, TypeScript, PostgreSQL, and MongoDB — with a proven track record of reducing API latency by 40% and increasing user engagement by 60%. I ship fast, test well, and care deeply about developer experience.",
+  bio: "AI Engineer & Full Stack Engineer with 2+ years of experience building multi-agent AI systems, RAG pipelines, and scalable web applications. Proficient in React, Next.js, Node.js, TypeScript, Python, LangChain/LangGraph, PostgreSQL, and MongoDB — with a proven track record of reducing API latency by 40% and increasing user engagement by 60%. I ship fast, test well, and care deeply about developer experience.",
   location: "Hyderabad, India",
   email: "lbh.lbharath@gmail.com",
   avatar: "https://avatars.githubusercontent.com/u/73902405?v=4",
@@ -33,6 +33,39 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "nexusflow",
+    name: "NexusFlow",
+    description:
+      "Visual multi-agent AI orchestration platform — design, deploy, and monitor teams of AI agents (Researcher, Planner, Executor, Critic) on a drag-and-drop canvas. Includes a RAG knowledge base over PDFs/docs/URLs, full observability (token costs, execution traces, success rates), and real-time agent-thought streaming via SSE. Free to self-host.",
+    tech: ["Next.js", "TypeScript", "Python", "FastAPI", "LangChain", "LangGraph", "PostgreSQL", "pgvector", "Redis", "Docker"],
+    github: "https://github.com/BharathLakkoju/nexusflow",
+    live: "https://nexusflow-web.vercel.app",
+    category: "ai",
+    featured: true,
+  },
+  {
+    id: "terminal",
+    name: "Terminal",
+    description:
+      "Custom PowerShell-native terminal emulator for Windows with a macOS/iTerm2-style UI, built with Tauri, React, TypeScript, and xterm.js. Features a contrast-correction engine that keeps output readable in both dark and light themes.",
+    tech: ["Tauri", "React", "TypeScript", "Rust", "xterm.js", "Vite"],
+    github: "https://github.com/BharathLakkoju/terminal",
+    live: null,
+    category: "tools",
+    featured: true,
+  },
+  {
+    id: "docqa",
+    name: "docQA",
+    description:
+      "Agentic RAG system that answers questions about n8n workflows, GitHub Actions CI/CD configs, and other technical docs — Python/FastAPI backend, Next.js/Tailwind frontend, and a Dockerized TypeScript client for interactive document Q&A.",
+    tech: ["Next.js", "TypeScript", "Python", "FastAPI", "LangChain", "CrewAI", "Tailwind CSS", "Docker"],
+    github: "https://github.com/BharathLakkoju/docQA",
+    live: "https://documentorqa.vercel.app",
+    category: "ai",
+    featured: true,
+  },
+  {
     id: "greensource",
     name: "GreenSource",
     description:
@@ -41,7 +74,7 @@ export const projects: Project[] = [
     github: "https://github.com/BharathLakkoju/greensource",
     live: null,
     category: "microservices",
-    featured: true,
+    featured: false,
   },
   {
     id: "flatmate",
@@ -52,7 +85,7 @@ export const projects: Project[] = [
     github: "https://github.com/BharathLakkoju/flatmate",
     live: "https://adjustyouflat.vercel.app",
     category: "fullstack",
-    featured: true,
+    featured: false,
   },
   {
     id: "atsprecise",
@@ -74,7 +107,7 @@ export const projects: Project[] = [
     github: "https://www.github.com/BharathLakkoju/waigenie-frontend",
     live: null,
     category: "fullstack",
-    featured: true,
+    featured: false,
   },
   {
     id: "job-hunter",
@@ -120,6 +153,17 @@ export const projects: Project[] = [
     category: "tools",
     featured: false,
   },
+  {
+    id: "depguard",
+    name: "DepGuard",
+    description:
+      "Universal dependency health scanner CLI — detects outdated, vulnerable, deprecated, and risky packages across JavaScript, Python, Rust, and Go ecosystems from a single command. Published to npm.",
+    tech: ["TypeScript", "Node.js", "CLI", "GitHub Actions"],
+    github: "https://github.com/BharathLakkoju/depguard",
+    live: "https://www.npmjs.com/package/@lbharath/depguard",
+    category: "tools",
+    featured: false,
+  },
 ];
 
 export const featuredProjects = projects.filter((p) => p.featured);
@@ -136,6 +180,11 @@ export type SkillCategory = {
 
 export const skills: SkillCategory[] = [
   {
+    category: "AI / ML",
+    icon: "brain",
+    items: ["LangChain", "LangGraph", "CrewAI", "RAG Pipelines", "OpenAI API", "Claude AI", "Gemini API", "Ollama"],
+  },
+  {
     category: "Programming Languages",
     icon: "code-2",
     items: ["TypeScript", "JavaScript", "Python", "SQL"],
@@ -148,17 +197,12 @@ export const skills: SkillCategory[] = [
   {
     category: "Backend & APIs",
     icon: "server",
-    items: ["Node.js", "Express.js", "RESTful APIs", "Microservices", "GraphQL", "API Security"],
+    items: ["Node.js", "Express.js", "FastAPI", "RESTful APIs", "Microservices", "GraphQL", "API Security"],
   },
   {
     category: "Databases",
     icon: "database",
-    items: ["PostgreSQL", "MongoDB", "MySQL", "Prisma ORM", "Drizzle ORM", "Supabase"],
-  },
-  {
-    category: "AI / ML",
-    icon: "brain",
-    items: ["OpenAI API", "Claude AI", "Gemini API", "LLM Integration", "LangChain", "Ollama"],
+    items: ["PostgreSQL", "MongoDB", "MySQL", "Prisma ORM", "Drizzle ORM", "Supabase", "pgvector"],
   },
   {
     category: "DevOps & Tools",

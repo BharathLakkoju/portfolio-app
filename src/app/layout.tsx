@@ -9,16 +9,18 @@ import { profile } from "~/lib/data";
 
 export const metadata: Metadata = {
   title: {
-    default: `${profile.name} — Full Stack Developer`,
+    default: `${profile.name} — AI Engineer & Full Stack Engineer`,
     template: `%s | ${profile.name}`,
   },
   description: profile.bio,
   keywords: [
-    "Full Stack Developer",
+    "AI Engineer",
+    "Full Stack Engineer",
+    "LangChain",
+    "LangGraph",
     "React",
     "Next.js",
     "TypeScript",
-    "AI Engineer",
     "Hyderabad",
     "Bharath Lakkoju",
   ],
@@ -28,13 +30,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://bharath-lakkoju-portfolio.vercel.app",
-    title: `${profile.name} — Full Stack Developer & AI Engineer`,
+    title: `${profile.name} — AI Engineer & Full Stack Engineer`,
     description: profile.bio,
     siteName: `${profile.name} Portfolio`,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — Full Stack Developer & AI Engineer`,
+    title: `${profile.name} — AI Engineer & Full Stack Engineer`,
     description: profile.bio,
     creator: "@bharathlakkoju",
   },

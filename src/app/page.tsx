@@ -95,9 +95,9 @@ export default function HomePage() {
                 transition={{ duration: 0.35, delay: 0.15 }}
                 className="text-sm leading-relaxed text-text-secondary mb-7 max-w-lg"
               >
-                Building AI-powered products and scalable web applications with
+                Building multi-agent AI systems and scalable web applications with
                 2+ years of experience. Proficient in React, Next.js, Node.js,
-                and LLM integrations.
+                Python, and LangChain/LangGraph-based LLM integrations.
               </motion.p>
 
               <motion.div
@@ -165,7 +165,7 @@ export default function HomePage() {
               <span className="text-text-muted ml-1.5">years experience</span>
             </div>
             <div>
-              <span className="font-semibold text-text-primary">8+</span>
+              <span className="font-semibold text-text-primary">12+</span>
               <span className="text-text-muted ml-1.5">projects built</span>
             </div>
             <div className="hidden sm:block">
