@@ -1,0 +1,47 @@
+---
+title: "Scalability vs Performance: The Distinction I Was Missing"
+description: "Breaking down why 'scaling' and 'performance' aren't the same conversation, and when to choose vertical vs horizontal scaling."
+author: "Bharath Lakkoju"
+date: "2026-08-14"
+slug: "system-design-scalability-vs-performance"
+tags:
+  [
+    "system-design",
+    "scalability",
+    "software-engineering",
+    "tech-interviews",
+    "distributed-systems",
+    "interview-preparation",
+  ]
+readingTime: "3 min read"
+---
+
+For the longest time I thought scaling a system was simple: your app is slow, throw a bigger server at it. That assumption held up fine until I actually sat down to prep for system design interviews and realized "scaling" and "performance" aren't really the same conversation.
+
+---
+
+## Performance vs scalability
+
+Performance is about how fast your system handles **one** user. Scalability is about whether that speed holds up when a thousand users show up at once.
+
+You can have a blazing-fast system that falls over the moment traffic multiplies, and you can have a system that scales cleanly to millions of users while still feeling sluggish per-request. They're different axes, and conflating them is how you end up optimizing the wrong thing.
+
+---
+
+## Vertical vs horizontal
+
+Vertical scaling — a bigger server — is the easy button. One machine, more CPU, more RAM, done. But it has a ceiling, and eventually you hit it.
+
+Horizontal scaling buys you headroom at the cost of complexity: load balancing, partitioning, and all the coordination problems that come with running many machines instead of one.
+
+---
+
+## The real answer
+
+Vertical scaling buys you time, horizontal scaling buys you ceiling — most real systems do both at different stages of growth. Knowing which lever to reach for, and when, turned out to be a much bigger part of the interview (and the job) than I expected.
+
+---
+
+## Reference
+
+- [A Word on Scalability — All Things Distributed](https://www.allthingsdistributed.com/2006/03/a_word_on_scalability.html)

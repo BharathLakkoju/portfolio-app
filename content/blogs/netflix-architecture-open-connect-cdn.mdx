@@ -1,0 +1,38 @@
+---
+title: "Netflix's Architecture Story Isn't Really About Microservices"
+description: "The most interesting part of Netflix's stack isn't the microservices at scale — it's Open Connect, their custom-built CDN."
+author: "Bharath Lakkoju"
+date: "2026-08-11"
+slug: "netflix-architecture-open-connect-cdn"
+tags:
+  [
+    "system-design",
+    "netflix",
+    "software-architecture",
+    "distributed-systems",
+    "tech-careers",
+  ]
+readingTime: "3 min read"
+---
+
+I always assumed Netflix's architecture story was "microservices at scale" — hundreds of services, AWS, done. The more interesting part turned out to be something else entirely: Open Connect, Netflix's own CDN.
+
+---
+
+## Shipping hardware into ISP networks
+
+Open Connect ships physical caching servers directly into ISP networks, for free. Close to 95% of Netflix's traffic globally is delivered through direct connections between these appliances and residential ISPs.
+
+---
+
+## Why own the edge
+
+It's not really a "CDN choice" in the usual sense — it's a deliberate bet that content delivery is core enough to Netflix's business to own the hardware rather than rent someone else's edge network.
+
+That bet is justified by the shape of their traffic: enormous, predictable, write-once-watch-many. A handful of files get requested by millions of people, over and over, which makes owning the last mile of delivery worth the operational overhead that renting would have avoided.
+
+---
+
+## Reference
+
+- [Netflix's Content Delivery Through Open Connect — APNIC](https://blog.apnic.net/2018/06/20/netflix-content-distribution-through-open-connect/)
