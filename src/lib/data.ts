@@ -47,12 +47,12 @@ export const projects: Project[] = [
     id: "terminal",
     name: "Terminal",
     description:
-      "Custom PowerShell-native terminal emulator for Windows with a macOS/iTerm2-style UI, built with Tauri, React, TypeScript, and xterm.js. Features a contrast-correction engine that keeps output readable in both dark and light themes.",
+      "Custom PowerShell-native terminal emulator for Windows with a macOS/iTerm2-style UI, built with Tauri, React, TypeScript, and xterm.js. Its core goal is a real contrast-correction engine for a working light theme — something no other Windows-supported terminal (including Windows Terminal) gets right.",
     tech: ["Tauri", "React", "TypeScript", "Rust", "xterm.js", "Vite"],
     github: "https://github.com/BharathLakkoju/terminal",
     live: null,
     category: "tools",
-    featured: true,
+    featured: false,
   },
   {
     id: "docqa",
@@ -85,7 +85,7 @@ export const projects: Project[] = [
     github: "https://github.com/BharathLakkoju/flatmate",
     live: "https://adjustyouflat.vercel.app",
     category: "fullstack",
-    featured: false,
+    featured: true,
   },
   {
     id: "atsprecise",
