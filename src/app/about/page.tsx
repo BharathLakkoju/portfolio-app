@@ -147,7 +147,7 @@ export default function AboutPage() {
                       {exp.bullets.map((bullet, j) => (
                         <li
                           key={j}
-                          className="flex gap-2 text-xs text-text-secondary leading-relaxed"
+                          className="flex gap-2 text-sm text-text-secondary leading-relaxed"
                         >
                           <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent" />
                           {bullet}
