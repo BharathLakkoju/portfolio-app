@@ -5,6 +5,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { Navbar } from "~/components/layout/Navbar";
 import { Footer } from "~/components/layout/Footer";
 import { PageTransitionProvider } from "~/components/shared/PageTransitionContext";
+import { ThemeProvider } from "~/components/shared/ThemeProvider";
 import { profile } from "~/lib/data";
 
 export const metadata: Metadata = {
@@ -60,18 +61,25 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      className={`${inter.variable} ${jetbrainsMono.variable} dark`}
+      className={`${inter.variable} ${jetbrainsMono.variable}`}
       lang="en"
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background text-text-primary antialiased">
-        <PageTransitionProvider>
-          <div className="relative flex min-h-screen flex-col">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-        </PageTransitionProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <PageTransitionProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+          </PageTransitionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

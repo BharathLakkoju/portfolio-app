@@ -87,7 +87,7 @@ export default async function BlogPostPage({ params }: Props) {
         <AnimatedSection delay={0.2}>
           <div
             className="
-              prose prose-invert prose-zinc max-w-none
+              prose dark:prose-invert prose-zinc max-w-none
               prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-text-primary
               prose-h1:text-2xl prose-h1:mt-10 prose-h1:mb-4
               prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-3 prose-h2:border-b prose-h2:border-border prose-h2:pb-2
