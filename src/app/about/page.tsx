@@ -7,9 +7,13 @@ import {
 } from "~/components/shared/AnimatedSection";
 import { SkillCard } from "~/components/shared/SkillCard";
 import { LeetCodeCard } from "~/components/shared/LeetCodeCard";
+import { PlatformCard } from "~/components/shared/PlatformCard";
 import { profile, skills, experience, education } from "~/lib/data";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { getLeetCodeStats } from "~/lib/leetcode";
+import { getCodeforcesStats } from "~/lib/codeforces";
+import { getHackerRankStats } from "~/lib/hackerrank";
+import { getGfgStats } from "~/lib/geeksforgeeks";
 
 export const metadata: Metadata = {
   title: "About",
@@ -17,7 +21,13 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  const leetcodeStats = await getLeetCodeStats();
+  const [leetcodeStats, codeforcesStats, hackerrankStats, gfgStats] =
+    await Promise.all([
+      getLeetCodeStats(),
+      getCodeforcesStats(),
+      getHackerRankStats(),
+      getGfgStats(),
+    ]);
 
   return (
     <div className="pt-24 pb-16">
@@ -125,7 +135,80 @@ export default async function AboutPage() {
             <p className="text-[10px] uppercase tracking-widest text-text-muted mb-6">
               Problem Solving
             </p>
-            <LeetCodeCard stats={leetcodeStats} />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <LeetCodeCard stats={leetcodeStats} />
+              <PlatformCard
+                name="Codeforces"
+                unavailable={!codeforcesStats}
+                profileUrl={codeforcesStats?.profileUrl}
+                primary={
+                  codeforcesStats
+                    ? { value: codeforcesStats.solvedCount, label: "solved" }
+                    : undefined
+                }
+                stats={
+                  codeforcesStats
+                    ? [
+                        {
+                          label: "Rating",
+                          value: codeforcesStats.rating ?? "Unrated",
+                        },
+                        ...(codeforcesStats.maxRating
+                          ? [
+                              {
+                                label: "Max",
+                                value: codeforcesStats.maxRating,
+                              },
+                            ]
+                          : []),
+                      ]
+                    : []
+                }
+              />
+              <PlatformCard
+                name="HackerRank"
+                unavailable={!hackerrankStats}
+                profileUrl={hackerrankStats?.profileUrl}
+                primary={
+                  hackerrankStats
+                    ? { value: hackerrankStats.level, label: "level" }
+                    : undefined
+                }
+                stats={
+                  hackerrankStats
+                    ? hackerrankStats.badges.map((b) => ({
+                        label: b.name,
+                        value: `${b.stars}★`,
+                      }))
+                    : []
+                }
+              />
+              <PlatformCard
+                name="GeeksforGeeks"
+                unavailable={!gfgStats}
+                profileUrl={gfgStats?.profileUrl}
+                primary={
+                  gfgStats
+                    ? { value: gfgStats.totalSolved, label: "solved" }
+                    : undefined
+                }
+                stats={
+                  gfgStats
+                    ? [
+                        { label: "Score", value: gfgStats.score },
+                        ...(gfgStats.instituteRank
+                          ? [
+                              {
+                                label: "Institute Rank",
+                                value: gfgStats.instituteRank,
+                              },
+                            ]
+                          : []),
+                      ]
+                    : []
+                }
+              />
+            </div>
           </div>
         </AnimatedSection>
 
