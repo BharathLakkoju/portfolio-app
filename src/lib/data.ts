@@ -110,17 +110,6 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    id: "job-hunter",
-    name: "Job Hunter Web",
-    description:
-      "Personal job intelligence dashboard — aggregates jobs every 4 hours from Indeed, Naukri, and Wellfound, scores them by hiring probability (0–100%), sends Telegram alerts for top matches (≥ 80%), and tracks application status.",
-    tech: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Drizzle ORM", "Zustand", "shadcn/ui", "Telegraf"],
-    github: "https://github.com/BharathLakkoju/job-hunter-web",
-    live: "https://job-hunter-web-three.vercel.app",
-    category: "ai",
-    featured: false,
-  },
-  {
     id: "swiftmedia",
     name: "SwiftMedia",
     description:

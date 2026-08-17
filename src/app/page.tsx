@@ -165,7 +165,7 @@ export default function HomePage() {
               <span className="text-text-muted ml-1.5">years experience</span>
             </div>
             <div>
-              <span className="font-semibold text-text-primary">12+</span>
+              <span className="font-semibold text-text-primary">11+</span>
               <span className="text-text-muted ml-1.5">projects built</span>
             </div>
             <div className="hidden sm:block">
