@@ -8,7 +8,7 @@ import { Mail, ArrowRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "~/components/shared/Icons";
 import { Button } from "~/components/ui/button";
 import { ProjectCard } from "~/components/shared/ProjectCard";
-import { LeetCodeStatTile } from "~/components/shared/LeetCodeStatTile";
+import { CodingProfilesGrid } from "~/components/shared/CodingProfilesGrid";
 import { profile, featuredProjects, skills } from "~/lib/data";
 
 const categoryColors: Record<
@@ -175,7 +175,6 @@ export default function HomePage() {
                 {profile.company}
               </span>
             </div>
-            <LeetCodeStatTile />
           </motion.div>
         </div>
       </section>
@@ -199,6 +198,24 @@ export default function HomePage() {
               <ProjectCard key={project.id} project={project} index={i} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ===== CODING PROFILES ===== */}
+      <section className="py-12 border-t border-border">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <div className="flex items-center justify-between mb-7">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-text-muted">
+              Coding profiles
+            </h2>
+            <Link
+              href="/about#problem-solving"
+              className="text-xs text-text-muted hover:text-text-primary transition-colors flex items-center gap-1"
+            >
+              View all <ArrowRight size={11} />
+            </Link>
+          </div>
+          <CodingProfilesGrid />
         </div>
       </section>
 

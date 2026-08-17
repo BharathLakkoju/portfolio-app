@@ -131,7 +131,7 @@ export default async function AboutPage() {
 
         {/* ── Problem Solving ── */}
         <AnimatedSection delay={0.05}>
-          <div className="border-t border-border pt-10">
+          <div id="problem-solving" className="border-t border-border pt-10 scroll-mt-20">
             <p className="text-[10px] uppercase tracking-widest text-text-muted mb-6">
               Problem Solving
             </p>
