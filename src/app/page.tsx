@@ -8,6 +8,7 @@ import { Mail, ArrowRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "~/components/shared/Icons";
 import { Button } from "~/components/ui/button";
 import { ProjectCard } from "~/components/shared/ProjectCard";
+import { LeetCodeStatTile } from "~/components/shared/LeetCodeStatTile";
 import { profile, featuredProjects, skills } from "~/lib/data";
 
 const categoryColors: Record<
@@ -174,6 +175,7 @@ export default function HomePage() {
                 {profile.company}
               </span>
             </div>
+            <LeetCodeStatTile />
           </motion.div>
         </div>
       </section>

@@ -6,15 +6,19 @@ import {
   StaggerChildren,
 } from "~/components/shared/AnimatedSection";
 import { SkillCard } from "~/components/shared/SkillCard";
+import { LeetCodeCard } from "~/components/shared/LeetCodeCard";
 import { profile, skills, experience, education } from "~/lib/data";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
+import { getLeetCodeStats } from "~/lib/leetcode";
 
 export const metadata: Metadata = {
   title: "About",
   description: `Learn more about ${profile.name} — AI Engineer and Full Stack Engineer.`,
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const leetcodeStats = await getLeetCodeStats();
+
   return (
     <div className="pt-24 pb-16">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 space-y-14">
@@ -112,6 +116,16 @@ export default function AboutPage() {
                 <SkillCard key={cat.category} cat={cat} />
               ))}
             </StaggerChildren>
+          </div>
+        </AnimatedSection>
+
+        {/* ── Problem Solving ── */}
+        <AnimatedSection delay={0.05}>
+          <div className="border-t border-border pt-10">
+            <p className="text-[10px] uppercase tracking-widest text-text-muted mb-6">
+              Problem Solving
+            </p>
+            <LeetCodeCard stats={leetcodeStats} />
           </div>
         </AnimatedSection>
 
