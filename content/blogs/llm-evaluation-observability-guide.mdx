@@ -1,0 +1,192 @@
+---
+title: "LLM Evaluation & Observability: The Skill Most AI Engineers Skip"
+description: "Everyone learns to call an LLM API. Almost nobody learns to measure whether it's actually working. Here's how to learn evaluation and observability before non-determinism bites you in production."
+author: "Bharath Lakkoju"
+date: "2026-08-24"
+slug: "llm-evaluation-observability-guide"
+tags: ["llm", "observability", "evaluation", "ai-engineering", "production", "learning-path"]
+readingTime: "7 min read"
+---
+
+## LLM Evaluation & Observability: The Skill Most AI Engineers Skip
+
+If you've built RAG pipelines or agentic workflows, you've probably hit the same wall: the feature works in your five manual tests, and you have no idea if it works for the other 995 inputs your users will actually send.
+
+Traditional software gives you deterministic tests — same input, same output, pass or fail. LLM systems don't. The same prompt can produce a slightly different (or completely different) answer twice. That single fact is why evaluation and observability are their own skill, not an afterthought you bolt on once something breaks.
+
+This is the part most "learn AI engineering" content skips entirely. Here's the path.
+
+---
+
+## Why "It Looks Good to Me" Doesn't Scale
+
+Manually eyeballing outputs works for a demo. It breaks down for three reasons:
+
+- **You can't manually check every prompt change.** Tweak a system prompt, and you need to know if it improved things or just changed them.
+- **You can't see what you don't test.** Edge cases — empty input, adversarial input, out-of-domain questions — won't show up in your five happy-path tests.
+- **Model updates change behavior underneath you.** A prompt that worked perfectly last month can degrade silently after a provider updates the underlying model.
+
+Evaluation is what turns "I think this is better" into "I can prove this is better."
+
+---
+
+## Stage 1 — Build a Golden Dataset Before You Build Anything Else
+
+A golden dataset is a small, curated set of input/expected-output pairs pulled from real or realistic usage. Start smaller than you think you need to — 15 to 30 examples is enough to catch obvious regressions.
+
+```python
+golden_set = [
+    {
+        "input": "How do I reset my password?",
+        "expected_topic": "password_reset",
+        "must_contain": ["settings", "email"],
+    },
+    {
+        "input": "What's your refund policy?",
+        "expected_topic": "refunds",
+        "must_contain": ["30 days"],
+    },
+    # deliberately include edge cases
+    {
+        "input": "asdkjaslkdj",
+        "expected_topic": "unclear",
+        "must_contain": [],  # should ask for clarification, not guess
+    },
+]
+```
+
+Include edge cases on purpose: empty strings, gibberish, questions outside your system's scope. How your system fails is as important as how it succeeds.
+
+---
+
+## Stage 2 — Automated Scoring, From Cheap to Expensive
+
+You don't need an LLM to judge every output. Cheapest-first:
+
+**Exact / fuzzy match** — for structured or highly constrained outputs:
+
+```python
+def score_exact(output: str, expected: str) -> bool:
+    return output.strip().lower() == expected.strip().lower()
+```
+
+**Rule-based checks** — for outputs where you know required properties:
+
+```python
+def score_contains(output: str, must_contain: list[str]) -> float:
+    hits = sum(1 for term in must_contain if term.lower() in output.lower())
+    return hits / max(len(must_contain), 1)
+```
+
+**Semantic similarity** — when phrasing varies but meaning shouldn't:
+
+```python
+def score_semantic(output: str, expected: str) -> float:
+    return cosine_similarity(embed(output), embed(expected))
+```
+
+**LLM-as-judge** — for open-ended quality (helpfulness, tone, faithfulness to source):
+
+```python
+JUDGE_PROMPT = """Rate this response from 1-5 on accuracy and helpfulness.
+Question: {question}
+Response: {response}
+Reference answer: {reference}
+Return only the number."""
+```
+
+Use LLM-as-judge last, not first — it's the most expensive, the least reproducible, and the easiest to over-trust. Rule-based and semantic checks catch most regressions for a fraction of the cost.
+
+---
+
+## Stage 3 — Trace Everything, Not Just the Final Output
+
+When a user reports "the AI gave a wrong answer," the final output alone rarely tells you why. You need the full trace:
+
+- The exact prompt sent (after templating, not the template itself)
+- Every tool call and its result, if any
+- Which model and which parameters
+- Token counts and cost, per call
+- Latency, per call
+
+```python
+def traced_call(prompt: str, **kwargs):
+    start = time.time()
+    response = llm.chat(prompt, **kwargs)
+
+    log_trace({
+        "prompt": prompt,
+        "response": response.content,
+        "model": kwargs.get("model"),
+        "tokens_in": response.usage.prompt_tokens,
+        "tokens_out": response.usage.completion_tokens,
+        "latency_ms": (time.time() - start) * 1000,
+    })
+    return response
+```
+
+This is unglamorous, and it's the single most useful thing I've built into every AI system I've shipped — including the execution-trace and cost view in [NexusFlow](https://github.com/BharathLakkoju/nexusflow). Without traces, debugging an LLM system is guesswork. With them, it's inspection.
+
+---
+
+## Stage 4 — Turn Evaluation Into a Regression Test You Actually Run
+
+The golden dataset is only useful if it runs automatically, the same way your unit tests do — ideally in CI, on every change to a prompt, model, or retrieval step.
+
+```python
+def run_eval_suite(golden_set, pipeline_fn) -> dict:
+    results = []
+    for case in golden_set:
+        output = pipeline_fn(case["input"])
+        results.append({
+            "input": case["input"],
+            "score": score_contains(output, case["must_contain"]),
+        })
+
+    avg_score = sum(r["score"] for r in results) / len(results)
+    failures = [r for r in results if r["score"] < 0.8]
+    return {"avg_score": avg_score, "failures": failures}
+```
+
+Run this before you ship a prompt change, not after a user notices something's off. Treat a drop in average score the same way you'd treat a failing test — something you investigate before merging, not after.
+
+---
+
+## Stage 5 — Production Monitoring: What to Actually Watch
+
+Once shipped, evaluation and observability become ongoing, not one-time:
+
+- **Failure rate** — how often does the system fall back to "I don't know" or produce an obvious non-answer?
+- **Cost per request** — tracked over time, not just totaled at month-end. A silent model or prompt change can quietly 3x your spend.
+- **Latency distribution**, not just the average — p95 latency is what your slowest users actually feel.
+- **User feedback signals** — thumbs up/down, regenerate-clicks, session abandonment — as a cheap proxy for quality at scale.
+- **Drift** — is the distribution of inputs changing? A support bot trained on billing questions will perform differently once users start asking about a new product line.
+
+None of this requires an expensive observability platform to start. A logging table and a weekly query against it will catch most problems long before you need anything fancier.
+
+---
+
+## Mistakes That Are Easy to Make Here
+
+- Treating "no errors thrown" as "the system is working" — LLM failures are usually silent, not exceptions
+- Only testing happy-path inputs, so edge cases ship untested
+- Using LLM-as-judge for everything because it's easy to set up, ignoring how much noisier and costlier it is than rule-based checks
+- Logging the final answer but not the prompt or retrieved context that produced it — undebuggable in six months
+- Never re-running the eval suite after a "small" prompt tweak
+
+---
+
+## Checklist
+
+- [ ] A golden dataset with at least a few deliberate edge cases
+- [ ] Automated scoring — rule-based and/or semantic — before reaching for LLM-as-judge
+- [ ] Full request tracing: prompt, tools, tokens, cost, latency
+- [ ] Eval suite runs on every prompt/model/retrieval change, not just on demand
+- [ ] Production dashboard tracking failure rate, cost, and p95 latency
+- [ ] A defined process for what happens when eval scores drop
+
+---
+
+## Final Thought
+
+The gap between an AI feature that survives contact with real users and one that doesn't is rarely the model. It's whether you can see what the system is actually doing, and whether you have a repeatable way to know if a change made it better or worse. Learn evaluation and observability at the same time you learn to build the feature — not after it's already in front of users.

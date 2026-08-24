@@ -1,0 +1,171 @@
+---
+title: "Agentic Workflows: How to Actually Learn to Build AI Agents"
+description: "'Agent' has become a marketing word. Here's the real learning path for agentic workflows — from a single tool-calling loop to multi-agent orchestration — with the failure modes nobody warns you about."
+author: "Bharath Lakkoju"
+date: "2026-08-21"
+slug: "agentic-workflows-guide-for-developers"
+tags: ["agents", "agentic-ai", "langgraph", "crewai", "llm", "ai-engineering", "learning-path"]
+readingTime: "8 min read"
+---
+
+## Agentic Workflows: How to Actually Learn to Build AI Agents
+
+"Agent" gets used for three different things depending on who's talking:
+
+1. A single LLM call with tool access
+2. A loop that reasons, acts, and observes until a task is done
+3. A team of specialized LLM roles coordinating on a shared goal
+
+Most tutorials jump straight to #3 with a framework doing all the work behind the scenes, which means you never learn what's actually happening. Here's the path I'd take instead — building up from the simplest possible version so each new layer of complexity is something you understand, not something you imported.
+
+---
+
+## What Makes a Workflow "Agentic"
+
+A regular LLM call is: input in, text out. One shot, no feedback loop.
+
+An agentic workflow adds a loop: the model **reasons** about what to do, **acts** (usually by calling a tool), **observes** the result, and decides whether to act again or stop. That loop — reason → act → observe → repeat — is the entire concept. Everything else (planning, memory, multi-agent coordination) is built on top of it.
+
+If your "agent" doesn't have that loop, it's just a function call with extra steps.
+
+---
+
+## Stage 1 — Build a Single Tool-Calling Loop by Hand
+
+Before touching LangGraph or CrewAI, write the loop yourself. It's short enough that you should:
+
+```python
+def run_agent(user_input: str, tools: dict, max_steps: int = 5) -> str:
+    messages = [{"role": "user", "content": user_input}]
+
+    for step in range(max_steps):
+        response = llm.chat(messages, tools=list(tools.values()))
+
+        if response.tool_call is None:
+            return response.content  # model decided it's done
+
+        tool_result = tools[response.tool_call.name](**response.tool_call.args)
+        messages.append({"role": "assistant", "content": None, "tool_call": response.tool_call})
+        messages.append({"role": "tool", "content": str(tool_result)})
+
+    return "Max steps reached without a final answer."
+```
+
+This is the **ReAct pattern** (Reason + Act), and it's the foundation of nearly every agent framework you'll encounter. Once you've written it yourself, the abstractions in LangGraph and CrewAI stop feeling like magic — they're this loop with more structure around it.
+
+---
+
+## Stage 2 — Understand Why max_steps Exists
+
+Run the loop above with a deliberately ambiguous prompt and no step limit. It will loop. Agents don't reliably know when to stop — a model can decide "I need more information" indefinitely, especially with a tool that returns unhelpful results.
+
+This is the first real lesson in agentic systems: **the loop is also the risk.** Every agent you build needs:
+
+- A hard step limit
+- A cost ceiling (tokens or dollars) checked mid-loop, not just at the end
+- A way to detect the model repeating the same failed action
+
+None of this is optional once real users are involved.
+
+---
+
+## Stage 3 — Move to a State Machine for Multi-Step Tasks
+
+A single loop works for simple tasks. Once a task has distinct phases — research, then draft, then review — model it explicitly as a graph instead of hoping the model keeps track of phase transitions itself.
+
+```python
+from langgraph.graph import StateGraph, END
+
+class AgentState(TypedDict):
+    task: str
+    research: str
+    draft: str
+
+graph = StateGraph(AgentState)
+graph.add_node("research", research_node)
+graph.add_node("draft", draft_node)
+graph.add_node("review", review_node)
+
+graph.set_entry_point("research")
+graph.add_edge("research", "draft")
+graph.add_edge("draft", "review")
+graph.add_conditional_edges(
+    "review",
+    lambda state: "draft" if state["needs_revision"] else END,
+)
+
+app = graph.compile()
+```
+
+The value here isn't the library — it's the shift in mental model. You're no longer hoping one long prompt keeps the model on track; you're encoding the workflow's structure explicitly, and the LLM only has to be good at the one step it's currently on.
+
+---
+
+## Stage 4 — Multi-Agent Orchestration (When It's Actually Worth It)
+
+Splitting work across specialized agents — a Researcher, a Planner, an Executor, a Critic — helps when each role benefits from a different system prompt, different tools, or a different model tier. It does **not** help just because it sounds more sophisticated.
+
+This was the core design problem in [NexusFlow](https://github.com/BharathLakkoju/nexusflow), a visual multi-agent orchestration platform I built: getting a Critic agent to meaningfully improve a Planner agent's output — not just rubber-stamp it — took more prompt and evaluation work than the orchestration plumbing did.
+
+Before adding a second agent, ask:
+
+- Does this role need different context or tools than the others? (If not, it's one agent with more instructions.)
+- Can a cheaper/faster model handle this specific role? (Route accordingly — don't run every step on your most expensive model.)
+- Is there a real handoff, or are you just naming steps of a single pipeline "agents" for the pitch deck?
+
+A second, cheap agent whose only job is to *critique* the first agent's output before it reaches the user is one of the highest-value patterns here — it catches errors a single pass misses, for a fraction of the cost of a bigger model.
+
+---
+
+## Stage 5 — Memory Is a Design Decision, Not a Feature Flag
+
+"Give the agent memory" means one of several different things, and conflating them causes bugs:
+
+- **Conversation memory**: the running message history for the current session
+- **Working memory**: intermediate state within a single task (the `AgentState` above)
+- **Long-term memory**: facts retrieved from a vector store or database across sessions
+
+Most agent bugs I've debugged were memory bugs in disguise — an agent "forgetting" something because it was never in the context window to begin with, or a context window bloated with irrelevant history crowding out what actually mattered. Decide explicitly what belongs in each layer before you build it.
+
+---
+
+## Stage 6 — Observability Isn't Optional Once It's Non-Deterministic
+
+A traditional bug reproduces. An agent bug might not — same input, different tool-call sequence, different outcome. You need to see the full trace, not just the final answer:
+
+- Every tool call, with arguments and results
+- Every intermediate reasoning step
+- Token cost per step, not just per request
+- Where in the loop a failure happened
+
+Building the execution-trace and token-cost view for NexusFlow mattered more to actually shipping it than any single prompt tweak — without it, "the agent gave a bad answer" is undebuggable. With it, it's usually one specific step you can inspect and fix.
+
+---
+
+## Failure Modes to Learn to Recognize Early
+
+- **Infinite or near-infinite loops** — no step limit, or a stop condition the model can't reliably satisfy
+- **Tool hallucination** — the model calls a tool that doesn't exist, or invents arguments for a real one
+- **Cost blowup** — a multi-agent pipeline where every agent uses the largest available model by default
+- **Silent failure propagation** — one agent's bad output gets passed downstream and amplified instead of caught
+- **Over-agentification** — using a 4-step agent pipeline for a task a single well-crafted prompt could handle
+
+That last one is the most common mistake I see. Agentic workflows add latency, cost, and failure surface. Reach for them when a task genuinely needs multi-step reasoning or tool use — not by default.
+
+---
+
+## A Learning Checklist
+
+- [ ] Write a tool-calling ReAct loop by hand, no framework
+- [ ] Add a hard step limit and watch it actually trigger
+- [ ] Model a multi-phase task as an explicit state graph
+- [ ] Build one multi-agent pipeline where a Critic role catches a real error
+- [ ] Separate conversation, working, and long-term memory deliberately
+- [ ] Add step-level tracing before you need it, not after something breaks in production
+- [ ] Find a task you were about to make "agentic" and check whether a single prompt would do
+
+---
+
+## Final Thought
+
+Every agent framework is the same reason → act → observe loop with different amounts of structure wrapped around it. Learn the loop first, by hand. The frameworks will make a lot more sense once you're not trusting them to do something you don't understand yet — and you'll know exactly which layer to debug when, not if, the agent does something you didn't expect.

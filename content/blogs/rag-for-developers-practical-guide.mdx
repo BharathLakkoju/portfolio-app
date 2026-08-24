@@ -1,0 +1,228 @@
+---
+title: "RAG for Developers: A Practical Learning Path From Zero to Production"
+description: "Most RAG tutorials stop at 'embed your docs and query them.' Here's the actual learning path — chunking, retrieval quality, evaluation — from someone who's shipped RAG pipelines in production."
+author: "Bharath Lakkoju"
+date: "2026-08-18"
+slug: "rag-for-developers-practical-guide"
+tags: ["rag", "llm", "ai", "vector-search", "embeddings", "langchain", "learning-path"]
+readingTime: "9 min read"
+---
+
+## RAG for Developers: A Practical Learning Path From Zero to Production
+
+Every "learn RAG in 10 minutes" tutorial teaches you the same three lines:
+
+1. Embed your documents
+2. Store the vectors
+3. Retrieve the top-k matches and stuff them into a prompt
+
+That's RAG in theory. In practice, that pipeline gives you mediocre answers, and you won't know why until you've already shipped it.
+
+Here's the learning path I'd actually recommend — the one that gets you from "it works in the demo" to "it works when a real user asks a real question."
+
+---
+
+## What RAG Actually Is
+
+Retrieval-Augmented Generation solves one problem: LLMs don't know your data. RAG fetches relevant context at query time and feeds it to the model instead of (or in addition to) fine-tuning.
+
+That's it. Everything else — chunking strategy, hybrid search, reranking, citations — exists to answer one question: **did you retrieve the right context?** If the answer is no, the generation step can't save you. A perfect prompt over the wrong documents still produces a wrong answer.
+
+Keep that framing in your head. Most RAG debugging is retrieval debugging, not prompt debugging.
+
+---
+
+## Stage 1 — Understand Embeddings Before You Touch a Framework
+
+Don't start with LangChain. Start with what an embedding actually is: a vector that places semantically similar text close together in high-dimensional space.
+
+```python
+from openai import OpenAI
+import numpy as np
+
+client = OpenAI()
+
+def embed(text: str) -> list[float]:
+    return client.embeddings.create(
+        model="text-embedding-3-small",
+        input=text,
+    ).data[0].embedding
+
+def cosine_similarity(a, b):
+    a, b = np.array(a), np.array(b)
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+query = embed("How do I reset my password?")
+doc_a = embed("Password reset instructions for your account")
+doc_b = embed("Our refund policy covers 30 days")
+
+print(cosine_similarity(query, doc_a))  # high
+print(cosine_similarity(query, doc_b))  # low
+```
+
+Run this yourself. Try near-miss phrasing. Try short queries against long documents. You'll quickly notice embeddings are good at topical similarity and bad at precise lookups — a foundational limitation that explains half the "RAG isn't working" bugs you'll hit later.
+
+---
+
+## Stage 2 — Chunking Is the Decision That Matters Most
+
+Beginners treat chunk size as a config value. It's actually the single biggest lever on retrieval quality.
+
+- **Too large**: irrelevant text dilutes the embedding, and you burn context window on noise.
+- **Too small**: you lose surrounding context, and the model can't reason about a fragment.
+- **Naive splitting** (fixed character count) cuts sentences and tables in half.
+
+Start here instead:
+
+```python
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=800,
+    chunk_overlap=120,
+    separators=["\n\n", "\n", ". ", " "],
+)
+
+chunks = splitter.split_text(document_text)
+```
+
+The overlap matters — it stops answers from being severed at a chunk boundary. For structured docs (PDFs with tables, code, or headers), a naive splitter will still hurt you. That's when you move to structure-aware chunking: split on markdown headers, keep code blocks intact, keep tables as single units.
+
+---
+
+## Stage 3 — Pick a Vector Store, Then Stop Thinking About It
+
+For learning, and for most production apps under a few million vectors, **Postgres + pgvector** is the right call. You don't need a dedicated vector database until you've outgrown Postgres for other reasons.
+
+```sql
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE documents (
+  id SERIAL PRIMARY KEY,
+  content TEXT,
+  embedding VECTOR(1536)
+);
+
+CREATE INDEX ON documents
+  USING hnsw (embedding vector_cosine_ops);
+```
+
+```sql
+SELECT content
+FROM documents
+ORDER BY embedding <=> $1
+LIMIT 5;
+```
+
+This is the exact setup I used for [NexusFlow](https://github.com/BharathLakkoju/nexusflow)'s knowledge base — one database for app data and vectors, one less system to operate. Don't reach for Pinecone/Weaviate/Qdrant until you have a concrete reason (scale, hybrid metadata filtering at volume, managed ops).
+
+---
+
+## Stage 4 — Naive Top-K Retrieval Is Not Enough
+
+This is where most tutorials stop, and where real RAG work begins.
+
+**Problem 1: Semantic search misses exact terms.** A query for "error code E4021" won't reliably match a document containing that exact string, because embeddings capture meaning, not tokens. Fix: combine vector search with keyword search (BM25) — **hybrid retrieval**.
+
+**Problem 2: Top-k by cosine similarity ≠ top-k by relevance.** The 5 nearest vectors aren't always the 5 most useful chunks. Fix: retrieve a wider candidate set (e.g., top 20), then **rerank** with a cross-encoder model that scores query-document pairs directly.
+
+```python
+from sentence_transformers import CrossEncoder
+
+reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+
+pairs = [(query, chunk) for chunk in candidate_chunks]
+scores = reranker.predict(pairs)
+
+ranked = [c for _, c in sorted(zip(scores, candidate_chunks), reverse=True)]
+top_chunks = ranked[:5]
+```
+
+Reranking is the single highest-leverage upgrade you can make to a mediocre RAG pipeline. Learn it before you learn anything fancier.
+
+---
+
+## Stage 5 — Generation: Cite, Don't Just Answer
+
+Once you have good context, the generation prompt should force the model to ground its answer in what was retrieved — and say so explicitly.
+
+```python
+SYSTEM_PROMPT = """Answer using ONLY the provided context.
+If the context doesn't contain the answer, say so — do not guess.
+Cite the source number for every claim, like [1], [2]."""
+
+context = "\n\n".join(
+    f"[{i+1}] {chunk}" for i, chunk in enumerate(top_chunks)
+)
+```
+
+This does two things: it reduces hallucination, and it gives users (and you, while debugging) a way to check whether the answer actually came from the retrieved context or from the model's own memory.
+
+---
+
+## Stage 6 — Evaluation Is Not Optional
+
+You cannot improve what you don't measure, and RAG has two failure surfaces that need separate metrics:
+
+- **Retrieval quality**: did we fetch the right chunks? (precision/recall against a labeled set of question → correct-source pairs)
+- **Generation quality**: given the right chunks, did the model answer correctly and stay grounded?
+
+Build a small golden dataset early — even 20 question/answer pairs pulled from real usage is enough to catch regressions when you change chunk size, swap embedding models, or tweak the prompt.
+
+```python
+def evaluate_retrieval(question, expected_source_id, retrieved_chunks):
+    retrieved_ids = [c.source_id for c in retrieved_chunks]
+    return expected_source_id in retrieved_ids
+```
+
+Frameworks like RAGAS automate this further (faithfulness, answer relevance, context precision), but the habit of testing retrieval and generation *separately* matters more than the tool.
+
+---
+
+## Mistakes That Show Up in Almost Every First RAG Project
+
+- Chunking by a fixed character count with no overlap
+- Embedding the query and documents with different models
+- Never testing what happens when nothing relevant exists — the model should say "I don't know," not invent an answer
+- Retrieving 3 chunks and never questioning whether 3 is the right number
+- No evaluation set, so every prompt tweak is a guess
+- Treating the vector store as a black box instead of inspecting what's actually being retrieved for a given query
+
+---
+
+## A Minimal Production-Shaped Pipeline
+
+```python
+def rag_query(question: str) -> str:
+    query_embedding = embed(question)
+
+    candidates = vector_search(query_embedding, top_k=20)
+    reranked = rerank(question, candidates)
+    top_chunks = reranked[:5]
+
+    if not top_chunks or top_chunks[0].score < RELEVANCE_THRESHOLD:
+        return "I don't have enough information to answer that."
+
+    context = build_context(top_chunks)
+    return generate_answer(question, context, cite_sources=True)
+```
+
+Every piece here — threshold check, reranking, citation — is a direct answer to a failure mode you'll hit if you skip it.
+
+---
+
+## Checklist Before You Call It "Production RAG"
+
+- [ ] Chunking strategy tested against your actual document types, not just prose
+- [ ] Hybrid search (vector + keyword) or a documented reason you don't need it
+- [ ] Reranking step in place
+- [ ] Explicit "I don't know" path when retrieval confidence is low
+- [ ] Citations tying answers back to source chunks
+- [ ] A golden evaluation set, even a small one, checked on every pipeline change
+- [ ] Retrieval and generation quality measured separately
+
+---
+
+## Final Thought
+
+RAG is deceptively simple to demo and genuinely hard to get right. The gap between the two is almost entirely retrieval quality, not model quality. Spend your learning time there — chunking, hybrid search, reranking, evaluation — and the "AI" part of the pipeline gets a lot easier to trust.
