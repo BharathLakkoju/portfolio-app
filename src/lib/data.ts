@@ -3,156 +3,253 @@
 // ============================================================
 
 export const profile = {
-  name: "Bharath Lakkoju",
-  firstName: "Bharath",
-  title: "AI Engineer & Full Stack Engineer",
-  tagline: "Building AI-powered products and scalable web apps",
-  bio: "AI Engineer & Full Stack Engineer with 2+ years of experience building multi-agent AI systems, RAG pipelines, and scalable web applications. Proficient in React, Next.js, Node.js, TypeScript, Python, LangChain/LangGraph, PostgreSQL, and MongoDB — with a proven track record of reducing API latency by 40% and increasing user engagement by 60%. I ship fast, test well, and care deeply about developer experience.",
-  location: "Hyderabad, India",
-  email: "lbh.lbharath@gmail.com",
-  avatar: "https://avatars.githubusercontent.com/u/73902405?v=4",
-  github: "https://github.com/BharathLakkoju",
-  linkedin: "https://linkedin.com/in/bharathlakkoju",
-  company: "UST Global",
+	name: "Bharath Lakkoju",
+	firstName: "Bharath",
+	title: "AI Engineer & Full Stack Engineer",
+	tagline: "Building AI-powered products and scalable web apps",
+	bio: "AI Engineer & Full Stack Engineer with 2+ years of experience building multi-agent AI systems, RAG pipelines, and scalable web applications. Proficient in React, Next.js, Node.js, TypeScript, Python, LangChain/LangGraph, PostgreSQL, and MongoDB — with a proven track record of reducing API latency by 40% and increasing user engagement by 60%. I ship fast, test well, and care deeply about developer experience.",
+	location: "Hyderabad, India",
+	email: "lbh.lbharath@gmail.com",
+	avatar: "https://avatars.githubusercontent.com/u/73902405?v=4",
+	github: "https://github.com/BharathLakkoju",
+	linkedin: "https://linkedin.com/in/bharathlakkoju",
+	company: "UST Global",
+	targetRoles: ["AI Engineer", "Full-Stack Engineer", "Applied AI Platform"],
 };
+
+// ============================================================
+// Impact — quantified outcomes, pulled from experience bullets
+// ============================================================
+
+export type ImpactStat = {
+	value: string;
+	label: string;
+};
+
+export const impactStats: ImpactStat[] = [
+	{ value: "69%", label: "user engagement lift" },
+	{ value: "113%", label: "increase in data intake" },
+	{ value: "86%", label: "less manual processing" },
+	{ value: "99%", label: "deployment uptime" },
+];
 
 // ============================================================
 // Projects — only high-weight portfolio projects (importance 5+)
 // ============================================================
 
 export type Project = {
-  id: string;
-  name: string;
-  description: string;
-  tech: string[];
-  github: string | null;
-  live: string | null;
-  category: "fullstack" | "ai" | "tools" | "microservices";
-  featured: boolean;
+	id: string;
+	name: string;
+	description: string;
+	tech: string[];
+	github: string | null;
+	live: string | null;
+	category: "fullstack" | "ai" | "tools" | "microservices";
+	featured: boolean;
+	role?: string;
 };
 
 export const projects: Project[] = [
-  {
-    id: "nexusflow",
-    name: "NexusFlow",
-    description:
-      "Visual multi-agent AI orchestration platform — design, deploy, and monitor teams of AI agents (Researcher, Planner, Executor, Critic) on a drag-and-drop canvas. Includes a RAG knowledge base over PDFs/docs/URLs, full observability (token costs, execution traces, success rates), and real-time agent-thought streaming via SSE. Free to self-host.",
-    tech: ["Next.js", "TypeScript", "Python", "FastAPI", "LangChain", "LangGraph", "PostgreSQL", "pgvector", "Redis", "Docker"],
-    github: "https://github.com/BharathLakkoju/nexusflow",
-    live: "https://nexusflow-web.vercel.app",
-    category: "ai",
-    featured: true,
-  },
-  {
-    id: "terminal",
-    name: "Terminal",
-    description:
-      "Custom PowerShell-native terminal emulator for Windows with a macOS/iTerm2-style UI, built with Tauri, React, TypeScript, and xterm.js. Its core goal is a real contrast-correction engine for a working light theme — something no other Windows-supported terminal (including Windows Terminal) gets right.",
-    tech: ["Tauri", "React", "TypeScript", "Rust", "xterm.js", "Vite"],
-    github: "https://github.com/BharathLakkoju/terminal",
-    live: null,
-    category: "tools",
-    featured: false,
-  },
-  {
-    id: "docqa",
-    name: "docQA",
-    description:
-      "Agentic RAG system that answers questions about n8n workflows, GitHub Actions CI/CD configs, and other technical docs — Python/FastAPI backend, Next.js/Tailwind frontend, and a Dockerized TypeScript client for interactive document Q&A.",
-    tech: ["Next.js", "TypeScript", "Python", "FastAPI", "LangChain", "CrewAI", "Tailwind CSS", "Docker"],
-    github: "https://github.com/BharathLakkoju/docQA",
-    live: "https://documentorqa.vercel.app",
-    category: "ai",
-    featured: true,
-  },
-  {
-    id: "greensource",
-    name: "GreenSource",
-    description:
-    "Microservices-based agricultural marketplace — 7 Node.js services behind an API gateway, 3 React frontends, MongoDB Atlas, JWT auth, and live Mandi price data. Farmers list produce, consumers order, delivery agents track, admins manage.",
-    tech: ["TypeScript", "React", "Node.js", "Express", "MongoDB", "Redux", "Microservices", "JWT", "Vite"],
-    github: "https://github.com/BharathLakkoju/greensource",
-    live: null,
-    category: "microservices",
-    featured: false,
-  },
-  {
-    id: "flatmate",
-    name: "Flatmate",
-    description:
-    "Full-stack shared living management app — expense splitting, grocery lists, meal planner with OCR receipt scanning, task manager, household calendar, and Google Gemini AI integration. Includes Vitest unit tests and Playwright E2E tests.",
-    tech: ["Next.js", "TypeScript", "Supabase", "Drizzle ORM", "Zustand", "shadcn/ui", "Framer Motion", "Playwright", "Vitest"],
-    github: "https://github.com/BharathLakkoju/flatmate",
-    live: "https://adjustyouflat.vercel.app",
-    category: "fullstack",
-    featured: true,
-  },
-  {
-    id: "atsprecise",
-    name: "ATS Precision",
-    description:
-    "AI-powered ATS resume evaluator — upload your resume, paste a job description, and get a precision compatibility score with keyword gap analysis, section-by-section feedback, and role-specific improvement suggestions. PDF report download included.",
-    tech: ["Next.js", "TypeScript", "Supabase", "Drizzle ORM", "Framer Motion", "Radix UI", "Zustand", "Zod"],
-    github: "https://github.com/BharathLakkoju/atsprecise",
-    live: "https://atsprecise.vercel.app",
-    category: "ai",
-    featured: false,
-  },
-  {
-    id: "waigenie",
-    name: "Waigenie",
-    description:
-      "Full-stack SaaS platform — an AI-powered software testing toolkit with 5 AI tools in a protected dashboard: IdeaForge, AutoScribe, CucumberCraft, DomDetective, and WebTrekker. Credit-based billing via Razorpay, full auth (email, Google, GitHub OAuth), and complete marketing site.",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Auth.js", "Prisma", "PostgreSQL", "Zustand", "shadcn/ui", "Razorpay"],
-    github: "https://www.github.com/BharathLakkoju/waigenie-frontend",
-    live: null,
-    category: "fullstack",
-    featured: false,
-  },
-  {
-    id: "swiftmedia",
-    name: "SwiftMedia",
-    description:
-      "Privacy-first browser-based media toolkit — compress images, videos (FFmpeg WebAssembly), and PDFs; merge PDFs; convert images to PDF. Zero server uploads — all processing runs client-side in the browser.",
-    tech: ["Next.js", "TypeScript", "WebAssembly", "FFmpeg", "Framer Motion", "Tailwind CSS"],
-    github: "https://github.com/BharathLakkoju/swiftmedia",
-    live: "https://swiftmedia-nine.vercel.app",
-    category: "tools",
-    featured: false,
-  },
-  {
-    id: "dvelve",
-    name: "Dvelve",
-    description:
-      "Local-first AI research assistant powered by Ollama. Enter a topic and get a structured, multi-source research report generated by a 5-agent AI pipeline — all running on your machine. Built with FastAPI, React, and Go.",
-    tech: ["TypeScript", "React", "Python", "FastAPI", "Go", "Ollama", "SQLite", "Zustand", "Vite"],
-    github: "https://github.com/BharathLakkoju/Dvelve",
-    live: null,
-    category: "ai",
-    featured: false,
-  },
-  {
-    id: "gitprofolio",
-    name: "GitProfolio",
-    description:
-      "Open-source Astro app that transforms a GitHub profile into a structured, enriched JSON portfolio. Fetches repos, parses READMEs, detects tech stacks, extracts live links, and scores projects using heuristics + LLM analysis.",
-    tech: ["Astro", "TypeScript", "GitHub API", "LLM", "AI", "Vercel"],
-    github: "https://github.com/BharathLakkoju/gitprofolio",
-    live: "https://gitprofolio.vercel.app",
-    category: "tools",
-    featured: false,
-  },
-  {
-    id: "depguard",
-    name: "DepGuard",
-    description:
-      "Universal dependency health scanner CLI — detects outdated, vulnerable, deprecated, and risky packages across JavaScript, Python, Rust, and Go ecosystems from a single command. Published to npm.",
-    tech: ["TypeScript", "Node.js", "CLI", "GitHub Actions"],
-    github: "https://github.com/BharathLakkoju/depguard",
-    live: "https://www.npmjs.com/package/@lbharath/depguard",
-    category: "tools",
-    featured: false,
-  },
+	{
+		id: "nexusflow",
+		name: "NexusFlow",
+		description:
+			"Visual multi-agent AI orchestration platform — design, deploy, and monitor teams of AI agents (Researcher, Planner, Executor, Critic) on a drag-and-drop canvas. Includes a RAG knowledge base over PDFs/docs/URLs, full observability (token costs, execution traces, success rates), and real-time agent-thought streaming via SSE. Free to self-host.",
+		tech: [
+			"Next.js",
+			"TypeScript",
+			"Python",
+			"FastAPI",
+			"LangChain",
+			"LangGraph",
+			"PostgreSQL",
+			"pgvector",
+			"Redis",
+			"Docker",
+		],
+		github: "https://github.com/BharathLakkoju/nexusflow",
+		live: "https://nexusflow-web.vercel.app",
+		category: "ai",
+		featured: true,
+		role: "Solo builder — designed the multi-agent orchestration architecture, RAG pipeline, and SSE observability layer end to end.",
+	},
+	{
+		id: "terminal",
+		name: "Terminal",
+		description:
+			"Custom PowerShell-native terminal emulator for Windows with a macOS/iTerm2-style UI, built with Tauri, React, TypeScript, and xterm.js. Its core goal is a real contrast-correction engine for a working light theme — something no other Windows-supported terminal (including Windows Terminal) gets right.",
+		tech: ["Tauri", "React", "TypeScript", "Rust", "xterm.js", "Vite"],
+		github: "https://github.com/BharathLakkoju/terminal",
+		live: null,
+		category: "tools",
+		featured: false,
+	},
+	{
+		id: "docqa",
+		name: "docQA",
+		description:
+			"Agentic RAG system that answers questions about n8n workflows, GitHub Actions CI/CD configs, and other technical docs — Python/FastAPI backend, Next.js/Tailwind frontend, and a Dockerized TypeScript client for interactive document Q&A.",
+		tech: [
+			"Next.js",
+			"TypeScript",
+			"Python",
+			"FastAPI",
+			"LangChain",
+			"CrewAI",
+			"Tailwind CSS",
+			"Docker",
+		],
+		github: "https://github.com/BharathLakkoju/docQA",
+		live: "https://documentorqa.vercel.app",
+		category: "ai",
+		featured: true,
+		role: "Solo builder — built the FastAPI/LangChain RAG backend and the Dockerized client from scratch.",
+	},
+	{
+		id: "greensource",
+		name: "GreenSource",
+		description:
+			"Microservices-based agricultural marketplace — 7 Node.js services behind an API gateway, 3 React frontends, MongoDB Atlas, JWT auth, and live Mandi price data. Farmers list produce, consumers order, delivery agents track, admins manage.",
+		tech: [
+			"TypeScript",
+			"React",
+			"Node.js",
+			"Express",
+			"MongoDB",
+			"Redux",
+			"Microservices",
+			"JWT",
+			"Vite",
+		],
+		github: "https://github.com/BharathLakkoju/greensource",
+		live: null,
+		category: "microservices",
+		featured: false,
+	},
+	{
+		id: "flatmate",
+		name: "Flatmate",
+		description:
+			"Full-stack shared living management app — expense splitting, grocery lists, meal planner with OCR receipt scanning, task manager, household calendar, and Google Gemini AI integration. Includes Vitest unit tests and Playwright E2E tests.",
+		tech: [
+			"Next.js",
+			"TypeScript",
+			"Supabase",
+			"Drizzle ORM",
+			"Zustand",
+			"shadcn/ui",
+			"Framer Motion",
+			"Playwright",
+			"Vitest",
+		],
+		github: "https://github.com/BharathLakkoju/flatmate",
+		live: "https://adjustyouflat.vercel.app",
+		category: "fullstack",
+		featured: true,
+		role: "Solo builder — full-stack app with Vitest unit tests and Playwright E2E coverage.",
+	},
+	{
+		id: "atsprecise",
+		name: "ATS Precision",
+		description:
+			"AI-powered ATS resume evaluator — upload your resume, paste a job description, and get a precision compatibility score with keyword gap analysis, section-by-section feedback, and role-specific improvement suggestions. PDF report download included.",
+		tech: [
+			"Next.js",
+			"TypeScript",
+			"Supabase",
+			"Drizzle ORM",
+			"Framer Motion",
+			"Radix UI",
+			"Zustand",
+			"Zod",
+		],
+		github: "https://github.com/BharathLakkoju/atsprecise",
+		live: "https://atsprecise.vercel.app",
+		category: "ai",
+		featured: false,
+	},
+	{
+		id: "waigenie",
+		name: "Waigenie",
+		description:
+			"Full-stack SaaS platform — an AI-powered software testing toolkit with 5 AI tools in a protected dashboard: IdeaForge, AutoScribe, CucumberCraft, DomDetective, and WebTrekker. Credit-based billing via Razorpay, full auth (email, Google, GitHub OAuth), and complete marketing site.",
+		tech: [
+			"Next.js",
+			"TypeScript",
+			"Tailwind CSS",
+			"Auth.js",
+			"Prisma",
+			"PostgreSQL",
+			"Zustand",
+			"shadcn/ui",
+			"Razorpay",
+		],
+		github: "https://www.github.com/BharathLakkoju/waigenie-frontend",
+		live: null,
+		category: "fullstack",
+		featured: false,
+	},
+	{
+		id: "swiftmedia",
+		name: "SwiftMedia",
+		description:
+			"Privacy-first browser-based media toolkit — compress images, videos (FFmpeg WebAssembly), and PDFs; merge PDFs; convert images to PDF. Zero server uploads — all processing runs client-side in the browser.",
+		tech: [
+			"Next.js",
+			"TypeScript",
+			"WebAssembly",
+			"FFmpeg",
+			"Framer Motion",
+			"Tailwind CSS",
+		],
+		github: "https://github.com/BharathLakkoju/swiftmedia",
+		live: "https://swiftmedia-nine.vercel.app",
+		category: "tools",
+		featured: false,
+	},
+	{
+		id: "dvelve",
+		name: "Dvelve",
+		description:
+			"Local-first AI research assistant powered by Ollama. Enter a topic and get a structured, multi-source research report generated by a 5-agent AI pipeline — all running on your machine. Built with FastAPI, React, and Go.",
+		tech: [
+			"TypeScript",
+			"React",
+			"Python",
+			"FastAPI",
+			"Go",
+			"Ollama",
+			"SQLite",
+			"Zustand",
+			"Vite",
+		],
+		github: "https://github.com/BharathLakkoju/Dvelve",
+		live: null,
+		category: "ai",
+		featured: false,
+	},
+	{
+		id: "gitprofolio",
+		name: "GitProfolio",
+		description:
+			"Open-source Astro app that transforms a GitHub profile into a structured, enriched JSON portfolio. Fetches repos, parses READMEs, detects tech stacks, extracts live links, and scores projects using heuristics + LLM analysis.",
+		tech: ["Astro", "TypeScript", "GitHub API", "LLM", "AI", "Vercel"],
+		github: "https://github.com/BharathLakkoju/gitprofolio",
+		live: "https://gitprofolio.vercel.app",
+		category: "tools",
+		featured: false,
+	},
+	{
+		id: "depguard",
+		name: "DepGuard",
+		description:
+			"Universal dependency health scanner CLI — detects outdated, vulnerable, deprecated, and risky packages across JavaScript, Python, Rust, and Go ecosystems from a single command. Published to npm.",
+		tech: ["TypeScript", "Node.js", "CLI", "GitHub Actions"],
+		github: "https://github.com/BharathLakkoju/depguard",
+		live: "https://www.npmjs.com/package/@lbharath/depguard",
+		category: "tools",
+		featured: false,
+	},
 ];
 
 export const featuredProjects = projects.filter((p) => p.featured);
@@ -162,42 +259,82 @@ export const featuredProjects = projects.filter((p) => p.featured);
 // ============================================================
 
 export type SkillCategory = {
-  category: string;
-  icon: string;
-  items: string[];
+	category: string;
+	icon: string;
+	items: string[];
 };
 
 export const skills: SkillCategory[] = [
-  {
-    category: "AI / ML",
-    icon: "brain",
-    items: ["LangChain", "LangGraph", "CrewAI", "RAG Pipelines", "OpenAI API", "Claude AI", "Gemini API", "Ollama"],
-  },
-  {
-    category: "Programming Languages",
-    icon: "code-2",
-    items: ["TypeScript", "JavaScript", "Python", "SQL"],
-  },
-  {
-    category: "Frontend",
-    icon: "layout",
-    items: ["React.js", "Next.js", "Redux", "Tailwind CSS", "Zustand", "HTML5/CSS3", "Framer Motion"],
-  },
-  {
-    category: "Backend & APIs",
-    icon: "server",
-    items: ["Node.js", "Express.js", "FastAPI", "RESTful APIs", "Microservices", "GraphQL", "API Security"],
-  },
-  {
-    category: "Databases",
-    icon: "database",
-    items: ["PostgreSQL", "MongoDB", "MySQL", "Prisma ORM", "Drizzle ORM", "Supabase", "pgvector"],
-  },
-  {
-    category: "DevOps & Tools",
-    icon: "git-branch",
-    items: ["CI/CD Pipelines", "Docker", "Git", "Vercel", "GitHub Actions", "Agile/Scrum"],
-  },
+	{
+		category: "AI / ML",
+		icon: "brain",
+		items: [
+			"LangChain",
+			"LangGraph",
+			"CrewAI",
+			"RAG Pipelines",
+			"OpenAI API",
+			"Claude AI",
+			"Gemini API",
+			"Ollama",
+		],
+	},
+	{
+		category: "Programming Languages",
+		icon: "code-2",
+		items: ["TypeScript", "JavaScript", "Python", "SQL"],
+	},
+	{
+		category: "Frontend",
+		icon: "layout",
+		items: [
+			"React.js",
+			"Next.js",
+			"Redux",
+			"Tailwind CSS",
+			"Zustand",
+			"HTML5/CSS3",
+			"Framer Motion",
+		],
+	},
+	{
+		category: "Backend & APIs",
+		icon: "server",
+		items: [
+			"Node.js",
+			"Express.js",
+			"FastAPI",
+			"RESTful APIs",
+			"Microservices",
+			"GraphQL",
+			"API Security",
+		],
+	},
+	{
+		category: "Databases",
+		icon: "database",
+		items: [
+			"PostgreSQL",
+			"MongoDB",
+			"MySQL",
+			"Prisma ORM",
+			"Drizzle ORM",
+			"Supabase",
+			"pgvector",
+		],
+	},
+	{
+		category: "DevOps & Tools",
+		icon: "git-branch",
+		items: [
+			"CI/CD Pipelines",
+			"Docker",
+			"Git",
+			"Vercel",
+			"GitHub Actions",
+			"Agile/Scrum",
+		],
+	},
 ];
 
 // ============================================================
@@ -205,27 +342,27 @@ export const skills: SkillCategory[] = [
 // ============================================================
 
 export type Experience = {
-  company: string;
-  title: string;
-  dates: string;
-  location: string;
-  bullets: string[];
+	company: string;
+	title: string;
+	dates: string;
+	location: string;
+	bullets: string[];
 };
 
 export const experience: Experience[] = [
-  {
-    company: "UST Global",
-    title: "Developer I",
-    dates: "Sep 2024 – Present",
-    location: "Hyderabad, India",
-    bullets: [
-      "Architected and deployed a full-stack health tracking app using React Native, Node.js, and PostgreSQL — implementing a reward system that increased user engagement by 69% and improved data intake by 113%.",
-      "Engineered a scalable Angular + Node.js microservices architecture with WCS data integration, deploying an automated digitization banner that reduced manual processing overhead by 86%.",
-      "Developed and integrated an AI-powered chatbot leveraging predictive analytics and LLM APIs, boosting monthly active users by 46% and enhancing real-time customer support.",
-      "Spearheaded migration of legacy Java Spring services to Node.js and NestJS microservices — establishing API security standards and improving system maintainability by 40%.",
-      "Collaborated in Agile sprints, conducted rigorous code reviews, and optimized CI/CD pipelines to achieve 99% deployment uptime.",
-    ],
-  },
+	{
+		company: "UST Global",
+		title: "Developer I",
+		dates: "Sep 2024 – Present",
+		location: "Hyderabad, India",
+		bullets: [
+			"Architected and deployed a full-stack health tracking app using React Native, Node.js, and PostgreSQL — implementing a reward system that increased user engagement by 69% and improved data intake by 113%.",
+			"Engineered a scalable Angular + Node.js microservices architecture with WCS data integration, deploying an automated digitization banner that reduced manual processing overhead by 86%.",
+			"Developed and integrated an AI-powered chatbot leveraging predictive analytics and LLM APIs, boosting monthly active users by 46% and enhancing real-time customer support.",
+			"Spearheaded migration of legacy Java Spring services to Node.js and NestJS microservices — establishing API security standards and improving system maintainability by 40%.",
+			"Collaborated in Agile sprints, conducted rigorous code reviews, and optimized CI/CD pipelines to achieve 99% deployment uptime.",
+		],
+	},
 ];
 
 // ============================================================
@@ -233,10 +370,10 @@ export const experience: Experience[] = [
 // ============================================================
 
 export const education = [
-  {
-    institution: "MVGR College of Engineering",
-    degree: "B.Tech — Information Technology",
-    year: "2020 – 2024",
-    gpa: "8.10 / 10",
-  },
+	{
+		institution: "MVGR College of Engineering",
+		degree: "B.Tech — Information Technology",
+		year: "2020 – 2024",
+		gpa: "8.10 / 10",
+	},
 ];
