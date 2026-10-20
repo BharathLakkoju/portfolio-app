@@ -1,300 +1,312 @@
-import { Building2, Calendar, MapPin } from "lucide-react";
+import { Download, Mail } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
-import {
-	AnimatedSection,
-	StaggerChildren,
-} from "~/components/shared/AnimatedSection";
+import { Reveal, Stagger, StaggerItem } from "~/components/motion/Reveal";
+import { SectionHeader } from "~/components/motion/SectionHeader";
+import { ContributionHeatmap } from "~/components/shared/ContributionHeatmap";
 import { LeetCodeCard } from "~/components/shared/LeetCodeCard";
 import { PlatformCard } from "~/components/shared/PlatformCard";
-import { SkillCard } from "~/components/shared/SkillCard";
+import { SwapAvatar } from "~/components/shared/SwapAvatar";
+import { Timeline } from "~/components/shared/Timeline";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
+import { Button } from "~/components/ui/button";
 import { getCodeforcesStats } from "~/lib/codeforces";
-import { education, experience, profile, skills } from "~/lib/data";
+import { education, experience, profile, site } from "~/lib/data";
 import { getGfgStats } from "~/lib/geeksforgeeks";
+import { getContributions } from "~/lib/github";
 import { getHackerRankStats } from "~/lib/hackerrank";
 import { getLeetCodeStats } from "~/lib/leetcode";
+import { cn } from "~/lib/utils";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
 	title: "About",
-	description: `Learn more about ${profile.name} — AI Engineer and Full Stack Engineer.`,
+	description: `${profile.name}: ${profile.jobTitle} at ${profile.company}, building multi-agent AI systems and full-stack products in ${profile.location}.`,
 };
 
+const shortcuts = [
+	{ keys: ["⌘K", "Ctrl K"], action: "Open the command palette" },
+	{ keys: ["/"], action: "Open the command palette" },
+	{ keys: ["H", "P", "B", "A"], action: "Home, Projects, Blog, About" },
+	{ keys: ["G", "H"], action: "Open GitHub (press G, then H)" },
+	{ keys: ["T"], action: "Toggle theme" },
+	{ keys: ["Esc"], action: "Close the palette or menu" },
+];
+
+const principles = [
+	{
+		title: "Evidence over vibes",
+		body: "If an AI system can't show where an answer came from, it doesn't ship. Citations, evals and logs come first.",
+	},
+	{
+		title: "Boring infrastructure",
+		body: "Postgres, queues, typed schemas and CI that runs on every pull request. The interesting part should be the product.",
+	},
+	{
+		title: "Ship, then measure",
+		body: "Small releases behind real numbers: engagement, uptime, time saved. Then the next iteration.",
+	},
+];
+
 export default async function AboutPage() {
-	const [leetcodeStats, codeforcesStats, hackerrankStats, gfgStats] =
+	const [leetcode, codeforces, hackerrank, gfg, contributions] =
 		await Promise.all([
 			getLeetCodeStats(),
 			getCodeforcesStats(),
 			getHackerRankStats(),
 			getGfgStats(),
+			getContributions(),
 		]);
+	const profileCards = [
+		leetcode && {
+			key: "leetcode",
+			node: <LeetCodeCard stats={leetcode} />,
+		},
+		codeforces && {
+			key: "codeforces",
+			node: (
+				<PlatformCard
+					name="Codeforces"
+					primary={{ value: codeforces.solvedCount, label: "solved" }}
+					profileUrl={codeforces.profileUrl}
+					stats={[
+						{ label: "Rating", value: codeforces.rating ?? "Unrated" },
+						...(codeforces.maxRating
+							? [{ label: "Max", value: codeforces.maxRating }]
+							: []),
+					]}
+				/>
+			),
+		},
+		hackerrank && {
+			key: "hackerrank",
+			node: (
+				<PlatformCard
+					name="HackerRank"
+					primary={{ value: hackerrank.level, label: "level" }}
+					profileUrl={hackerrank.profileUrl}
+					stats={hackerrank.badges.map((b) => ({
+						label: b.name,
+						value: `${b.stars}★`,
+					}))}
+				/>
+			),
+		},
+		gfg && {
+			key: "gfg",
+			node: (
+				<PlatformCard
+					name="GeeksforGeeks"
+					primary={{ value: gfg.totalSolved, label: "solved" }}
+					profileUrl={gfg.profileUrl}
+					stats={[
+						{ label: "Score", value: gfg.score },
+						...(gfg.instituteRank
+							? [{ label: "Institute rank", value: gfg.instituteRank }]
+							: []),
+					]}
+				/>
+			),
+		},
+	].filter((c): c is { key: string; node: React.JSX.Element } => Boolean(c));
+	const hasProfiles = profileCards.length > 0;
 
 	return (
-		<div className="pt-24 pb-16">
-			<div className="mx-auto max-w-3xl space-y-14 px-4 sm:px-6">
-				{/* ── Intro ── */}
-				<AnimatedSection>
-					<div className="flex items-start gap-5">
-						<div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl border border-border">
-							<Image
-								alt={profile.name}
-								className="rounded-full object-cover"
-								fill
-								src={profile.avatar}
-							/>
-						</div>
-						<div>
-							<h1 className="mb-1 font-bold text-xl">{profile.name}</h1>
-							<p className="mb-3 text-sm text-text-secondary">
-								{profile.title}
-							</p>
-							<div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-text-muted text-xs">
-								<span className="flex items-center gap-1">
-									<MapPin size={11} />
-									{profile.location}
-								</span>
-								<span className="flex items-center gap-1">
-									<Building2 size={11} />
-									{profile.company}
-								</span>
-							</div>
-						</div>
-					</div>
-				</AnimatedSection>
-
-				{/* ── Bio ── */}
-				<AnimatedSection delay={0.05}>
-					<div className="space-y-3 border-border border-t pt-10 text-sm text-text-secondary leading-relaxed">
+		<div className="container-page flex flex-col gap-[var(--space-section)] pt-12 pb-[var(--space-section)]">
+			<section>
+				<SectionHeader as="h1" label="About" title="About" />
+				<div className="grid-page gap-y-10">
+					<Reveal className="flex max-w-[var(--measure-prose)] flex-col gap-4 text-body-lg text-fg-secondary lg:col-span-8">
 						<p>
-							AI Engineer and Full Stack Engineer currently at{" "}
-							<span className="text-text-primary">UST Global</span> in
-							Hyderabad. I specialise in building multi-agent AI systems and
-							production-grade web applications using the modern JavaScript and
-							Python ecosystems.
+							I&apos;m {profile.firstName}, a {profile.jobTitle} at{" "}
+							<span className="text-fg">{profile.company}</span> in Hyderabad. I
+							build multi-agent AI systems and the full-stack products that put
+							them in front of people.
 						</p>
 						<p>
-							My work spans AI orchestration platforms, RAG pipelines,
-							microservices architectures, and SaaS tools. I care about
-							performance, developer experience, and shipping things that work
-							at scale.
+							At work that has meant a health-tracking app whose reward system
+							lifted engagement 69%, automation that removed 86% of manual data
+							processing, and CI/CD that holds 99% deployment uptime.
 						</p>
 						<p>
-							Open-source side projects:{" "}
-							<Link
-								className="border-text-primary border-b border-dashed text-text-primary"
-								href="https://github.com/bharathlakkoju/nexusflow"
-							>
-								NexusFlow
-							</Link>
-							,{" "}
-							<Link
-								className="border-text-primary border-b border-dashed text-text-primary"
-								href="https://github.com/bharathlakkoju/gitprofolio"
-							>
-								GitProfolio
-							</Link>
-							,{" "}
-							<Link
-								className="border-text-primary border-b border-dashed text-text-primary"
-								href="https://github.com/bharathlakkoju/flatmate"
-							>
-								Flatmate
-							</Link>
-							, and{" "}
-							<Link
-								className="border-text-primary border-b border-dashed text-text-primary"
-								href="https://github.com/bharathlakkoju/atsprecise"
-							>
-								ATS Precision
-							</Link>
-							.
+							On my own time I ship complete products: a compliance review
+							copilot that cites every finding, a paid YouTube research agent, a
+							deterministic resume scorer, and an open-source secrets CLI.
 						</p>
-					</div>
-				</AnimatedSection>
+					</Reveal>
+					<Reveal className="flex justify-start lg:col-span-4 lg:justify-end">
+						<SwapAvatar
+							className="aspect-square w-full max-w-[220px]"
+							priority
+							rounded="lg"
+							sizes="220px"
+						/>
+					</Reveal>
+				</div>
+			</section>
 
-				{/* ── Skills ── */}
-				<AnimatedSection delay={0.05}>
-					<div className="border-border border-t pt-10">
-						<p className="mb-6 text-[10px] text-text-muted uppercase tracking-widest">
-							Stack
-						</p>
-						<StaggerChildren
-							className="grid grid-cols-1 gap-3 sm:grid-cols-2"
-							staggerDelay={0.06}
-						>
-							{skills.map((cat) => (
-								<SkillCard cat={cat} key={cat.category} />
-							))}
-						</StaggerChildren>
+			<section aria-labelledby="experience" id="experience-section">
+				<SectionHeader
+					id="experience"
+					index="01"
+					label="Experience"
+					title="Experience"
+				/>
+				<div className="grid-page">
+					<div className="lg:col-span-8">
+						<Timeline entries={experience} />
 					</div>
-				</AnimatedSection>
+				</div>
+			</section>
 
-				{/* ── Problem Solving ── */}
-				<AnimatedSection delay={0.05}>
-					<div
-						className="scroll-mt-20 border-border border-t pt-10"
+			<section aria-labelledby="education">
+				<SectionHeader
+					id="education"
+					index="02"
+					label="Education"
+					title="Education"
+				/>
+				<div className="grid-page">
+					<div className="lg:col-span-8">
+						<Timeline entries={education} />
+					</div>
+				</div>
+			</section>
+
+			{contributions && (
+				<section aria-labelledby="activity">
+					<SectionHeader
+						id="activity"
+						index="03"
+						label="Activity"
+						title="Shipping, week by week"
+					/>
+					<Reveal>
+						<ContributionHeatmap data={contributions} />
+					</Reveal>
+				</section>
+			)}
+
+			{hasProfiles && (
+				<section
+					aria-labelledby="problem-solving"
+					className="scroll-mt-24"
+					id="problem-solving-section"
+				>
+					<SectionHeader
 						id="problem-solving"
-					>
-						<p className="mb-6 text-[10px] text-text-muted uppercase tracking-widest">
-							Problem Solving
-						</p>
-						<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-							<LeetCodeCard stats={leetcodeStats} />
-							<PlatformCard
-								name="Codeforces"
-								primary={
-									codeforcesStats
-										? { value: codeforcesStats.solvedCount, label: "solved" }
-										: undefined
-								}
-								profileUrl={codeforcesStats?.profileUrl}
-								stats={
-									codeforcesStats
-										? [
-												{
-													label: "Rating",
-													value: codeforcesStats.rating ?? "Unrated",
-												},
-												...(codeforcesStats.maxRating
-													? [
-															{
-																label: "Max",
-																value: codeforcesStats.maxRating,
-															},
-														]
-													: []),
-											]
-										: []
-								}
-								unavailable={!codeforcesStats}
-							/>
-							<PlatformCard
-								name="HackerRank"
-								primary={
-									hackerrankStats
-										? { value: hackerrankStats.level, label: "level" }
-										: undefined
-								}
-								profileUrl={hackerrankStats?.profileUrl}
-								stats={
-									hackerrankStats
-										? hackerrankStats.badges.map((b) => ({
-												label: b.name,
-												value: `${b.stars}★`,
-											}))
-										: []
-								}
-								unavailable={!hackerrankStats}
-							/>
-							<PlatformCard
-								name="GeeksforGeeks"
-								primary={
-									gfgStats
-										? { value: gfgStats.totalSolved, label: "solved" }
-										: undefined
-								}
-								profileUrl={gfgStats?.profileUrl}
-								stats={
-									gfgStats
-										? [
-												{ label: "Score", value: gfgStats.score },
-												...(gfgStats.instituteRank
-													? [
-															{
-																label: "Institute Rank",
-																value: gfgStats.instituteRank,
-															},
-														]
-													: []),
-											]
-										: []
-								}
-								unavailable={!gfgStats}
-							/>
-						</div>
-					</div>
-				</AnimatedSection>
+						index="04"
+						label="Problem solving"
+						title="Practice, in public"
+					/>
+					<Stagger className="grid grid-cols-1 gap-[var(--gutter)] md:grid-cols-2">
+						{profileCards.map((card, i) => (
+							<StaggerItem
+								className={cn(
+									"flex",
+									profileCards.length % 2 === 1 &&
+										i === profileCards.length - 1 &&
+										"md:col-span-2",
+								)}
+								index={i}
+								key={card.key}
+							>
+								{card.node}
+							</StaggerItem>
+						))}
+					</Stagger>
+				</section>
+			)}
 
-				{/* ── Experience ── */}
-				<AnimatedSection delay={0.05}>
-					<div
-						className="scroll-mt-20 border-border border-t pt-10"
-						id="experience"
-					>
-						<p className="mb-6 text-[10px] text-text-muted uppercase tracking-widest">
-							Experience
-						</p>
-						<div className="space-y-4">
-							{experience.map((exp, i) => (
-								<AnimatedSection delay={i * 0.08} key={i}>
-									<div className="rounded-lg">
-										<div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
-											<div>
-												<p className="font-semibold text-sm text-text-primary">
-													{exp.title}
-												</p>
-												<p className="text-accent text-xs">{exp.company}</p>
-											</div>
-											<div className="flex flex-col gap-0.5 text-[10px] text-text-muted sm:text-right">
-												<span className="flex items-center gap-1 sm:justify-end">
-													<Calendar size={10} />
-													{exp.dates}
-												</span>
-												<span className="flex items-center gap-1 sm:justify-end">
-													<MapPin size={10} />
-													{exp.location}
-												</span>
-											</div>
-										</div>
-										<ul className="space-y-1.5">
-											{exp.bullets.map((bullet, j) => (
-												<li
-													className="flex gap-2 text-sm text-text-secondary leading-relaxed"
-													key={j}
-												>
-													<span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent" />
-													{bullet}
-												</li>
-											))}
-										</ul>
-									</div>
-								</AnimatedSection>
-							))}
-						</div>
-					</div>
-				</AnimatedSection>
+			<section aria-labelledby="how-i-work">
+				<SectionHeader
+					id="how-i-work"
+					index="05"
+					label="How I work"
+					title="How I work"
+				/>
+				<Stagger className="grid gap-[var(--gutter)] md:grid-cols-3">
+					{principles.map((p, i) => (
+						<StaggerItem
+							className="rounded-lg border border-border bg-surface p-6"
+							index={i}
+							key={p.title}
+						>
+							<h3 className="mb-2 text-fg text-h3">{p.title}</h3>
+							<p className="text-fg-secondary text-sm">{p.body}</p>
+						</StaggerItem>
+					))}
+				</Stagger>
+			</section>
 
-				{/* ── Education ── */}
-				<AnimatedSection delay={0.05}>
-					<div className="border-border border-t pt-10 pb-4">
-						<p className="mb-6 text-[10px] text-text-muted uppercase tracking-widest">
-							Education
+			<section aria-labelledby="shortcuts">
+				<SectionHeader
+					id="shortcuts"
+					index="06"
+					label="Keyboard"
+					title="Keyboard shortcuts"
+				/>
+				<div className="grid-page">
+					<Reveal className="lg:col-span-8">
+						<table className="w-full text-sm">
+							<thead className="sr-only">
+								<tr>
+									<th>Keys</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{shortcuts.map((s) => (
+									<tr
+										className="border-border border-b"
+										key={s.action + s.keys.join()}
+									>
+										<td className="py-3 pr-6">
+											<span className="flex flex-wrap gap-1.5">
+												{s.keys.map((k) => (
+													<kbd
+														className="min-w-7 rounded-sm border border-border-strong bg-surface px-1.5 py-0.5 text-center font-mono text-fg-secondary text-label"
+														key={k}
+													>
+														{k}
+													</kbd>
+												))}
+											</span>
+										</td>
+										<td className="py-3 text-fg-secondary">{s.action}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+						<p className="mt-3 text-fg-muted text-sm">
+							Single-key shortcuts never fire while you&apos;re typing, and you
+							can turn them off from the palette.
 						</p>
-						<div className="space-y-4">
-							{education.map((edu, i) => (
-								<AnimatedSection delay={i * 0.08} key={i}>
-									<div className="rounded-lg">
-										<div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
-											<div>
-												<p className="font-semibold text-sm text-text-primary">
-													{edu.degree}
-												</p>
-												<p className="text-accent text-xs">{edu.institution}</p>
-											</div>
-											<div className="text-[10px] text-text-muted sm:text-right">
-												<div>{edu.year}</div>
-												<div className="font-medium text-text-primary">
-													GPA: {edu.gpa}
-												</div>
-											</div>
-										</div>
-									</div>
-								</AnimatedSection>
-							))}
-						</div>
-					</div>
-				</AnimatedSection>
-			</div>
+					</Reveal>
+				</div>
+			</section>
+
+			<Reveal className="flex flex-col items-start justify-between gap-6 rounded-lg border border-border bg-surface p-8 md:flex-row md:items-center">
+				<div>
+					<p className="text-fg text-h3">Hiring for AI or full-stack?</p>
+					<p className="mt-1 text-fg-secondary text-sm">{profile.workMode}.</p>
+				</div>
+				<div className="flex flex-wrap gap-3">
+					<Button asChild size="lg">
+						<a href={site.resume} rel="noopener" target="_blank">
+							<Download aria-hidden size={16} />
+							Download resume
+							<span className="sr-only"> (PDF, opens in new tab)</span>
+						</a>
+					</Button>
+					<Button asChild size="lg" variant="secondary">
+						<Link href="/contact">
+							<Mail aria-hidden size={16} />
+							Contact me
+						</Link>
+					</Button>
+				</div>
+			</Reveal>
 		</div>
 	);
 }

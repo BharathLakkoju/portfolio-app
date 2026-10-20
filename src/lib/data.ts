@@ -1,379 +1,451 @@
 // ============================================================
-// Portfolio data — sourced from profile-content.json + resume.json
+// Portfolio content. Facts follow bharath-portfolio-design-system.md
+// (confirmed 20 Oct 2026). Don't add numbers that aren't confirmed.
 // ============================================================
+
+export const site = {
+	url: "https://bharathlakkoju.vercel.app",
+	resume: "/resume.pdf",
+	resumeLabel: "Download resume (PDF)",
+};
 
 export const profile = {
 	name: "Bharath Lakkoju",
 	firstName: "Bharath",
-	title: "AI Engineer & Full Stack Engineer",
-	tagline: "Building AI-powered products and scalable web apps",
-	bio: "AI Engineer & Full Stack Engineer with 2+ years of experience building multi-agent AI systems, RAG pipelines, and scalable web applications. Proficient in React, Next.js, Node.js, TypeScript, Python, LangChain/LangGraph, PostgreSQL, and MongoDB — with a proven track record of reducing API latency by 40% and increasing user engagement by 60%. I ship fast, test well, and care deeply about developer experience.",
+	roleLine: "AI Engineer · Full Stack Engineer",
+	jobTitle: "Developer I (SDE-1)",
 	location: "Hyderabad, India",
+	timeZone: "Asia/Kolkata",
+	timeZoneLabel: "IST",
+	workMode: "Remote or relocate anywhere in India",
+	bio: "I build multi-agent AI systems and the full-stack products around them: RAG pipelines, evaluation harnesses and the Next.js apps people actually use.",
+	summary: "AI Engineer building multi-agent systems and full-stack products.",
 	email: "lbh.lbharath@gmail.com",
-	avatar: "https://avatars.githubusercontent.com/u/73902405?v=4",
 	github: "https://github.com/BharathLakkoju",
+	githubUser: "BharathLakkoju",
 	linkedin: "https://linkedin.com/in/bharathlakkoju",
 	company: "UST Global",
-	targetRoles: ["AI Engineer", "Full-Stack Engineer", "Applied AI Platform"],
+	targetRoles: ["AI Engineer", "Full-Stack", "Applied AI"],
+	/** Set false the day availability changes; the status dot turns grey. */
+	openToWork: true,
+	availability: "Open to opportunities",
 };
 
-// ============================================================
-// Impact — quantified outcomes, pulled from experience bullets
-// ============================================================
-
-export type ImpactStat = {
-	value: string;
-	label: string;
-};
-
-export const impactStats: ImpactStat[] = [
-	{ value: "69%", label: "user engagement lift" },
-	{ value: "113%", label: "increase in data intake" },
-	{ value: "86%", label: "less manual processing" },
-	{ value: "99%", label: "deployment uptime" },
+/** Rotating hero phrase; the first entry is the server-rendered and resting state. */
+export const heroPhrases = [
+	"multi-agent systems",
+	"RAG pipelines",
+	"full-stack products",
+	"production-ready software",
 ];
 
 // ============================================================
-// Projects — only high-weight portfolio projects (importance 5+)
+// Impact: every number carries a context line
 // ============================================================
 
+export type ImpactStat = {
+	label: string;
+	value: number;
+	suffix: string;
+	verb: string;
+	context: string;
+	size: "lead" | "standard" | "wide";
+};
+
+export const impactStats: ImpactStat[] = [
+	{
+		label: "User engagement",
+		value: 69,
+		suffix: "%",
+		verb: "lift",
+		context: "Health-tracking app with a reward system",
+		size: "lead",
+	},
+	{
+		label: "Data intake",
+		value: 113,
+		suffix: "%",
+		verb: "increase",
+		context: "Data intake on the same health-tracking app",
+		size: "standard",
+	},
+	{
+		label: "Manual processing",
+		value: 86,
+		suffix: "%",
+		verb: "less",
+		context: "WCS data-pipeline automation",
+		size: "standard",
+	},
+	{
+		label: "Deployment uptime",
+		value: 99,
+		suffix: "%",
+		verb: "uptime",
+		context: "CI/CD pipelines across Agile sprints",
+		size: "wide",
+	},
+];
+
+export const marqueeItems: { value?: string; text: string }[] = [
+	{ value: "69%", text: "engagement lift" },
+	{ value: "113%", text: "data intake" },
+	{ value: "86%", text: "less manual processing" },
+	{ value: "99%", text: "deployment uptime" },
+	{ value: "11+", text: "projects shipped" },
+	{ text: "Developer I at UST Global" },
+	{ text: "Based in Hyderabad" },
+];
+
+// ============================================================
+// Projects: the final four (design system §6.3.1)
+// ============================================================
+
+export type ProjectLink = {
+	label: string;
+	href: string;
+	kind: "live" | "code" | "npm" | "site" | "contact";
+};
+
+export type ProjectMedia = {
+	poster: string;
+	mp4?: string;
+	webm?: string;
+	alt: string;
+};
+
 export type Project = {
-	id: string;
-	name: string;
-	description: string;
-	tech: string[];
-	github: string | null;
-	live: string | null;
-	category: "fullstack" | "ai" | "tools" | "microservices";
-	featured: boolean;
-	role?: string;
+	slug: string;
+	title: string;
+	repo: string;
+	label: string;
+	badge: { text: string; tone: "live" | "neutral" };
+	outcome: string;
+	roleLine: string;
+	stack: string[];
+	marginNote: string;
+	/** Pipeline steps drawn in the card schematic until a recorded clip exists. */
+	steps: string[];
+	links: ProjectLink[];
+	media?: ProjectMedia;
+	caseStudy: {
+		problem?: string;
+		built: string;
+		architecture: string[];
+		decisions: string[];
+		results?: { title: string; body: string };
+		shows?: string;
+		next?: string;
+	};
 };
 
 export const projects: Project[] = [
 	{
-		id: "nexusflow",
-		name: "NexusFlow",
-		description:
-			"Visual multi-agent AI orchestration platform — design, deploy, and monitor teams of AI agents (Researcher, Planner, Executor, Critic) on a drag-and-drop canvas. Includes a RAG knowledge base over PDFs/docs/URLs, full observability (token costs, execution traces, success rates), and real-time agent-thought streaming via SSE. Free to self-host.",
-		tech: [
-			"Next.js",
-			"TypeScript",
-			"Python",
+		slug: "compliance-review-copilot",
+		title: "Compliance Review Copilot",
+		repo: "complibot",
+		label: "Compliance AI",
+		badge: { text: "Demo on request", tone: "neutral" },
+		outcome:
+			"Reviews contracts and policies against GDPR, SOC 2, ISO 27001 and HIPAA; every finding cites a verified span of the source.",
+		roleLine: "Solo build · AI review pipeline, full stack, infra",
+		stack: [
+			"Next.js 16",
+			"React 19",
+			"Tailwind 4",
 			"FastAPI",
-			"LangChain",
-			"LangGraph",
-			"PostgreSQL",
-			"pgvector",
-			"Redis",
+			"async SQLAlchemy",
+			"Postgres",
+			"WebSockets",
 			"Docker",
+			"AWS EC2",
+			"Terraform",
+			"Caddy",
 		],
-		github: "https://github.com/BharathLakkoju/nexusflow",
-		live: "https://nexusflow-web.vercel.app",
-		category: "ai",
-		featured: true,
-		role: "Solo builder — designed the multi-agent orchestration architecture, RAG pipeline, and SSE observability layer end to end.",
+		marginNote: "↑ cite it or discard it",
+		steps: ["Upload", "Ingest", "Match", "Cite", "Review"],
+		links: [
+			{ label: "Request a demo", href: "/contact", kind: "contact" },
+			{
+				label: "Code",
+				href: "https://github.com/BharathLakkoju/complibot",
+				kind: "code",
+			},
+		],
+		caseStudy: {
+			problem:
+				"Compliance review means checking long documents against several frameworks, and a reviewer can't trust a finding they can't trace back to the text.",
+			built:
+				"A review copilot that checks an uploaded contract or policy against versioned framework rule packs, streams findings live over WebSockets, and lets reviewers accept or reject each one.",
+			architecture: [
+				"Upload",
+				"Ingest · FastAPI + worker",
+				"Match · versioned rule pack",
+				"Cite · span verified or discarded",
+				"Stream · WebSocket",
+				"Review · accept / reject in Postgres",
+			],
+			decisions: [
+				"Frameworks are versioned rule packs, not prompts.",
+				"Citation or discard: a finding without a mechanically verified source span never reaches the reviewer, including control-ID alias normalisation.",
+				"Reviewer accept and reject decisions persist.",
+				"An eval harness and pluggable model providers.",
+				"YAML schemas drive code generation across the monorepo.",
+			],
+			results: {
+				title: "Verified end to end",
+				body: "Passed a 5-round QA on 18 Oct 2026. In the full flow, an uploaded policy produced 4 GDPR findings with highlighted citations, and reviewer decisions persisted.",
+			},
+			next: "Deploy behind auth for pilot reviewers.",
+		},
 	},
 	{
-		id: "terminal",
-		name: "Terminal",
-		description:
-			"Custom PowerShell-native terminal emulator for Windows with a macOS/iTerm2-style UI, built with Tauri, React, TypeScript, and xterm.js. Its core goal is a real contrast-correction engine for a working light theme — something no other Windows-supported terminal (including Windows Terminal) gets right.",
-		tech: ["Tauri", "React", "TypeScript", "Rust", "xterm.js", "Vite"],
-		github: "https://github.com/BharathLakkoju/terminal",
-		live: null,
-		category: "tools",
-		featured: false,
-	},
-	{
-		id: "docqa",
-		name: "docQA",
-		description:
-			"Agentic RAG system that answers questions about n8n workflows, GitHub Actions CI/CD configs, and other technical docs — Python/FastAPI backend, Next.js/Tailwind frontend, and a Dockerized TypeScript client for interactive document Q&A.",
-		tech: [
+		slug: "youtube-research-agent",
+		title: "YouTube Research Agent",
+		repo: "tubecp",
+		label: "AI product",
+		badge: { text: "Live", tone: "live" },
+		outcome:
+			"Turns a research topic into a chat-able knowledge base, with sources and timestamps.",
+		roleLine: "Solo build · AI product, payments, production ops",
+		stack: [
 			"Next.js",
-			"TypeScript",
-			"Python",
-			"FastAPI",
-			"LangChain",
-			"CrewAI",
-			"Tailwind CSS",
-			"Docker",
-		],
-		github: "https://github.com/BharathLakkoju/docQA",
-		live: "https://documentorqa.vercel.app",
-		category: "ai",
-		featured: true,
-		role: "Solo builder — built the FastAPI/LangChain RAG backend and the Dockerized client from scratch.",
-	},
-	{
-		id: "greensource",
-		name: "GreenSource",
-		description:
-			"Microservices-based agricultural marketplace — 7 Node.js services behind an API gateway, 3 React frontends, MongoDB Atlas, JWT auth, and live Mandi price data. Farmers list produce, consumers order, delivery agents track, admins manage.",
-		tech: [
-			"TypeScript",
-			"React",
-			"Node.js",
-			"Express",
-			"MongoDB",
-			"Redux",
-			"Microservices",
-			"JWT",
-			"Vite",
-		],
-		github: "https://github.com/BharathLakkoju/greensource",
-		live: null,
-		category: "microservices",
-		featured: false,
-	},
-	{
-		id: "flatmate",
-		name: "Flatmate",
-		description:
-			"Full-stack shared living management app — expense splitting, grocery lists, meal planner with OCR receipt scanning, task manager, household calendar, and Google Gemini AI integration. Includes Vitest unit tests and Playwright E2E tests.",
-		tech: [
-			"Next.js",
-			"TypeScript",
-			"Supabase",
-			"Drizzle ORM",
-			"Zustand",
-			"shadcn/ui",
-			"Framer Motion",
-			"Playwright",
-			"Vitest",
-		],
-		github: "https://github.com/BharathLakkoju/flatmate",
-		live: "https://adjustyouflat.vercel.app",
-		category: "fullstack",
-		featured: true,
-		role: "Solo builder — full-stack app with Vitest unit tests and Playwright E2E coverage.",
-	},
-	{
-		id: "atsprecise",
-		name: "ATS Precision",
-		description:
-			"AI-powered ATS resume evaluator — upload your resume, paste a job description, and get a precision compatibility score with keyword gap analysis, section-by-section feedback, and role-specific improvement suggestions. PDF report download included.",
-		tech: [
-			"Next.js",
-			"TypeScript",
-			"Supabase",
-			"Drizzle ORM",
-			"Framer Motion",
-			"Radix UI",
-			"Zustand",
-			"Zod",
-		],
-		github: "https://github.com/BharathLakkoju/atsprecise",
-		live: "https://atsprecise.vercel.app",
-		category: "ai",
-		featured: false,
-	},
-	{
-		id: "waigenie",
-		name: "Waigenie",
-		description:
-			"Full-stack SaaS platform — an AI-powered software testing toolkit with 5 AI tools in a protected dashboard: IdeaForge, AutoScribe, CucumberCraft, DomDetective, and WebTrekker. Credit-based billing via Razorpay, full auth (email, Google, GitHub OAuth), and complete marketing site.",
-		tech: [
-			"Next.js",
-			"TypeScript",
-			"Tailwind CSS",
 			"Auth.js",
-			"Prisma",
-			"PostgreSQL",
-			"Zustand",
-			"shadcn/ui",
-			"Razorpay",
+			"Neon Postgres",
+			"Upstash Redis",
+			"Polar",
+			"Sentry",
+			"Resend",
+			"OpenRouter",
+			"YouTube Data API",
 		],
-		github: "https://www.github.com/BharathLakkoju/waigenie-frontend",
-		live: null,
-		category: "fullstack",
-		featured: false,
-	},
-	{
-		id: "swiftmedia",
-		name: "SwiftMedia",
-		description:
-			"Privacy-first browser-based media toolkit — compress images, videos (FFmpeg WebAssembly), and PDFs; merge PDFs; convert images to PDF. Zero server uploads — all processing runs client-side in the browser.",
-		tech: [
-			"Next.js",
-			"TypeScript",
-			"WebAssembly",
-			"FFmpeg",
-			"Framer Motion",
-			"Tailwind CSS",
+		marginNote: "↑ paid tiers, quotas in Redis",
+		steps: ["Topic", "YouTube API", "Knowledge base", "Chat", "Sources"],
+		links: [
+			{ label: "Live", href: "https://tubecp.vercel.app", kind: "live" },
+			{
+				label: "Code",
+				href: "https://github.com/BharathLakkoju/tubecp",
+				kind: "code",
+			},
 		],
-		github: "https://github.com/BharathLakkoju/swiftmedia",
-		live: "https://swiftmedia-nine.vercel.app",
-		category: "tools",
-		featured: false,
+		caseStudy: {
+			built:
+				"Topic in, videos found through the YouTube Data API, then a knowledge base you can chat with, where every answer points to its source and timestamp.",
+			architecture: [
+				"Topic",
+				"YouTube Data API",
+				"Knowledge base · Neon Postgres",
+				"Chat · OpenRouter",
+				"Answer · source + timestamp",
+			],
+			decisions: [
+				"Tiered quotas (Free, Pro $9, Researcher $19, Team $49) enforced in Redis.",
+				"Polar for payments, driven by webhooks.",
+				"A pre-deploy validate script, production smoke tests and an /api/health endpoint.",
+			],
+			shows: "A shipped, paid AI product with production guardrails.",
+		},
 	},
 	{
-		id: "dvelve",
-		name: "Dvelve",
-		description:
-			"Local-first AI research assistant powered by Ollama. Enter a topic and get a structured, multi-source research report generated by a 5-agent AI pipeline — all running on your machine. Built with FastAPI, React, and Go.",
-		tech: [
-			"TypeScript",
-			"React",
-			"Python",
-			"FastAPI",
-			"Go",
-			"Ollama",
-			"SQLite",
-			"Zustand",
-			"Vite",
+		slug: "ats-resume-evaluator",
+		title: "ATS Resume Evaluator",
+		repo: "atsprecise",
+		label: "Full stack",
+		badge: { text: "Live", tone: "live" },
+		outcome:
+			"Deterministic, weighted resume-to-job scoring with section-by-section gap analysis. ₹99 per report.",
+		roleLine: "Solo build · Full stack, scoring engine",
+		stack: [
+			"Next.js 16",
+			"Supabase",
+			"Drizzle",
+			"Zod",
+			"mammoth",
+			"unpdf",
+			"jspdf",
 		],
-		github: "https://github.com/BharathLakkoju/Dvelve",
-		live: null,
-		category: "ai",
-		featured: false,
+		marginNote: "↑ ₹99 per report",
+		steps: ["Resume", "Parse", "Match JD", "Score", "PDF report"],
+		links: [
+			{ label: "Live", href: "https://atsprecise.vercel.app", kind: "live" },
+			{
+				label: "Code",
+				href: "https://github.com/BharathLakkoju/atsprecise",
+				kind: "code",
+			},
+		],
+		caseStudy: {
+			built:
+				"Upload a resume (DOCX or PDF, parsed with mammoth and unpdf), paste a job description, and get a weighted score across keywords, skills, sections and formatting, a gap analysis per section, and a PDF report.",
+			architecture: [
+				"Resume · DOCX / PDF",
+				"Parse · mammoth + unpdf",
+				"Validate · Zod",
+				"Score · weighted, deterministic",
+				"Report · jspdf",
+			],
+			decisions: [
+				"Deterministic scoring, so the same inputs always give the same score.",
+				"Zod-validated inputs at every boundary.",
+				"A paid per-report model.",
+			],
+			shows: "A live, paid product with explainable scoring.",
+		},
 	},
 	{
-		id: "gitprofolio",
-		name: "GitProfolio",
-		description:
-			"Open-source Astro app that transforms a GitHub profile into a structured, enriched JSON portfolio. Fetches repos, parses READMEs, detects tech stacks, extracts live links, and scores projects using heuristics + LLM analysis.",
-		tech: ["Astro", "TypeScript", "GitHub API", "LLM", "AI", "Vercel"],
-		github: "https://github.com/BharathLakkoju/gitprofolio",
-		live: "https://gitprofolio.vercel.app",
-		category: "tools",
-		featured: false,
-	},
-	{
-		id: "depguard",
-		name: "DepGuard",
-		description:
-			"Universal dependency health scanner CLI — detects outdated, vulnerable, deprecated, and risky packages across JavaScript, Python, Rust, and Go ecosystems from a single command. Published to npm.",
-		tech: ["TypeScript", "Node.js", "CLI", "GitHub Actions"],
-		github: "https://github.com/BharathLakkoju/depguard",
-		live: "https://www.npmjs.com/package/@lbharath/depguard",
-		category: "tools",
-		featured: false,
+		slug: "nvault",
+		title: "Open-source secrets CLI (nvault)",
+		repo: "nvault",
+		label: "Open source CLI",
+		badge: { text: "npm 0.2.0", tone: "neutral" },
+		outcome:
+			"An open-source secrets CLI published on npm, released through Trusted Publishing (OIDC).",
+		roleLine: "Solo build · Open source, CLI, release engineering",
+		stack: ["TypeScript", "Node.js", "CLI", "GitHub Actions", "npm OIDC"],
+		marginNote: "↑ dry-run publish on every PR",
+		steps: ["Pull request", "Dry-run", "OIDC", "npm publish"],
+		links: [
+			{
+				label: "npm",
+				href: "https://www.npmjs.com/package/@lbharath/nvault",
+				kind: "npm",
+			},
+			{ label: "Site", href: "https://nvaults.vercel.app", kind: "site" },
+			{
+				label: "Code",
+				href: "https://github.com/BharathLakkoju/nvault",
+				kind: "code",
+			},
+		],
+		caseStudy: {
+			built:
+				"Published as @lbharath/nvault 0.2.0 and released from GitHub Actions with npm Trusted Publishing, so there's no long-lived token to leak.",
+			architecture: [
+				"Pull request",
+				"CI · publish dry-run",
+				"Release · GitHub Actions",
+				"OIDC · Trusted Publishing",
+				"npm · @lbharath/nvault",
+			],
+			decisions: [
+				"npm Trusted Publishing (OIDC) instead of a stored token.",
+				"CI runs a publish dry-run on every pull request.",
+			],
+			shows: "Open-source shipping and supply-chain-safe releases.",
+		},
 	},
 ];
 
-export const featuredProjects = projects.filter((p) => p.featured);
+export function getProject(slug: string) {
+	return projects.find((p) => p.slug === slug);
+}
 
 // ============================================================
-// Skills — from resume.json
+// Stack: four groups, neutral chips with a colored group dot
 // ============================================================
 
-export type SkillCategory = {
-	category: string;
-	icon: string;
+export type StackGroup = {
+	label: string;
+	dot: "ai" | "lang" | "frontend" | "backend";
 	items: string[];
 };
 
-export const skills: SkillCategory[] = [
+export const stackGroups: StackGroup[] = [
 	{
-		category: "AI / ML",
-		icon: "brain",
+		label: "AI & Agents",
+		dot: "ai",
 		items: [
 			"LangChain",
 			"LangGraph",
 			"CrewAI",
-			"RAG Pipelines",
+			"RAG pipelines",
 			"OpenAI API",
-			"Claude AI",
+			"Claude",
 			"Gemini API",
 			"Ollama",
-		],
-	},
-	{
-		category: "Programming Languages",
-		icon: "code-2",
-		items: ["TypeScript", "JavaScript", "Python", "SQL"],
-	},
-	{
-		category: "Frontend",
-		icon: "layout",
-		items: [
-			"React.js",
-			"Next.js",
-			"Redux",
-			"Tailwind CSS",
-			"Zustand",
-			"HTML5/CSS3",
-			"Framer Motion",
-		],
-	},
-	{
-		category: "Backend & APIs",
-		icon: "server",
-		items: [
-			"Node.js",
-			"Express.js",
-			"FastAPI",
-			"RESTful APIs",
-			"Microservices",
-			"GraphQL",
-			"API Security",
-		],
-	},
-	{
-		category: "Databases",
-		icon: "database",
-		items: [
-			"PostgreSQL",
-			"MongoDB",
-			"MySQL",
-			"Prisma ORM",
-			"Drizzle ORM",
-			"Supabase",
 			"pgvector",
 		],
 	},
 	{
-		category: "DevOps & Tools",
-		icon: "git-branch",
+		label: "Languages",
+		dot: "lang",
+		items: ["TypeScript", "JavaScript", "Python", "SQL"],
+	},
+	{
+		label: "Frontend",
+		dot: "frontend",
 		items: [
-			"CI/CD Pipelines",
+			"React",
+			"Next.js",
+			"Tailwind CSS",
+			"Framer Motion",
+			"Redux",
+			"Zustand",
+			"React Native",
+		],
+	},
+	{
+		label: "Backend",
+		dot: "backend",
+		items: [
+			"Node.js",
+			"NestJS",
+			"Express",
+			"FastAPI",
+			"PostgreSQL",
+			"MongoDB",
+			"Redis",
 			"Docker",
-			"Git",
-			"Vercel",
 			"GitHub Actions",
-			"Agile/Scrum",
+			"Terraform",
 		],
 	},
 ];
 
 // ============================================================
-// Experience — from resume.json
+// Experience and education
 // ============================================================
 
-export type Experience = {
-	company: string;
+export type TimelineEntry = {
 	title: string;
+	org: string;
+	location?: string;
 	dates: string;
-	location: string;
+	current?: boolean;
 	bullets: string[];
 };
 
-export const experience: Experience[] = [
+export const experience: TimelineEntry[] = [
 	{
-		company: "UST Global",
-		title: "Developer I",
-		dates: "Sep 2024 – Present",
+		title: "Developer I (SDE-1)",
+		org: "UST Global",
 		location: "Hyderabad, India",
+		dates: "Sep 2024 — Present",
+		current: true,
 		bullets: [
-			"Architected and deployed a full-stack health tracking app using React Native, Node.js, and PostgreSQL — implementing a reward system that increased user engagement by 69% and improved data intake by 113%.",
-			"Engineered a scalable Angular + Node.js microservices architecture with WCS data integration, deploying an automated digitization banner that reduced manual processing overhead by 86%.",
-			"Developed and integrated an AI-powered chatbot leveraging predictive analytics and LLM APIs, boosting monthly active users by 46% and enhancing real-time customer support.",
-			"Spearheaded migration of legacy Java Spring services to Node.js and NestJS microservices — establishing API security standards and improving system maintainability by 40%.",
-			"Collaborated in Agile sprints, conducted rigorous code reviews, and optimized CI/CD pipelines to achieve 99% deployment uptime.",
+			"Built a full-stack health-tracking app (React Native, Node.js, PostgreSQL) whose reward system lifted engagement 69% and data intake 113%.",
+			"Automated WCS data digitisation across Angular and Node.js microservices, cutting manual processing 86%.",
+			"Shipped an LLM-backed support chatbot with predictive analytics, growing monthly active users 46%.",
+			"Migrated legacy Java Spring services to Node.js and NestJS with API security standards.",
+			"Tuned CI/CD pipelines to hold 99% deployment uptime.",
 		],
 	},
 ];
 
-// ============================================================
-// Education
-// ============================================================
-
-export const education = [
+export const education: TimelineEntry[] = [
 	{
-		institution: "MVGR College of Engineering",
-		degree: "B.Tech — Information Technology",
-		year: "2020 – 2024",
-		gpa: "8.10 / 10",
+		title: "B.Tech, Information Technology",
+		org: "MVGR College of Engineering",
+		dates: "2020 — 2024",
+		bullets: ["GPA 8.10 / 10"],
 	},
 ];
+
+export const navLinks = [
+	{ href: "/", label: "Home", key: "H" },
+	{ href: "/about", label: "About", key: "A" },
+	{ href: "/projects", label: "Projects", key: "P" },
+	{ href: "/blog", label: "Blog", key: "B" },
+	{ href: "/contact", label: "Contact" },
+] as const;

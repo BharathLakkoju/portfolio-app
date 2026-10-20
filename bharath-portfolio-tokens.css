@@ -1,0 +1,409 @@
+/* ==========================================================================
+   Bharath Lakkoju — Portfolio Design Tokens  v1.1  (2026-10-20, IBM Plex type)
+   Companion to bharath-portfolio-design-system.md
+
+   Theme switching
+   - Dark is the default (matches today's site). Light applies with
+     `.light` or `[data-theme="light"]` on <html> (next-themes: attribute="class"
+     or attribute="data-theme"; pick one and stay with it).
+   - Hex values are the source of truth: every contrast ratio in the doc was
+     measured on these exact hex values. OKLCH equivalents are in comments
+     for tooling and future palette work.
+   - Never use raw hex in components. Use these variables (or the Tailwind
+     theme keys mapped to them).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Theme-independent tokens
+   -------------------------------------------------------------------------- */
+:root {
+	/* ---- Font families ---------------------------------------------------- */
+	/* next/font exposes --font-plex-sans / --font-plex-mono / --font-instrument-serif
+     on <html>; they come first so its size-adjusted fallbacks are used (no CLS). */
+	--font-sans:
+		var(--font-plex-sans, "IBM Plex Sans"), "IBM Plex Sans", ui-sans-serif,
+		system-ui, -apple-system, "Segoe UI", sans-serif;
+	--font-mono:
+		var(--font-plex-mono, "IBM Plex Mono"), "IBM Plex Mono", ui-monospace,
+		"SFMono-Regular", Menlo, monospace;
+	/* Approved by Bharath (20 Oct 2026). Name + one italic phrase only. */
+	--font-display:
+		var(--font-instrument-serif, "Instrument Serif"), "Instrument Serif",
+		"Iowan Old Style", Georgia, serif;
+
+	/* ---- Font weights ----------------------------------------------------- */
+	/* IBM Plex: load and use these three only. No 700. Plex Mono: 400 + 500. */
+	--weight-regular: 400; /* reading text */
+	--weight-medium: 500; /* buttons, nav, mono labels */
+	--weight-semibold: 600; /* headings, stats */
+
+	/* ---- Type scale (fluid, 360px → 1280px viewport) ----------------------
+     size / line-height / tracking                                          */
+	--text-display: clamp(
+		2.75rem,
+		1.9rem +
+		3.8vw,
+		4.75rem
+	); /* 44 → 76px  name only */
+	--leading-display: 1;
+	--tracking-display: -0.02em;
+
+	/* Plex Sans sets ~5–7% wider than Geist/Inter with a taller x-height:
+     heading sizes come down one step and negative tracking is lighter. */
+	--text-h1: clamp(
+		2.125rem,
+		1.79rem +
+		1.52vw,
+		3rem
+	); /* 34 → 48px  page titles, Plex 600 */
+	--leading-h1: 1.1;
+	--tracking-h1: -0.02em;
+
+	--text-h2: clamp(
+		1.625rem,
+		1.43rem +
+		0.87vw,
+		2.125rem
+	); /* 26 → 34px  section titles, Plex 600 */
+	--leading-h2: 1.18;
+	--tracking-h2: -0.015em;
+
+	--text-h3: 1.1875rem; /* 19px  card titles, Plex 600 */
+	--leading-h3: 1.3;
+	--tracking-h3: -0.005em;
+
+	--text-body-lg: 1.125rem; /* 18px  hero bio, lead paragraphs */
+	--leading-body-lg: 1.6;
+
+	--text-body: 1rem; /* 16px  default, Plex 400 */
+	--leading-body: 1.65; /* taller x-height needs a little more air */
+
+	--text-sm: 0.875rem; /* 14px  card body (400), buttons + nav (500) */
+	--leading-sm: 1.5;
+	--tracking-sm: 0.005em;
+
+	--text-label: 0.75rem; /* 12px  Plex Mono 500 labels, chips, captions — the floor. Nothing smaller. */
+	--leading-label: 1.4;
+	--tracking-label: 0.04em; /* uppercase mono labels only; Plex Mono is already wide */
+
+	--text-stat: clamp(
+		2.375rem,
+		2.03rem +
+		1.52vw,
+		3.25rem
+	); /* 38 → 52px  bento numbers, Plex 600, tabular-nums */
+	--leading-stat: 1;
+	--tracking-stat: -0.02em;
+
+	--measure-prose: 68ch; /* blog + case-study body */
+	--measure-lead: 56ch; /* hero bio */
+
+	/* ---- Spacing (4px base) ----------------------------------------------- */
+	--space-0: 0;
+	--space-px: 1px;
+	--space-0-5: 0.125rem; /* 2  */
+	--space-1: 0.25rem; /* 4  */
+	--space-2: 0.5rem; /* 8  */
+	--space-3: 0.75rem; /* 12 */
+	--space-4: 1rem; /* 16 */
+	--space-5: 1.25rem; /* 20 */
+	--space-6: 1.5rem; /* 24 */
+	--space-8: 2rem; /* 32 */
+	--space-10: 2.5rem; /* 40 */
+	--space-12: 3rem; /* 48 */
+	--space-16: 4rem; /* 64 */
+	--space-20: 5rem; /* 80 */
+	--space-24: 6rem; /* 96 */
+	--space-32: 8rem; /* 128 */
+
+	/* Semantic spacing */
+	--space-section: clamp(
+		4rem,
+		2.5rem +
+		6vw,
+		8rem
+	); /* 64 → 128 between home sections */
+	--space-section-head: var(--space-8); /* section header → content */
+	--space-card-pad: var(--space-6); /* 24 */
+	--space-card-pad-lg: var(--space-8); /* 32, bento hero tile */
+	--space-stack: var(--space-4); /* default vertical rhythm */
+
+	/* ---- Layout ----------------------------------------------------------- */
+	--container-max: 70rem; /* 1120px content width */
+	--container-prose: 42.5rem; /* 680px reading column */
+	--gutter: 1rem; /* 16px  <768 */
+	--page-margin: 1.25rem; /* 20px  <640 */
+	--header-h: 3.5rem; /* 56px  */
+	--target-min: 2.75rem; /* 44px  minimum hit target */
+
+	/* ---- Radii (kept from current site + pill) ----------------------------- */
+	--radius-sm: 6px; /* chips, kbd, small inputs, tab indicator */
+	--radius-md: 8px; /* buttons, inputs, menu items, toasts */
+	--radius-lg: 12px; /* cards, bento tiles, palette, dialogs */
+	--radius-full: 9999px; /* status dot, avatar, toggle */
+
+	/* ---- Borders ------------------------------------------------------------ */
+	--border-width: 1px;
+	--border-width-strong: 1.5px;
+	--focus-ring-width: 2px;
+	--focus-ring-offset: 2px;
+
+	/* ---- Z-index ------------------------------------------------------------ */
+	--z-below: -1; /* hero canvas, blueprint grid */
+	--z-base: 0;
+	--z-raised: 1; /* card secondary links above stretched link */
+	--z-sticky: 40; /* header */
+	--z-dropdown: 50; /* menus, mobile nav sheet */
+	--z-overlay: 60; /* scrims */
+	--z-modal: 70; /* command palette, dialogs */
+	--z-toast: 80;
+	--z-skip-link: 90;
+
+	/* ---- Motion: durations ---------------------------------------------------
+     Hard ceiling 600ms for any one-shot animation. Ambient loops (hero signal,
+     marquee, status pulse) are the only exceptions and are always pausable. */
+	--dur-instant: 100ms; /* press feedback, color on active */
+	--dur-fast: 150ms; /* hover color, focus ring, chip */
+	--dur-base: 200ms; /* buttons, tab indicator, toast exit, palette open */
+	--dur-moderate: 300ms; /* card lift, page enter, toast enter */
+	--dur-slow: 450ms; /* scroll reveal, theme reveal */
+	--dur-slower: 560ms; /* hero name, count-up — the max */
+
+	/* ---- Motion: easing ------------------------------------------------------ */
+	--ease-out: cubic-bezier(
+		0.16,
+		1,
+		0.3,
+		1
+	); /* default for entrances (expo-out) */
+	--ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1); /* hover lifts, count-up */
+	--ease-in: cubic-bezier(0.4, 0, 1, 1); /* exits only */
+	--ease-in-out: cubic-bezier(
+		0.65,
+		0,
+		0.35,
+		1
+	); /* theme reveal, tab indicator, page cross-fade */
+	--ease-linear: linear; /* marquee, signal pulse travel */
+
+	/* ---- Motion: stagger + distance ------------------------------------------ */
+	--stagger-tight: 40ms; /* chips, list rows */
+	--stagger-base: 60ms; /* hero sequence, cards */
+	--stagger-max-items: 6; /* after 6 items, everything else appears with item 6 */
+	--distance-xs: 4px;
+	--distance-sm: 8px; /* default reveal travel */
+	--distance-md: 16px; /* page transition, toast */
+	--hover-lift: -2px;
+
+	/* ---- Signature: "Signal" motif ------------------------------------------ */
+	--signal-node-size: 4px;
+	--signal-hub-size: 8px;
+	--signal-line-width: 1px;
+	--signal-link-radius: 140px; /* cursor connects nodes within this distance */
+	--signal-pulse-duration: 1400ms; /* ambient: one pulse travelling one edge */
+	--signal-pulse-interval: 3200ms;
+	--flow-line-duration: 560ms; /* card hover: dot crosses card once */
+	--status-pulse-duration: 2000ms;
+
+	/* ---- Marquee -------------------------------------------------------------- */
+	--marquee-speed: 40s; /* one full loop; ~32px/s, slow enough to read */
+	--marquee-gap: var(--space-12);
+}
+
+/* --------------------------------------------------------------------------
+   2. Dark theme (default)
+   -------------------------------------------------------------------------- */
+:root,
+.dark,
+[data-theme="dark"] {
+	color-scheme: dark;
+
+	/* Surfaces */
+	--color-bg: #09090b; /* oklch(14.1% 0.004 285.8) page */
+	--color-bg-subtle: #111113; /* oklch(17.9% 0.004 286.0) alt bands, code, footer */
+	--color-surface: #18181b; /* oklch(21.0% 0.006 285.9) cards, inputs */
+	--color-surface-2: #27272a; /* oklch(27.4% 0.005 286.0) hover fill, kbd, selected row */
+	--color-scrim: rgb(9 9 11 / 0.72); /* behind palette */
+	--color-header: rgb(
+		9 9 11 / 0.72
+	); /* + backdrop-filter: blur(12px) saturate(140%) */
+
+	/* Borders */
+	--color-border: #27272a; /* oklch(27.4% 0.005 286.0) hairlines, card edges (decorative) */
+	--color-border-strong: #3f3f46; /* oklch(37.0% 0.012 285.8) card hover, dividers that matter */
+	--color-border-input: #71717a; /* oklch(55.2% 0.014 285.9) 4.12:1 on bg, 3.67:1 on surface — meets 1.4.11 */
+	--color-grid-line: rgb(250 250 250 / 0.04); /* blueprint grid, decorative */
+
+	/* Text */
+	--color-fg: #fafafa; /* oklch(98.5% 0 0)            19.06 bg / 16.97 surface */
+	--color-fg-secondary: #a1a1aa; /* oklch(71.2% 0.013 286.1)    7.76 bg / 6.91 surface / 5.81 surface-2 */
+	--color-fg-muted: #8b8b94; /* oklch(64.0% 0.013 286.0)    5.89 bg / 5.25 surface — NOT on surface-2 (4.41) */
+	--color-fg-disabled: #71717a; /* oklch(55.2% 0.014 285.9)    disabled only (exempt) */
+
+	/* Accent — "Signal cyan" */
+	--color-accent: #22d3ee; /* oklch(79.7% 0.134 211.5)    text/links/icons: 11.01 bg / 9.80 surface */
+	--color-accent-hover: #67e8f9; /* oklch(86.5% 0.115 207.1) */
+	--color-accent-solid: #22d3ee; /* primary button fill */
+	--color-on-accent: #09090b; /* 11.01 on accent-solid, 13.73 on accent-hover */
+	--color-accent-subtle: #0c2a31; /* oklch(26.6% 0.037 215.8)    tinted chip/tag bg */
+	--color-accent-subtle-fg: #67e8f9; /* 10.41 on accent-subtle */
+	--color-accent-graphic: #06b6d4; /* oklch(71.5% 0.126 215.2)    the original brand cyan — lines, nodes, dots */
+	--color-accent-glow: rgb(
+		34 211 238 / 0.14
+	); /* card hover inner glow, signal halo */
+	--color-focus: #22d3ee; /* 11.01 vs bg */
+
+	/* Status */
+	--color-success: #4ade80; /* oklch(80.0% 0.182 151.7)    11.42 bg / 10.17 surface */
+	--color-success-subtle: #0f2e1a; /* 8.45 with success text */
+	--color-warning: #fbbf24; /* oklch(83.7% 0.164 84.4)     10.61 surface */
+	--color-warning-subtle: #2e2208; /* 9.33 with warning text */
+	--color-danger: #f87171; /* oklch(71.1% 0.166 22.2)     7.19 bg / 6.40 surface */
+	--color-danger-subtle: #3a1212; /* 5.95 with danger text */
+	--color-status-live: #4ade80; /* "Open to opportunities" dot */
+
+	/* Stack group markers (non-text dots only; chip text stays neutral) */
+	--color-group-ai: #22d3ee;
+	--color-group-lang: #c4b5fd; /* oklch(81.1% 0.101 293.6) */
+	--color-group-frontend: #fcd34d; /* oklch(87.9% 0.153 91.6) */
+	--color-group-backend: #86efac; /* oklch(87.1% 0.136 154.4) */
+
+	/* Elevation — dark mode leans on borders + a top highlight, not drop shadows */
+	--shadow-0: none;
+	--shadow-1: inset 0 1px 0 rgb(255 255 255 / 0.04);
+	--shadow-2:
+		inset 0 1px 0 rgb(255 255 255 / 0.05), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+	--shadow-3:
+		inset 0 1px 0 rgb(255 255 255 / 0.06), 0 24px 64px -16px rgb(0 0 0 / 0.7),
+		0 0 0 1px var(--color-border-strong);
+	--shadow-glow:
+		0 0 0 1px rgb(34 211 238 / 0.35), 0 8px 32px -12px rgb(34 211 238 / 0.25);
+
+	/* Skeleton */
+	--color-skeleton: #18181b;
+	--color-skeleton-shine: #27272a;
+}
+
+/* --------------------------------------------------------------------------
+   3. Light theme
+   -------------------------------------------------------------------------- */
+.light,
+[data-theme="light"] {
+	color-scheme: light;
+
+	/* Surfaces */
+	--color-bg: #ffffff; /* oklch(100% 0 0) */
+	--color-bg-subtle: #fafafa; /* oklch(98.5% 0 0) */
+	--color-surface: #f4f4f5; /* oklch(96.7% 0.001 286.4) */
+	--color-surface-2: #e4e4e7; /* oklch(92.0% 0.004 286.3) */
+	--color-scrim: rgb(24 24 27 / 0.32);
+	--color-header: rgb(255 255 255 / 0.78);
+
+	/* Borders */
+	--color-border: #e4e4e7; /* oklch(92.0% 0.004 286.3) decorative */
+	--color-border-strong: #d4d4d8; /* oklch(87.1% 0.005 286.3) */
+	--color-border-input: #8a8a93; /* oklch(63.6% 0.013 286.0) 3.42 on bg, 3.11 on surface */
+	--color-grid-line: rgb(24 24 27 / 0.05);
+
+	/* Text */
+	--color-fg: #18181b; /* oklch(21.0% 0.006 285.9)    17.72 bg / 16.12 surface */
+	--color-fg-secondary: #52525b; /* oklch(44.2% 0.015 285.8)    7.73 bg / 7.03 surface / 6.09 surface-2 */
+	--color-fg-muted: #6b6b74; /* oklch(53.1% 0.014 285.9)    5.28 bg / 4.80 surface — NOT on surface-2 (4.16) */
+	--color-fg-disabled: #a1a1aa;
+
+	/* Accent — "Signal cyan", deepened for white backgrounds */
+	--color-accent: #0e7490; /* oklch(52.0% 0.094 223.1)    5.36 bg / 4.87 surface / 5.15 accent-subtle */
+	--color-accent-hover: #155e75; /* oklch(45.0% 0.077 224.3)    7.27 bg */
+	--color-accent-solid: #0e7490;
+	--color-on-accent: #ffffff; /* 5.36 on solid, 7.27 on hover */
+	--color-accent-subtle: #ecfeff; /* oklch(98.4% 0.019 200.9) */
+	--color-accent-subtle-fg: #0e7490; /* 5.15 (old #0891b2 here was 3.54 — the failure) */
+	--color-accent-graphic: #0891b2; /* oklch(60.9% 0.111 221.7)    graphics only: 3.68 bg ≥ 3:1 */
+	--color-accent-glow: rgb(8 145 178 / 0.1);
+	--color-focus: #0e7490; /* 5.36 vs bg */
+
+	/* Status */
+	--color-success: #15803d; /* oklch(52.7% 0.137 150.1)    5.02 bg */
+	--color-success-subtle: #f0fdf4; /* 4.79 with success text */
+	--color-warning: #b45309; /* oklch(55.5% 0.146 49.0)     5.02 bg */
+	--color-warning-subtle: #fffbeb; /* 4.84 */
+	--color-danger: #b91c1c; /* oklch(50.5% 0.190 27.5)     6.47 bg */
+	--color-danger-subtle: #fef2f2; /* 5.91 */
+	--color-status-live: #15803d;
+
+	--color-group-ai: #0891b2;
+	--color-group-lang: #6d28d9; /* oklch(49.1% 0.241 292.6) */
+	--color-group-frontend: #b45309;
+	--color-group-backend: #15803d;
+
+	--shadow-0: none;
+	--shadow-1: 0 1px 2px rgb(24 24 27 / 0.06);
+	--shadow-2:
+		0 1px 2px rgb(24 24 27 / 0.04), 0 8px 24px -12px rgb(24 24 27 / 0.16);
+	--shadow-3:
+		0 24px 64px -16px rgb(24 24 27 / 0.24), 0 0 0 1px var(--color-border);
+	--shadow-glow:
+		0 0 0 1px rgb(8 145 178 / 0.35), 0 8px 32px -12px rgb(8 145 178 / 0.22);
+
+	--color-skeleton: #f4f4f5;
+	--color-skeleton-shine: #e4e4e7;
+}
+
+/* --------------------------------------------------------------------------
+   4. Responsive layout tokens
+   Breakpoints: sm 640 · md 768 · lg 1024 · xl 1280 (Tailwind defaults)
+   -------------------------------------------------------------------------- */
+@media (min-width: 640px) {
+	:root {
+		--page-margin: 1.5rem;
+	} /* 24 */
+}
+@media (min-width: 768px) {
+	:root {
+		--gutter: 1.5rem;
+		--page-margin: 2rem;
+	} /* 24 / 32 */
+}
+@media (min-width: 1280px) {
+	:root {
+		--page-margin: 3rem;
+	} /* 48 */
+}
+
+/* --------------------------------------------------------------------------
+   5. Reduced motion — collapse durations; components still read these tokens.
+   Ambient loops must also check the media query in JS and render static.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--dur-fast: 0ms;
+		--dur-base: 0ms;
+		--dur-moderate: 120ms; /* opacity-only cross-fades are allowed */
+		--dur-slow: 120ms;
+		--dur-slower: 0ms;
+		--distance-xs: 0px;
+		--distance-sm: 0px;
+		--distance-md: 0px;
+		--hover-lift: 0px;
+		--stagger-tight: 0ms;
+		--stagger-base: 0ms;
+		--marquee-speed: 0s; /* marquee renders as a static wrapped row */
+	}
+}
+
+/* --------------------------------------------------------------------------
+   6. Global primitives that are pure token application (not components)
+   -------------------------------------------------------------------------- */
+:focus-visible {
+	outline: var(--focus-ring-width) solid var(--color-focus);
+	outline-offset: var(--focus-ring-offset);
+}
+
+::selection {
+	background: var(--color-accent-subtle);
+	color: var(--color-fg);
+}
+
+.tabular {
+	font-variant-numeric: tabular-nums;
+}

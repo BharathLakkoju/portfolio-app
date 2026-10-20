@@ -1,35 +1,61 @@
-import { cn } from "~/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "~/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2",
-  {
-    variants: {
-      variant: {
-        default:
-          "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-secondary)]",
-        accent:
-          "border-[var(--color-accent)]/30 bg-[var(--color-accent-subtle)] text-[var(--color-accent)]",
-        outline:
-          "border-[var(--color-border)] bg-transparent text-[var(--color-text-muted)]",
-        success:
-          "border-green-500/30 bg-green-500/10 text-green-400",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
+	"inline-flex h-6 items-center gap-1.5 whitespace-nowrap rounded-sm px-2 font-medium font-mono text-label",
+	{
+		variants: {
+			variant: {
+				neutral: "border border-border text-fg-secondary",
+				accent: "bg-accent-subtle text-accent-subtle-fg",
+				live: "bg-success-subtle text-success uppercase",
+				status: "border border-border text-fg-secondary uppercase",
+			},
+		},
+		defaultVariants: { variant: "neutral" },
+	},
 );
 
 export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+	extends React.HTMLAttributes<HTMLSpanElement>,
+		VariantProps<typeof badgeVariants> {}
 
-function Badge({ className, variant, ...props }: BadgeProps) {
-  return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
-  );
+export function Badge({ className, variant, ...props }: BadgeProps) {
+	return (
+		<span className={cn(badgeVariants({ variant }), className)} {...props} />
+	);
 }
 
-export { Badge, badgeVariants };
+const dotColor = {
+	ai: "bg-group-ai",
+	lang: "bg-group-lang",
+	frontend: "bg-group-frontend",
+	backend: "bg-group-backend",
+} as const;
+
+export function Chip({
+	children,
+	dot,
+	className,
+}: {
+	children: React.ReactNode;
+	dot?: keyof typeof dotColor;
+	className?: string;
+}) {
+	return (
+		<span
+			className={cn(
+				"inline-flex h-6 items-center gap-1.5 whitespace-nowrap rounded-sm border border-border px-2 font-mono text-fg-secondary text-label",
+				className,
+			)}
+		>
+			{dot && (
+				<span
+					aria-hidden
+					className={cn("size-1.5 rounded-full", dotColor[dot])}
+				/>
+			)}
+			{children}
+		</span>
+	);
+}

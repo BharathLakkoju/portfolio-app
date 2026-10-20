@@ -1,128 +1,118 @@
+import { ArrowLeft, ArrowRight, Download, Mail } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { getAllSlugs, getPostBySlug } from "~/lib/blog";
-import { formatDate } from "~/lib/utils";
-import { Badge } from "~/components/ui/badge";
-import { AnimatedSection } from "~/components/shared/AnimatedSection";
-import { Calendar, Clock, ArrowLeft } from "lucide-react";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
+import { Chip } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
+import { getAllPosts, getAllSlugs, getPostBySlug } from "~/lib/blog";
+import { site } from "~/lib/data";
+import { formatDate } from "~/lib/utils";
 
-type Props = {
-  params: Promise<{ slug: string }>;
-};
+type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
+	return getAllSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
-  if (!post) return {};
-  return {
-    title: post.title,
-    description: post.description,
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      type: "article",
-      publishedTime: post.date,
-      tags: post.tags,
-    },
-  };
+	const { slug } = await params;
+	const post = getPostBySlug(slug);
+	if (!post) return {};
+	return {
+		title: post.title,
+		description: post.description,
+		openGraph: {
+			title: post.title,
+			description: post.description,
+			type: "article",
+			publishedTime: post.date,
+			tags: post.tags,
+		},
+	};
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
-  if (!post) notFound();
+	const { slug } = await params;
+	const post = getPostBySlug(slug);
+	if (!post) notFound();
 
-  return (
-    <div className="pt-16">
-      <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16">
-        {/* Back link */}
-        <AnimatedSection className="mb-8">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/blog" className="flex items-center gap-2">
-              <ArrowLeft size={16} />
-              Back to Blog
-            </Link>
-          </Button>
-        </AnimatedSection>
+	const posts = getAllPosts();
+	const index = posts.findIndex((p) => p.slug === slug);
+	const nextPost = posts[index + 1];
 
-        {/* Header */}
-        <AnimatedSection delay={0.1}>
-          {/* Tags */}
-          <div className="mb-5 flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <Badge key={tag} variant="accent">
-                {tag}
-              </Badge>
-            ))}
-          </div>
+	return (
+		<article className="container-page pt-10 pb-[var(--space-section)]">
+			<div className="max-w-[var(--container-prose)]">
+				<Link
+					className="-ml-3 inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-fg-secondary text-sm hover:text-fg"
+					href="/blog"
+				>
+					<ArrowLeft aria-hidden size={14} />
+					All posts
+				</Link>
 
-          <h1 className="text-2xl font-bold leading-tight mb-4 sm:text-3xl md:text-4xl">
-            {post.title}
-          </h1>
+				<header className="mt-6 mb-10 border-border border-b pb-8">
+					<h1 className="text-fg text-h1 tracking-[-0.02em]">{post.title}</h1>
+					{post.description && (
+						<p className="mt-4 text-body-lg text-fg-secondary">
+							{post.description}
+						</p>
+					)}
+					<p className="label-mono mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-fg-muted">
+						<time dateTime={post.date}>{formatDate(post.date)}</time>
+						<span aria-hidden>·</span>
+						<span>{post.readTime} min read</span>
+					</p>
+					{post.tags.length > 0 && (
+						<ul className="mt-4 flex flex-wrap gap-2">
+							{post.tags.map((tag) => (
+								<li key={tag}>
+									<Chip>{tag}</Chip>
+								</li>
+							))}
+						</ul>
+					)}
+				</header>
 
-          <p className="text-lg text-text-secondary mb-6 leading-relaxed">
-            {post.description}
-          </p>
+				<div className="prose prose-site max-w-none prose-pre:rounded-lg prose-headings:font-semibold prose-headings:text-fg prose-headings:tracking-[-0.01em] prose-a:underline-offset-4">
+					<MDXRemote source={post.content} />
+				</div>
 
-          <div className="flex items-center gap-5 text-sm text-text-muted border-y border-border py-4 mb-10">
-            <span className="flex items-center gap-2">
-              <Calendar size={14} />
-              {formatDate(post.date)}
-            </span>
-            <span className="flex items-center gap-2">
-              <Clock size={14} />
-              {post.readTime} min read
-            </span>
-          </div>
-        </AnimatedSection>
-
-        {/* MDX Content */}
-        <AnimatedSection delay={0.2}>
-          <div
-            className="
-              prose dark:prose-invert prose-zinc max-w-none
-              prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-text-primary
-              prose-h1:text-2xl prose-h1:mt-10 prose-h1:mb-4
-              prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-3 prose-h2:border-b prose-h2:border-border prose-h2:pb-2
-              prose-h3:text-base prose-h3:mt-8 prose-h3:mb-2
-              prose-p:text-text-secondary prose-p:leading-[1.85] prose-p:my-5
-              prose-a:text-accent prose-a:no-underline hover:prose-a:underline
-              prose-strong:text-text-primary prose-strong:font-semibold
-              prose-code:font-mono prose-code:text-accent prose-code:bg-surface prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:border prose-code:border-border prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
-              prose-pre:bg-surface prose-pre:border prose-pre:border-border prose-pre:rounded-xl prose-pre:my-6
-              prose-blockquote:border-l-accent prose-blockquote:text-text-muted prose-blockquote:my-6
-              prose-hr:border-border prose-hr:my-8
-              prose-ul:text-text-secondary prose-ul:my-5 prose-ul:pl-6
-              prose-ol:text-text-secondary prose-ol:my-5 prose-ol:pl-6
-              prose-li:my-2 prose-li:leading-relaxed
-              prose-li:marker:text-accent
-              prose-table:text-sm prose-th:text-text-primary prose-td:text-text-secondary
-            "
-          >
-            <MDXRemote source={post.content} />
-          </div>
-        </AnimatedSection>
-
-        {/* Footer */}
-        <AnimatedSection
-          delay={0.3}
-          className="mt-16 border-t border-border pt-8"
-        >
-          <Button variant="outline" asChild>
-            <Link href="/blog">
-              <ArrowLeft size={16} />
-              All posts
-            </Link>
-          </Button>
-        </AnimatedSection>
-      </article>
-    </div>
-  );
+				<footer className="mt-16 flex flex-col gap-6 border-border border-t pt-8">
+					{nextPost && (
+						<Link
+							className="group flex flex-col gap-1 rounded-lg border border-border bg-surface p-6 transition-colors hover:border-border-strong"
+							href={`/blog/${nextPost.slug}`}
+						>
+							<span className="label-mono text-fg-muted">Next post</span>
+							<span className="flex items-center gap-2 text-fg text-h3 group-hover:text-accent">
+								{nextPost.title}
+								<ArrowRight
+									aria-hidden
+									className="transition-transform group-hover:translate-x-0.5"
+									size={16}
+								/>
+							</span>
+						</Link>
+					)}
+					<div className="flex flex-wrap gap-3">
+						<Button asChild>
+							<a href={site.resume} rel="noopener" target="_blank">
+								<Download aria-hidden size={15} />
+								Download resume
+								<span className="sr-only"> (PDF, opens in new tab)</span>
+							</a>
+						</Button>
+						<Button asChild variant="secondary">
+							<Link href="/contact">
+								<Mail aria-hidden size={15} />
+								Contact me
+							</Link>
+						</Button>
+					</div>
+				</footer>
+			</div>
+		</article>
+	);
 }
