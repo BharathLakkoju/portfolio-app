@@ -379,9 +379,11 @@ function Corners() {
 					<span className="relative">
 						<Image
 							alt=""
-							className="size-9 rounded-full transition-transform duration-300 group-hover:rotate-[-8deg]"
+							className="size-9 rounded-full bg-white object-cover ring-1 ring-border-strong transition-transform duration-300 group-hover:rotate-[-8deg]"
 							height={36}
-							src="/favicon.ico"
+							priority
+							src="/images/bharath-logo.png"
+							unoptimized
 							width={36}
 						/>
 						{profile.openToWork && (

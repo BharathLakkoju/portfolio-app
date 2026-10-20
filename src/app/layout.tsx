@@ -68,7 +68,13 @@ export const metadata: Metadata = {
 		site: profile.twitterHandle,
 		creator: profile.twitterHandle,
 	},
-	icons: [{ rel: "icon", url: "/favicon.ico" }],
+	icons: {
+		icon: [
+			{ url: "/favicon.ico", sizes: "48x48" },
+			{ url: "/icon.png", type: "image/png", sizes: "512x512" },
+		],
+		apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+	},
 };
 
 export const viewport: Viewport = {
