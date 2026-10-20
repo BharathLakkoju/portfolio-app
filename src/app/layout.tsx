@@ -61,7 +61,13 @@ export const metadata: Metadata = {
 		description,
 		siteName: profile.name,
 	},
-	twitter: { card: "summary_large_image", title, description },
+	twitter: {
+		card: "summary_large_image",
+		title,
+		description,
+		site: profile.twitterHandle,
+		creator: profile.twitterHandle,
+	},
 	icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
@@ -93,7 +99,7 @@ const personJsonLd = {
 		addressRegion: "Telangana",
 		addressCountry: "IN",
 	},
-	sameAs: [profile.github, profile.linkedin],
+	sameAs: [profile.github, profile.linkedin, profile.twitter],
 };
 
 export default function RootLayout({

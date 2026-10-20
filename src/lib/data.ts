@@ -24,6 +24,8 @@ export const profile = {
 	github: "https://github.com/BharathLakkoju",
 	githubUser: "BharathLakkoju",
 	linkedin: "https://linkedin.com/in/bharathlakkoju",
+	twitter: "https://x.com/twostardev",
+	twitterHandle: "@twostardev",
 	company: "UST Global",
 	targetRoles: ["AI Engineer", "Full-Stack", "Applied AI"],
 	/** Set false the day availability changes; the status dot turns grey. */
@@ -404,41 +406,96 @@ export const stackGroups: StackGroup[] = [
 ];
 
 // ============================================================
-// Experience and education
+// Experience
 // ============================================================
 
-export type TimelineEntry = {
-	title: string;
-	org: string;
-	location?: string;
-	dates: string;
-	current?: boolean;
-	bullets: string[];
+export type WorkMetric = {
+	/** A number counts up; a string (e.g. "Java → NestJS") renders as-is. */
+	value: number | string;
+	prefix?: string;
+	suffix?: string;
+	label: string;
 };
 
-export const experience: TimelineEntry[] = [
+export type Workstream = {
+	id: string;
+	name: string;
+	metrics: WorkMetric[];
+	summary: string;
+	stack: string[];
+};
+
+export type Role = {
+	title: string;
+	org: string;
+	location: string;
+	dates: string;
+	/** ISO month the role began; drives the live tenure label. */
+	start: string;
+	current: boolean;
+	summary: string;
+	workstreams: Workstream[];
+};
+
+export const experience: Role[] = [
 	{
 		title: "Developer I (SDE-1)",
 		org: "UST Global",
 		location: "Hyderabad, India",
 		dates: "Sep 2024 — Present",
+		start: "2024-09",
 		current: true,
-		bullets: [
-			"Built a full-stack health-tracking app (React Native, Node.js, PostgreSQL) whose reward system lifted engagement 69% and data intake 113%.",
-			"Automated WCS data digitisation across Angular and Node.js microservices, cutting manual processing 86%.",
-			"Shipped an LLM-backed support chatbot with predictive analytics, growing monthly active users 46%.",
-			"Migrated legacy Java Spring services to Node.js and NestJS with API security standards.",
-			"Tuned CI/CD pipelines to hold 99% deployment uptime.",
+		summary:
+			"Full-stack engineer shipping product features, automation and delivery pipelines.",
+		workstreams: [
+			{
+				id: "health",
+				name: "Health-tracking app",
+				metrics: [
+					{ value: 69, prefix: "+", suffix: "%", label: "engagement" },
+					{ value: 113, prefix: "+", suffix: "%", label: "data intake" },
+				],
+				summary: "Built the full app; its reward system drove daily use.",
+				stack: ["React Native", "Node.js", "PostgreSQL"],
+			},
+			{
+				id: "wcs",
+				name: "WCS digitisation",
+				metrics: [
+					{ value: 86, prefix: "−", suffix: "%", label: "manual processing" },
+				],
+				summary: "Automated data digitisation across microservices.",
+				stack: ["Angular", "Node.js"],
+			},
+			{
+				id: "chatbot",
+				name: "Support chatbot",
+				metrics: [
+					{
+						value: 46,
+						prefix: "+",
+						suffix: "%",
+						label: "monthly active users",
+					},
+				],
+				summary: "Shipped an LLM-backed assistant with predictive analytics.",
+				stack: ["LLM", "Analytics"],
+			},
+			{
+				id: "migration",
+				name: "Service migration",
+				metrics: [{ value: "Java → NestJS", label: "legacy Spring services" }],
+				summary: "Moved services over with API security standards applied.",
+				stack: ["Spring", "Node.js", "NestJS"],
+			},
+			{
+				id: "cicd",
+				name: "CI/CD reliability",
+				metrics: [{ value: 99, suffix: "%", label: "deployment uptime" }],
+				summary: "Tuned delivery pipelines across Agile sprints.",
+				stack: ["CI/CD"],
+			},
 		],
-	},
-];
-
-export const education: TimelineEntry[] = [
-	{
-		title: "B.Tech, Information Technology",
-		org: "MVGR College of Engineering",
-		dates: "2020 — 2024",
-		bullets: ["GPA 8.10 / 10"],
 	},
 ];
 

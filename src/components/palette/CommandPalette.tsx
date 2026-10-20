@@ -21,7 +21,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useNavigate } from "~/components/providers/NavigationProvider";
 import { useToast } from "~/components/providers/ToastProvider";
-import { GithubIcon, LinkedinIcon } from "~/components/shared/Icons";
+import { GithubIcon, LinkedinIcon, XIcon } from "~/components/shared/Icons";
 import { profile, projects, site } from "~/lib/data";
 import { duration, ease, spring } from "~/lib/motion";
 import { cn } from "~/lib/utils";
@@ -118,6 +118,14 @@ export default function CommandPalette() {
 				run: external(profile.linkedin),
 			},
 			{
+				id: "twitter",
+				group: "Actions",
+				label: "Open X (Twitter)",
+				icon: XIcon,
+				keywords: `twitter x ${profile.twitterHandle}`,
+				run: external(profile.twitter),
+			},
+			{
 				id: "github",
 				group: "Actions",
 				label: "Open GitHub",
@@ -147,7 +155,7 @@ export default function CommandPalette() {
 				label: "About",
 				icon: User,
 				keys: ["A"],
-				keywords: "experience education",
+				keywords: "experience work career",
 				run: go("/about"),
 			},
 			{

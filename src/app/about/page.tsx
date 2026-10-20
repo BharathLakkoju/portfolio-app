@@ -1,21 +1,21 @@
 import { Download, Mail } from "lucide-react";
 import type { Metadata } from "next";
+import { ExperienceShowcase } from "~/components/experience/ExperienceShowcase";
 import { Reveal, Stagger, StaggerItem } from "~/components/motion/Reveal";
 import { SectionHeader } from "~/components/motion/SectionHeader";
 import { ContributionHeatmap } from "~/components/shared/ContributionHeatmap";
 import { LeetCodeCard } from "~/components/shared/LeetCodeCard";
 import { PlatformCard } from "~/components/shared/PlatformCard";
 import { SwapAvatar } from "~/components/shared/SwapAvatar";
-import { Timeline } from "~/components/shared/Timeline";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { Button } from "~/components/ui/button";
 import { getCodeforcesStats } from "~/lib/codeforces";
-import { education, experience, profile, site } from "~/lib/data";
+import { experience, profile, site } from "~/lib/data";
 import { getGfgStats } from "~/lib/geeksforgeeks";
 import { getContributions } from "~/lib/github";
 import { getHackerRankStats } from "~/lib/hackerrank";
 import { getLeetCodeStats } from "~/lib/leetcode";
-import { cn } from "~/lib/utils";
+import { cn, formatTenure } from "~/lib/utils";
 
 export const revalidate = 3600;
 
@@ -152,32 +152,20 @@ export default async function AboutPage() {
 					label="Experience"
 					title="Experience"
 				/>
-				<div className="grid-page">
-					<div className="lg:col-span-8">
-						<Timeline entries={experience} />
-					</div>
-				</div>
-			</section>
-
-			<section aria-labelledby="education">
-				<SectionHeader
-					id="education"
-					index="02"
-					label="Education"
-					title="Education"
-				/>
-				<div className="grid-page">
-					<div className="lg:col-span-8">
-						<Timeline entries={education} />
-					</div>
-				</div>
+				{experience.map((role) => (
+					<ExperienceShowcase
+						key={`${role.org}-${role.title}`}
+						role={role}
+						tenure={formatTenure(role.start)}
+					/>
+				))}
 			</section>
 
 			{contributions && (
 				<section aria-labelledby="activity">
 					<SectionHeader
 						id="activity"
-						index="03"
+						index="02"
 						label="Activity"
 						title="Shipping, week by week"
 					/>
@@ -195,7 +183,7 @@ export default async function AboutPage() {
 				>
 					<SectionHeader
 						id="problem-solving"
-						index="04"
+						index="03"
 						label="Problem solving"
 						title="Practice, in public"
 					/>
@@ -221,7 +209,7 @@ export default async function AboutPage() {
 			<section aria-labelledby="how-i-work">
 				<SectionHeader
 					id="how-i-work"
-					index="05"
+					index="04"
 					label="How I work"
 					title="How I work"
 				/>
@@ -242,7 +230,7 @@ export default async function AboutPage() {
 			<section aria-labelledby="shortcuts">
 				<SectionHeader
 					id="shortcuts"
-					index="06"
+					index="05"
 					label="Keyboard"
 					title="Keyboard shortcuts"
 				/>

@@ -285,12 +285,12 @@ html[data-vt="theme"]::view-transition-new(root) {
 	}
 }
 
-/* Marquee: pauses on hover, focus, off-screen, or by the pause button */
+/* Marquee: pauses on viewport hover, off-screen, or via the pause button */
 .marquee-track {
 	animation: var(--animate-marquee);
 }
-.marquee:hover .marquee-track,
-.marquee:focus-within .marquee-track,
+.marquee-viewport:hover .marquee-track,
+.marquee[data-offscreen="true"] .marquee-track,
 .marquee[data-paused="true"] .marquee-track {
 	animation-play-state: paused;
 }

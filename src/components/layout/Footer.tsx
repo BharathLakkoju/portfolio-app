@@ -1,6 +1,6 @@
 import { Download } from "lucide-react";
 import { CopyEmail } from "~/components/shared/CopyEmail";
-import { GithubIcon, LinkedinIcon } from "~/components/shared/Icons";
+import { GithubIcon, LinkedinIcon, XIcon } from "~/components/shared/Icons";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { navLinks, profile, site } from "~/lib/data";
 
@@ -64,6 +64,15 @@ export function Footer() {
 							target="_blank"
 						>
 							<LinkedinIcon size={16} />
+						</a>
+						<a
+							aria-label="X (opens in new tab)"
+							className="grid size-11 place-items-center rounded-md text-fg-secondary transition-colors duration-150 hover:bg-surface-2 hover:text-fg"
+							href={profile.twitter}
+							rel="noopener"
+							target="_blank"
+						>
+							<XIcon size={16} />
 						</a>
 					</div>
 				</div>

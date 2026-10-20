@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import { ArrowRight, Download, Mail } from "lucide-react";
 import { useEffect, useLayoutEffect, useState } from "react";
-import { GithubIcon, LinkedinIcon } from "~/components/shared/Icons";
+import { GithubIcon, LinkedinIcon, XIcon } from "~/components/shared/Icons";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -261,6 +261,12 @@ export function Hero({ commit }: { commit: LatestCommit | null }) {
 									href: profile.linkedin,
 									label: "LinkedIn",
 									Icon: LinkedinIcon,
+									ext: true,
+								},
+								{
+									href: profile.twitter,
+									label: "X",
+									Icon: XIcon,
 									ext: true,
 								},
 								{

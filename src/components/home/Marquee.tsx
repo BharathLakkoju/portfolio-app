@@ -57,11 +57,12 @@ export function Marquee() {
 		<section
 			aria-label="Highlights"
 			className="marquee relative border-border border-y bg-bg/60 backdrop-blur-sm"
-			data-paused={paused || offscreen}
+			data-offscreen={offscreen}
+			data-paused={paused}
 			ref={ref}
 		>
 			<div className="container-page flex h-11 items-center gap-2 md:h-12">
-				<div className="mask-fade-x min-w-0 flex-1 overflow-hidden">
+				<div className="marquee-viewport mask-fade-x min-w-0 flex-1 overflow-hidden">
 					<div className="marquee-track flex w-max">
 						<Items />
 						<Items hidden />

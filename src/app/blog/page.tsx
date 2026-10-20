@@ -4,6 +4,7 @@ import { Stagger, StaggerItem } from "~/components/motion/Reveal";
 import { SectionHeader } from "~/components/motion/SectionHeader";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { getAllPosts } from "~/lib/blog";
+import { profile } from "~/lib/data";
 import { formatDate } from "~/lib/utils";
 
 export const metadata: Metadata = {
@@ -71,7 +72,17 @@ export default function BlogPage() {
 			</div>
 			{posts.length < 3 && (
 				<p className="mt-6 text-fg-secondary text-sm">
-					More writing soon. Follow on LinkedIn for updates.
+					More writing soon. Follow{" "}
+					<a
+						className="text-accent hover:text-accent-hover"
+						href={profile.twitter}
+						rel="noopener"
+						target="_blank"
+					>
+						{profile.twitterHandle}
+						<span className="sr-only"> on X (opens in new tab)</span>
+					</a>{" "}
+					or LinkedIn for updates.
 				</p>
 			)}
 		</div>

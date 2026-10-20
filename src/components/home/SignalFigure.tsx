@@ -3,11 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePalette } from "~/components/palette/PaletteProvider";
 import { SwapAvatar } from "~/components/shared/SwapAvatar";
-import {
-	useFinePointer,
-	useMediaQuery,
-	useReducedMotion,
-} from "~/hooks/use-media-query";
+import { useReducedMotion } from "~/hooks/use-media-query";
 import { usePageVisible } from "~/hooks/use-page-visible";
 
 type Node = { x: number; y: number; label?: string };
@@ -64,7 +60,8 @@ const EDGES: [number, number][] = [
 ];
 
 const CHAIN = [1, 2, 3, 4, 0];
-const LINK_RADIUS = 140;
+/** Reach of the pointer/touch links, as a share of the figure size. */
+const LINK_REACH = 0.32;
 const PULSE_MS = 1400;
 const PULSE_EVERY_MS = 3200;
 const VIEW = 440;
@@ -137,8 +134,10 @@ function SignalCanvas() {
 			pointer.x = -9999;
 			pointer.y = -9999;
 		};
+		host.addEventListener("pointerdown", onMove);
 		host.addEventListener("pointermove", onMove);
 		host.addEventListener("pointerleave", onLeave);
+		host.addEventListener("pointercancel", onLeave);
 
 		const start = performance.now();
 		let raf = 0;
@@ -148,12 +147,13 @@ function SignalCanvas() {
 			pointer.y += (target.y - pointer.y) * 0.2;
 
 			ctx.lineWidth = 1;
+			const reach = size * LINK_REACH;
 			for (const node of NODES) {
 				const nx = node.x * size;
 				const ny = node.y * size;
 				const d = Math.hypot(pointer.x - nx, pointer.y - ny);
-				if (d > LINK_RADIUS) continue;
-				const a = 1 - d / LINK_RADIUS;
+				if (d > reach) continue;
+				const a = 1 - d / reach;
 				ctx.globalAlpha = a * 0.7;
 				ctx.strokeStyle = line;
 				ctx.beginPath();
@@ -209,8 +209,10 @@ function SignalCanvas() {
 			cancelAnimationFrame(raf);
 			ro.disconnect();
 			mo.disconnect();
+			host.removeEventListener("pointerdown", onMove);
 			host.removeEventListener("pointermove", onMove);
 			host.removeEventListener("pointerleave", onLeave);
+			host.removeEventListener("pointercancel", onLeave);
 		};
 	}, [running]);
 
@@ -264,10 +266,9 @@ function SignalGraph() {
 					/>
 					{n.label && (
 						<text
-							className="max-lg:hidden"
+							className="text-[15px] md:text-[12px]"
 							fill="var(--color-fg-muted)"
 							fontFamily="var(--font-mono)"
-							fontSize={12}
 							letterSpacing="0.04em"
 							textAnchor={n.x > 0.5 ? "end" : "start"}
 							x={n.x * VIEW + (n.x > 0.5 ? -10 : 10)}
@@ -284,18 +285,16 @@ function SignalGraph() {
 
 export function SignalFigure() {
 	const reduce = useReducedMotion();
-	const fine = useFinePointer();
-	const large = useMediaQuery("(min-width: 1024px)");
 
 	return (
-		<figure className="relative mx-auto h-40 w-full overflow-hidden rounded-lg border border-border bg-bg-subtle/60 lg:aspect-square lg:h-auto lg:max-w-[440px]">
+		<figure className="relative mx-auto aspect-square w-full max-w-[440px] touch-pan-y overflow-hidden rounded-lg border border-border bg-bg-subtle/60">
 			<SignalGraph />
-			{large && fine && !reduce && <SignalCanvas />}
+			{!reduce && <SignalCanvas />}
 			<div className="absolute inset-0 grid place-items-center">
 				<SwapAvatar
-					className="size-[88px] lg:size-[120px]"
+					className="aspect-square w-[27%] max-w-[120px]"
 					priority
-					sizes="(min-width: 1024px) 120px, 88px"
+					sizes="120px"
 				/>
 			</div>
 			<figcaption className="sr-only">

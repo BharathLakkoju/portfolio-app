@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { ExperienceShowcase } from "~/components/experience/ExperienceShowcase";
 import { ClosingCTA } from "~/components/home/ClosingCTA";
 import { Hero } from "~/components/home/Hero";
 import { ImpactBento } from "~/components/home/ImpactBento";
@@ -7,16 +8,10 @@ import { StackSection } from "~/components/home/StackSection";
 import { SectionHeader } from "~/components/motion/SectionHeader";
 import { ProjectGrid } from "~/components/projects/ProjectGrid";
 import { CodingSnapshot } from "~/components/shared/CodingSnapshot";
-import { Timeline } from "~/components/shared/Timeline";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
-import {
-	education,
-	experience,
-	impactStats,
-	projects,
-	stackGroups,
-} from "~/lib/data";
+import { experience, impactStats, projects, stackGroups } from "~/lib/data";
 import { getLatestCommit } from "~/lib/github";
+import { formatTenure } from "~/lib/utils";
 
 export const revalidate = 600;
 
@@ -97,11 +92,13 @@ export default async function HomePage() {
 					link={{ href: "/about#experience", label: "Full experience" }}
 					title="Where I've worked"
 				/>
-				<div className="grid-page">
-					<div className="lg:col-span-8">
-						<Timeline entries={[...experience, ...education]} maxBullets={3} />
-					</div>
-				</div>
+				{experience.map((role) => (
+					<ExperienceShowcase
+						key={`${role.org}-${role.title}`}
+						role={role}
+						tenure={formatTenure(role.start)}
+					/>
+				))}
 			</section>
 
 			<ClosingCTA />

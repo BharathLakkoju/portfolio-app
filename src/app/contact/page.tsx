@@ -4,7 +4,7 @@ import { ContactForm } from "~/components/contact/ContactForm";
 import { Reveal } from "~/components/motion/Reveal";
 import { SectionHeader } from "~/components/motion/SectionHeader";
 import { CopyEmail } from "~/components/shared/CopyEmail";
-import { GithubIcon, LinkedinIcon } from "~/components/shared/Icons";
+import { GithubIcon, LinkedinIcon, XIcon } from "~/components/shared/Icons";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { profile, site } from "~/lib/data";
@@ -26,6 +26,12 @@ const socials = [
 		label: "GitHub",
 		value: "BharathLakkoju",
 		Icon: GithubIcon,
+	},
+	{
+		href: profile.twitter,
+		label: "X",
+		value: profile.twitterHandle,
+		Icon: XIcon,
 	},
 ];
 
