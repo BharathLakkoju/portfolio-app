@@ -1,12 +1,21 @@
 import { NextResponse } from "next/server";
-import { getCodeforcesStats } from "~/lib/codeforces";
+import { buildCodingProfiles } from "~/lib/coding-profiles";
+import { getGfgStats } from "~/lib/geeksforgeeks";
+import { getHackerRankStats } from "~/lib/hackerrank";
 import { getLeetCodeStats } from "~/lib/leetcode";
 
 export async function GET() {
-	const [leetcode, codeforces] = await Promise.all([
+	const [leetcode, hackerrank, gfg] = await Promise.all([
 		getLeetCodeStats(),
-		getCodeforcesStats(),
+		getHackerRankStats(),
+		getGfgStats(),
 	]);
 
-	return NextResponse.json({ leetcode, codeforces });
+	const profiles = buildCodingProfiles({
+		leetcode,
+		hackerrank,
+		gfg,
+	});
+
+	return NextResponse.json({ profiles });
 }

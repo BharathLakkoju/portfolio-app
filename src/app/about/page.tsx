@@ -3,19 +3,18 @@ import type { Metadata } from "next";
 import { ExperienceShowcase } from "~/components/experience/ExperienceShowcase";
 import { Reveal, Stagger, StaggerItem } from "~/components/motion/Reveal";
 import { SectionHeader } from "~/components/motion/SectionHeader";
+import { CodingProfilesPanel } from "~/components/shared/CodingProfilesPanel";
 import { ContributionHeatmap } from "~/components/shared/ContributionHeatmap";
-import { LeetCodeCard } from "~/components/shared/LeetCodeCard";
-import { PlatformCard } from "~/components/shared/PlatformCard";
 import { SwapAvatar } from "~/components/shared/SwapAvatar";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { Button } from "~/components/ui/button";
-import { getCodeforcesStats } from "~/lib/codeforces";
 import { experience, profile, site } from "~/lib/data";
 import { getGfgStats } from "~/lib/geeksforgeeks";
 import { getContributions } from "~/lib/github";
 import { getHackerRankStats } from "~/lib/hackerrank";
 import { getLeetCodeStats } from "~/lib/leetcode";
-import { cn, formatTenure } from "~/lib/utils";
+import { buildCodingProfiles } from "~/lib/coding-profiles";
+import { formatTenure } from "~/lib/utils";
 
 export const revalidate = 3600;
 
@@ -49,67 +48,18 @@ const principles = [
 ];
 
 export default async function AboutPage() {
-	const [leetcode, codeforces, hackerrank, gfg, contributions] =
-		await Promise.all([
-			getLeetCodeStats(),
-			getCodeforcesStats(),
-			getHackerRankStats(),
-			getGfgStats(),
-			getContributions(),
-		]);
-	const profileCards = [
-		leetcode && {
-			key: "leetcode",
-			node: <LeetCodeCard stats={leetcode} />,
-		},
-		codeforces && {
-			key: "codeforces",
-			node: (
-				<PlatformCard
-					name="Codeforces"
-					primary={{ value: codeforces.solvedCount, label: "solved" }}
-					profileUrl={codeforces.profileUrl}
-					stats={[
-						{ label: "Rating", value: codeforces.rating ?? "Unrated" },
-						...(codeforces.maxRating
-							? [{ label: "Max", value: codeforces.maxRating }]
-							: []),
-					]}
-				/>
-			),
-		},
-		hackerrank && {
-			key: "hackerrank",
-			node: (
-				<PlatformCard
-					name="HackerRank"
-					primary={{ value: hackerrank.level, label: "level" }}
-					profileUrl={hackerrank.profileUrl}
-					stats={hackerrank.badges.map((b) => ({
-						label: b.name,
-						value: `${b.stars}★`,
-					}))}
-				/>
-			),
-		},
-		gfg && {
-			key: "gfg",
-			node: (
-				<PlatformCard
-					name="GeeksforGeeks"
-					primary={{ value: gfg.totalSolved, label: "solved" }}
-					profileUrl={gfg.profileUrl}
-					stats={[
-						{ label: "Score", value: gfg.score },
-						...(gfg.instituteRank
-							? [{ label: "Institute rank", value: gfg.instituteRank }]
-							: []),
-					]}
-				/>
-			),
-		},
-	].filter((c): c is { key: string; node: React.JSX.Element } => Boolean(c));
-	const hasProfiles = profileCards.length > 0;
+	const [leetcode, hackerrank, gfg, contributions] = await Promise.all([
+		getLeetCodeStats(),
+		getHackerRankStats(),
+		getGfgStats(),
+		getContributions(),
+	]);
+	const codingProfiles = buildCodingProfiles({
+		leetcode,
+		hackerrank,
+		gfg,
+	});
+	const hasProfiles = codingProfiles.length > 0;
 
 	return (
 		<div className="container-page flex flex-col gap-[var(--space-section)] pt-12 pb-[var(--space-section)]">
@@ -182,27 +132,15 @@ export default async function AboutPage() {
 					id="problem-solving-section"
 				>
 					<SectionHeader
+						description="Live stats from the judges I practice on — one panel, three platforms."
 						id="problem-solving"
 						index="03"
 						label="Problem solving"
 						title="Practice, in public"
 					/>
-					<Stagger className="grid grid-cols-1 gap-[var(--gutter)] md:grid-cols-2">
-						{profileCards.map((card, i) => (
-							<StaggerItem
-								className={cn(
-									"flex",
-									profileCards.length % 2 === 1 &&
-										i === profileCards.length - 1 &&
-										"md:col-span-2",
-								)}
-								index={i}
-								key={card.key}
-							>
-								{card.node}
-							</StaggerItem>
-						))}
-					</Stagger>
+					<Reveal>
+						<CodingProfilesPanel profiles={codingProfiles} />
+					</Reveal>
 				</section>
 			)}
 
