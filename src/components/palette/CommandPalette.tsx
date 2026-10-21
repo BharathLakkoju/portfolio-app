@@ -380,7 +380,10 @@ export default function CommandPalette() {
 									</button>
 								</div>
 
-								<div className="mask-fade-b overflow-y-auto overscroll-contain p-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+								<div
+									className="mask-fade-b overflow-y-auto overscroll-contain p-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+									data-lenis-prevent
+								>
 									{results.length === 0 && (
 										<p className="px-3 pt-2 pb-1 text-fg-secondary text-sm">
 											No results for “{query}”.

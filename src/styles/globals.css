@@ -176,6 +176,24 @@
 		-moz-osx-font-smoothing: grayscale;
 	}
 
+	/* Lenis */
+	html.lenis,
+	html.lenis body {
+		height: auto;
+	}
+
+	.lenis:not(.lenis-autoToggle).lenis-stopped {
+		overflow: clip;
+	}
+
+	.lenis [data-lenis-prevent] {
+		overscroll-behavior: contain;
+	}
+
+	.lenis.lenis-smooth iframe {
+		pointer-events: none;
+	}
+
 	h1,
 	h2,
 	h3 {

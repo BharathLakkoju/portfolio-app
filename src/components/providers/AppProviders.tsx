@@ -7,6 +7,7 @@ import {
 	PaletteProvider,
 } from "~/components/palette/PaletteProvider";
 import { NavigationProvider } from "./NavigationProvider";
+import { SmoothScroll } from "./SmoothScroll";
 import { ToastProvider } from "./ToastProvider";
 
 export function AppProviders({
@@ -25,6 +26,7 @@ export function AppProviders({
 			storageKey="bl-theme"
 		>
 			<MotionConfig reducedMotion="user">
+				<SmoothScroll />
 				<NavigationProvider>
 					<ToastProvider>
 						<PaletteProvider posts={posts}>{children}</PaletteProvider>
