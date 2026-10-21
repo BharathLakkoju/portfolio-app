@@ -132,6 +132,16 @@
 	text-transform: uppercase;
 }
 
+/* Same label recipe as label-mono, set in Plex Sans. Used by section-header eyebrows. */
+@utility label-sans {
+	font-family: var(--font-sans);
+	font-size: var(--text-label);
+	line-height: var(--leading-label);
+	font-weight: 500;
+	letter-spacing: var(--tracking-label);
+	text-transform: uppercase;
+}
+
 /* The 12-column page grid the blueprint lines are drawn on. Content takes
    columns 1–8 (lg:col-span-8), rails and figures 9–12 (lg:col-span-4). */
 @utility grid-page {

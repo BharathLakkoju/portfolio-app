@@ -31,7 +31,7 @@ const item = (delay: number, blur = false) => ({
 	},
 });
 
-/** Hairline, mono index label, then a heading that sharpens out of a blur. */
+/** Hairline, index label, then a heading that sharpens out of a blur. */
 export function SectionHeader({
 	index,
 	label,
@@ -55,7 +55,7 @@ export function SectionHeader({
 		>
 			<div className="max-w-2xl">
 				<motion.p
-					className="label-mono mb-3 text-fg-muted"
+					className="label-sans mb-3 text-fg-muted"
 					data-reveal
 					variants={item(0)}
 				>
