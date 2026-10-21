@@ -86,11 +86,10 @@ export default function HireMe() {
 								>
 									<a
 										className="text-accent underline-offset-4 hover:underline"
+										download={site.resumeFile}
 										href={site.resume}
-										rel="noopener"
-										target="_blank"
 									>
-										→ open resume.pdf
+										→ download resume
 									</a>
 								</motion.p>
 							)}

@@ -5,7 +5,9 @@
 
 export const site = {
 	url: "https://bharathlakkoju.vercel.app",
-	resume: "/resume.pdf",
+	resume: "/Bharath_Lakkoju_Resume.pdf",
+	/** Saved-as name, so the download isn't called "resume.pdf". */
+	resumeFile: "Bharath_Lakkoju_Resume.pdf",
 	resumeLabel: "Download resume (PDF)",
 };
 
@@ -100,7 +102,7 @@ export const marqueeItems: { value?: string; text: string }[] = [
 ];
 
 // ============================================================
-// Projects: the final four (design system §6.3.1)
+// Projects: featured work (design system §6.3.1)
 // ============================================================
 
 export type ProjectLink = {
@@ -335,6 +337,53 @@ export const projects: Project[] = [
 				"CI runs a publish dry-run on every pull request.",
 			],
 			shows: "Open-source shipping and supply-chain-safe releases.",
+		},
+	},
+	{
+		slug: "depguard",
+		title: "Dependency health scanner (DepGuard)",
+		repo: "depguard",
+		label: "Open source CLI",
+		badge: { text: "npm 1.2.0", tone: "neutral" },
+		outcome:
+			"One command that scans a project for outdated, vulnerable, deprecated and stale packages across npm, pip, Cargo and Go.",
+		roleLine: "Solo build · Open source, CLI, multi-ecosystem scanning",
+		stack: ["TypeScript", "Node.js", "Commander.js", "tsup", "OSV.dev", "CLI"],
+		marginNote: "↑ --fail-on-high gates CI",
+		steps: ["Detect", "Scan", "Enrich", "Report"],
+		links: [
+			{
+				label: "npm",
+				href: "https://www.npmjs.com/package/@lbharath/depguard",
+				kind: "npm",
+			},
+			{
+				label: "Code",
+				href: "https://github.com/BharathLakkoju/depguard",
+				kind: "code",
+			},
+		],
+		caseStudy: {
+			problem:
+				"Dependency health is scattered: one tool for outdated versions, another for audits, and nothing at all for deprecated or abandoned packages, least of all across several languages.",
+			built:
+				"A universal scanner CLI published as @lbharath/depguard. It detects the package manager from the manifest or lockfile, then reports outdated versions, known vulnerabilities, deprecated or yanked releases and stale packages, in a terminal, JSON or Markdown report.",
+			architecture: [
+				"Detect · package manager from manifest / lockfile",
+				"Scan · per-ecosystem engine",
+				"Normalise · one dependency model, semver diffing",
+				"Enrich · OSV.dev, registry deprecation, publish dates",
+				"Report · terminal, JSON or Markdown",
+			],
+			decisions: [
+				"Covers npm, pnpm, yarn and bun, plus pip, Poetry, Pipenv, conda, Cargo and Go modules.",
+				"Vulnerabilities come from OSV.dev for every ecosystem, with native audits layered on for JavaScript.",
+				"--fail-on-high exits non-zero, so it can gate a CI pipeline.",
+				"Monorepo workspace scanning (--workspace) for JavaScript projects.",
+				"Known limits are documented in the README rather than hidden.",
+			],
+			shows:
+				"Tooling that works across ecosystems, shipped as an installable package.",
 		},
 	},
 ];

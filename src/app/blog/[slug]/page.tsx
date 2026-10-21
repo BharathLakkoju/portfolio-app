@@ -98,10 +98,10 @@ export default async function BlogPostPage({ params }: Props) {
 					)}
 					<div className="flex flex-wrap gap-3">
 						<Button asChild>
-							<a href={site.resume} rel="noopener" target="_blank">
+							<a download={site.resumeFile} href={site.resume}>
 								<Download aria-hidden size={15} />
 								Download resume
-								<span className="sr-only"> (PDF, opens in new tab)</span>
+								<span className="sr-only"> (PDF)</span>
 							</a>
 						</Button>
 						<Button asChild variant="secondary">

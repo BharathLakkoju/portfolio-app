@@ -295,16 +295,15 @@ function Dock() {
 
 				<DockSlot label="Resume (PDF)" magnify={magnify} mouseX={mouseX}>
 					<a
-						aria-label="Download resume (PDF, opens in new tab)"
+						aria-label="Download resume (PDF)"
 						className={cn(
 							"grid size-full place-items-center rounded-xl transition-[background-color,color,box-shadow] duration-200",
 							heroCta
 								? "border border-border-strong text-fg-secondary hover:text-fg"
 								: "bg-accent-solid text-on-accent shadow-[var(--shadow-glow)] hover:bg-accent-hover",
 						)}
+						download={site.resumeFile}
 						href={site.resume}
-						rel="noopener"
-						target="_blank"
 					>
 						<Download aria-hidden className="size-[42%]" strokeWidth={2} />
 					</a>

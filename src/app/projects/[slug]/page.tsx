@@ -122,10 +122,10 @@ export default async function ProjectPage({ params }: Props) {
 						</dl>
 						<div className="flex flex-col gap-2 border-border border-t pt-4">
 							<Button asChild>
-								<a href={site.resume} rel="noopener" target="_blank">
+								<a download={site.resumeFile} href={site.resume}>
 									<Download aria-hidden size={15} />
 									Download resume
-									<span className="sr-only"> (PDF, opens in new tab)</span>
+									<span className="sr-only"> (PDF)</span>
 								</a>
 							</Button>
 							<Button asChild variant="secondary">

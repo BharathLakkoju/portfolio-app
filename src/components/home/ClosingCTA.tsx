@@ -87,13 +87,12 @@ export function ClosingCTA() {
 					<CopyEmail />
 					<a
 						className="inline-flex min-h-11 items-center gap-2 text-fg-secondary text-sm hover:text-fg"
+						download={site.resumeFile}
 						href={site.resume}
-						rel="noopener"
-						target="_blank"
 					>
 						<Download aria-hidden size={14} />
 						Resume
-						<span className="sr-only"> (PDF, opens in new tab)</span>
+						<span className="sr-only"> (PDF)</span>
 					</a>
 				</div>
 			</div>

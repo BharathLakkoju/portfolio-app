@@ -230,10 +230,10 @@ export function Hero({ commit }: { commit: LatestCommit | null }) {
 
 					<div className="flex flex-wrap gap-3">
 						<Button asChild data-boot="cta" id="hero-cta" size="lg">
-							<a href={site.resume} rel="noopener" target="_blank">
+							<a download={site.resumeFile} href={site.resume}>
 								<Download aria-hidden size={16} />
 								Download resume
-								<span className="sr-only"> (PDF, opens in new tab)</span>
+								<span className="sr-only"> (PDF)</span>
 							</a>
 						</Button>
 						<Button asChild data-boot="cta" size="lg" variant="secondary">

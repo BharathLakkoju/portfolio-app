@@ -4,8 +4,9 @@ import { cn } from "~/lib/utils";
 import { ProjectCard } from "./ProjectCard";
 
 /**
- * Three-up row, then every further project as a full-width card, so four
- * projects never leave an orphan in the last row.
+ * Three-up row, then the rest in pairs (half width each). An odd leftover
+ * becomes one full-width card, so the last row is never ragged. Built on six
+ * columns at `lg`: thirds span 2, halves span 3, full width spans 6.
  */
 export function ProjectGrid({
 	projects,
@@ -22,7 +23,7 @@ export function ProjectGrid({
 	return (
 		<Stagger
 			className={cn(
-				"grid grid-cols-1 gap-[var(--gutter)] md:grid-cols-2 lg:grid-cols-3",
+				"grid grid-cols-1 gap-[var(--gutter)] md:grid-cols-2 lg:grid-cols-6",
 				notes && "lg:gap-y-[calc(var(--gutter)*2)]",
 			)}
 		>
@@ -30,8 +31,8 @@ export function ProjectGrid({
 				<StaggerItem
 					className={
 						i === 2
-							? "flex flex-col gap-3 md:col-span-2 lg:col-span-1"
-							: "flex flex-col gap-3"
+							? "flex flex-col gap-3 md:col-span-2 lg:col-span-2"
+							: "flex flex-col gap-3 lg:col-span-2"
 					}
 					index={i}
 					key={project.slug}
@@ -53,20 +54,24 @@ export function ProjectGrid({
 					)}
 				</StaggerItem>
 			))}
-			{rest.map((project, i) => (
-				<StaggerItem
-					className="md:col-span-2 lg:col-span-3"
-					index={i}
-					key={project.slug}
-				>
-					<ProjectCard
-						headingLevel={headingLevel}
-						index={i + 3}
-						project={project}
-						wide
-					/>
-				</StaggerItem>
-			))}
+			{rest.map((project, i) => {
+				const wide = rest.length % 2 === 1 && i === rest.length - 1;
+				return (
+					<StaggerItem
+						className={wide ? "md:col-span-2 lg:col-span-6" : "lg:col-span-3"}
+						index={i}
+						key={project.slug}
+					>
+						<ProjectCard
+							className={wide ? undefined : "h-full"}
+							headingLevel={headingLevel}
+							index={i + 3}
+							project={project}
+							wide={wide}
+						/>
+					</StaggerItem>
+				);
+			})}
 		</Stagger>
 	);
 }

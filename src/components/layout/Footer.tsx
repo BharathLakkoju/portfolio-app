@@ -20,13 +20,12 @@ export function Footer() {
 					</div>
 					<a
 						className="inline-flex min-h-11 items-center gap-2 font-medium text-accent text-sm hover:text-accent-hover"
+						download={site.resumeFile}
 						href={site.resume}
-						rel="noopener"
-						target="_blank"
 					>
 						<Download aria-hidden size={15} />
 						Download resume
-						<span className="sr-only"> (PDF, opens in new tab)</span>
+						<span className="sr-only"> (PDF)</span>
 					</a>
 				</div>
 

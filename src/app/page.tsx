@@ -29,7 +29,7 @@ export default async function HomePage() {
 				id="work"
 			>
 				<SectionHeader
-					description="Four products, each built solo from architecture to deploy."
+					description="Five projects, each built solo from architecture to deploy."
 					id="work-title"
 					index="01"
 					label="Selected work"

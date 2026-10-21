@@ -89,6 +89,15 @@ export default function CommandPalette() {
 		const go = (href: string) => () => navigate(href);
 		const external = (href: string) => () =>
 			window.open(href, "_blank", "noopener");
+		const download = (href: string, filename: string) => () => {
+			const a = document.createElement("a");
+			a.href = href;
+			a.download = filename;
+			document.body.append(a);
+			a.click();
+			a.remove();
+			toast({ tone: "success", message: "Downloading resume" });
+		};
 		return [
 			{
 				id: "resume",
@@ -96,7 +105,7 @@ export default function CommandPalette() {
 				label: "Download resume",
 				icon: Download,
 				keywords: "cv pdf",
-				run: external(site.resume),
+				run: download(site.resume, site.resumeFile),
 			},
 			{
 				id: "email",
