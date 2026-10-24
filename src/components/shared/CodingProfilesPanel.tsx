@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useEffect, useId, useState } from "react";
+import { CodingPlatformIcon } from "~/components/shared/CodingPlatformIcon";
 import type { CodingProfile } from "~/lib/coding-profiles";
 import { totalProblemsSolved } from "~/lib/coding-profiles";
 import { duration } from "~/lib/motion";
@@ -201,14 +202,14 @@ export function CodingProfilesPanel({
 								)}
 								<span
 									aria-hidden
-									className="grid size-9 shrink-0 place-items-center rounded-md border border-border font-mono text-sm md:size-8 md:text-label"
+									className="grid size-9 shrink-0 place-items-center rounded-md border border-border md:size-8"
 									style={{
 										color: profile.accent,
 										borderColor: `${profile.accent}55`,
 										backgroundColor: `${profile.accent}12`,
 									}}
 								>
-									{profile.shortName}
+									<CodingPlatformIcon id={profile.id} size={20} />
 								</span>
 								<span className="min-w-0 flex-1 md:min-w-0">
 									<span className="hidden font-medium text-sm md:block md:truncate">

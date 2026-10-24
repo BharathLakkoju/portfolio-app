@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { CodingPlatformIcon } from "~/components/shared/CodingPlatformIcon";
 import type { CodingProfile } from "~/lib/coding-profiles";
 import { duration } from "~/lib/motion";
 import { cn } from "~/lib/utils";
@@ -38,10 +39,16 @@ export function CodingSnapshot() {
 					>
 						<span
 							aria-hidden
-							className="size-1.5 shrink-0 rounded-full"
-							style={{ backgroundColor: profile.accent }}
-						/>
-						<span className="text-fg-secondary">{profile.shortName}</span>
+							className="grid size-7 shrink-0 place-items-center rounded-md border border-border"
+							style={{
+								color: profile.accent,
+								borderColor: `${profile.accent}44`,
+								backgroundColor: `${profile.accent}10`,
+							}}
+						>
+							<CodingPlatformIcon id={profile.id} size={16} />
+						</span>
+						<span className="text-fg-secondary">{profile.name}</span>
 						<span className="text-fg-secondary">
 							{profile.tabStat.value} ({profile.tabStat.unit})
 						</span>
