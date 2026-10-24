@@ -105,7 +105,6 @@ export function ContributionGrid({ weeks }: { weeks: ContributionDay[][] }) {
 								data-count={day.date ? day.count : undefined}
 								data-date={day.date || undefined}
 								data-level={day.date ? day.level : undefined}
-								// biome-ignore lint/suspicious/noArrayIndexKey: padding cells have no date
 								key={day.date || `pad-${i}`}
 								style={
 									day.level > 0

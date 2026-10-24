@@ -165,7 +165,7 @@
 	--dur-instant: 100ms; /* press feedback, color on active */
 	--dur-fast: 150ms; /* hover color, focus ring, chip */
 	--dur-base: 200ms; /* buttons, tab indicator, toast exit, palette open */
-	--dur-moderate: 300ms; /* card lift, page enter, toast enter */
+	--dur-moderate: 300ms; /* card increase, page enter, toast enter */
 	--dur-slow: 450ms; /* scroll reveal, theme reveal */
 	--dur-slower: 560ms; /* hero name, count-up — the max */
 
@@ -176,7 +176,7 @@
 		0.3,
 		1
 	); /* default for entrances (expo-out) */
-	--ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1); /* hover lifts, count-up */
+	--ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1); /* hover increases, count-up */
 	--ease-in: cubic-bezier(0.4, 0, 1, 1); /* exits only */
 	--ease-in-out: cubic-bezier(
 		0.65,
@@ -193,7 +193,7 @@
 	--distance-xs: 4px;
 	--distance-sm: 8px; /* default reveal travel */
 	--distance-md: 16px; /* page transition, toast */
-	--hover-lift: -2px;
+	--hover-increase: -2px;
 
 	/* ---- Signature: "Signal" motif ------------------------------------------ */
 	--signal-node-size: 4px;
@@ -384,7 +384,7 @@
 		--distance-xs: 0px;
 		--distance-sm: 0px;
 		--distance-md: 0px;
-		--hover-lift: 0px;
+		--hover-increase: 0px;
 		--stagger-tight: 0ms;
 		--stagger-base: 0ms;
 		--marquee-speed: 0s; /* marquee renders as a static wrapped row */

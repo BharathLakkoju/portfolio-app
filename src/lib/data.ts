@@ -5,9 +5,9 @@
 
 export const site = {
 	url: "https://bharathlakkoju.vercel.app",
-	resume: "/Bharath_Lakkoju_Resume.pdf",
+	resume: "/Bharath_Lakkoju_SDEpdf",
 	/** Saved-as name, so the download isn't called "resume.pdf". */
-	resumeFile: "Bharath_Lakkoju_Resume.pdf",
+	resumeFile: "Bharath_Lakkoju_SDE.pdf",
 	resumeLabel: "Download resume (PDF)",
 };
 
@@ -15,7 +15,7 @@ export const profile = {
 	name: "Bharath Lakkoju",
 	firstName: "Bharath",
 	roleLine: "AI Engineer · Full Stack Engineer",
-	jobTitle: "Developer I (SDE-1)",
+	jobTitle: "Software Engineer I",
 	location: "Hyderabad, India",
 	timeZone: "Asia/Kolkata",
 	timeZoneLabel: "IST",
@@ -59,45 +59,48 @@ export type ImpactStat = {
 export const impactStats: ImpactStat[] = [
 	{
 		label: "User engagement",
-		value: 69,
+		value: 60,
 		suffix: "%",
-		verb: "lift",
+		verb: "increase",
 		context: "Health-tracking app with a reward system",
 		size: "lead",
 	},
 	{
-		label: "Data intake",
-		value: 113,
+		label: "Data entry accuracy",
+		value: 98,
 		suffix: "%",
-		verb: "increase",
-		context: "Data intake on the same health-tracking app",
+		verb: "accuracy",
+		context: "health-tracking app",
 		size: "standard",
 	},
 	{
-		label: "Manual processing",
-		value: 86,
+		label: "Integration effort",
+		value: 40,
 		suffix: "%",
 		verb: "less",
-		context: "WCS data-pipeline automation",
+		context: "Contract-driven UI and API (Zod, tRPC, Storybook, MSW)",
 		size: "standard",
 	},
 	{
-		label: "Deployment uptime",
-		value: 99,
-		suffix: "%",
-		verb: "uptime",
-		context: "CI/CD pipelines across Agile sprints",
+		label: "Shared components",
+		value: 50,
+		suffix: "+",
+		verb: "shipped",
+		context: "Design system for web and mobile member experiences",
 		size: "wide",
 	},
 ];
 
 export const marqueeItems: { value?: string; text: string }[] = [
-	{ value: "69%", text: "engagement lift" },
-	{ value: "113%", text: "data intake" },
-	{ value: "86%", text: "less manual processing" },
-	{ value: "99%", text: "deployment uptime" },
+	{ value: "60%", text: "user engagement" },
+	{ value: "98%", text: "data entry accuracy" },
+	{ value: "50+", text: "shared design system components" },
+	{ value: "40%", text: "less integration effort" },
+	{ value: "30%", text: "release readiness" },
+	{ value: "35%", text: "maintainability" },
+	{ value: "40%", text: "AI-integrated engagement" },
 	{ value: "11+", text: "projects shipped" },
-	{ text: "Developer I at UST Global" },
+	{ text: "Software Engineer I at UST Global" },
 	{ text: "Based in Hyderabad" },
 ];
 
@@ -488,61 +491,96 @@ export type Role = {
 
 export const experience: Role[] = [
 	{
-		title: "Developer I (SDE-1)",
+		title: "Software Engineer I",
 		org: "UST Global",
 		location: "Hyderabad, India",
 		dates: "Sep 2024 — Present",
 		start: "2024-09",
 		current: true,
 		summary:
-			"Full-stack engineer shipping product features, automation and delivery pipelines.",
+			"Full-stack delivery on a multi-tenant healthcare portal—from UI through APIs—with migrations, shared design system work, and contract-driven releases.",
 		workstreams: [
 			{
 				id: "health",
 				name: "Health-tracking app",
 				metrics: [
-					{ value: 69, prefix: "+", suffix: "%", label: "engagement" },
-					{ value: 113, prefix: "+", suffix: "%", label: "data intake" },
+					{ value: 60, prefix: "+", suffix: "%", label: "user engagement" },
+					{ value: 98, suffix: "%", label: "data entry accuracy" },
 				],
-				summary: "Built the full app; its reward system drove daily use.",
+				summary:
+					"Shipped a full-stack health tracking app with a rewards system on React Native, Node.js, and PostgreSQL.",
 				stack: ["React Native", "Node.js", "PostgreSQL"],
 			},
 			{
-				id: "wcs",
-				name: "WCS digitisation",
+				id: "portal",
+				name: "Healthcare portal",
 				metrics: [
-					{ value: 86, prefix: "−", suffix: "%", label: "manual processing" },
+					{ value: "Multi-tenant", label: "feature-flag rollout" },
 				],
-				summary: "Automated data digitisation across microservices.",
-				stack: ["Angular", "Node.js"],
-			},
-			{
-				id: "chatbot",
-				name: "Support chatbot",
-				metrics: [
-					{
-						value: 46,
-						prefix: "+",
-						suffix: "%",
-						label: "monthly active users",
-					},
-				],
-				summary: "Shipped an LLM-backed assistant with predictive analytics.",
-				stack: ["LLM", "Analytics"],
+				summary:
+					"Owned UI-to-API delivery for portal features in an Nx monorepo (React Native, NestJS, tRPC) and enabled tenant-by-tenant rollout with feature flags.",
+				stack: ["Nx", "React Native", "TypeScript", "NestJS", "tRPC"],
 			},
 			{
 				id: "migration",
 				name: "Service migration",
-				metrics: [{ value: "Java → NestJS", label: "legacy Spring services" }],
-				summary: "Moved services over with API security standards applied.",
-				stack: ["Spring", "Node.js", "NestJS"],
+				metrics: [
+					{ value: 35, prefix: "+", suffix: "%", label: "maintainability" },
+				],
+				summary:
+					"Moved legacy Java Spring Boot services to NestJS and Node.js microservices, with API security standards and unit tests.",
+				stack: ["Spring Boot", "NestJS", "Node.js"],
 			},
 			{
-				id: "cicd",
-				name: "CI/CD reliability",
-				metrics: [{ value: 99, suffix: "%", label: "deployment uptime" }],
-				summary: "Tuned delivery pipelines across Agile sprints.",
-				stack: ["CI/CD"],
+				id: "rn-migration",
+				name: "Cross-platform UI",
+				metrics: [
+					{ value: "React → RN", label: "member app migration" },
+				],
+				summary:
+					"Ported React.js web components to React Native so members get the same flows on web and mobile, including deep-link navigation fixes.",
+				stack: ["React.js", "React Native"],
+			},
+			{
+				id: "design-system",
+				name: "Design system",
+				metrics: [
+					{ value: 50, prefix: "", suffix: "+", label: "shared components" },
+				],
+				summary:
+					"Built 50+ custom shared components for the design system—reusable UI patterns and bilingual copy on web and mobile.",
+				stack: ["Design system", "React Native", "React"],
+			},
+			{
+				id: "contracts",
+				name: "Contract-driven delivery",
+				metrics: [
+					{ value: 40, prefix: "−", suffix: "%", label: "integration effort" },
+					{
+						value: 30,
+						prefix: "+",
+						suffix: "%",
+						label: "release readiness",
+					},
+				],
+				summary:
+					"Built contract-driven UI and API layers with Zod and tRPC, documented in Storybook and exercised with MSW before release.",
+				stack: ["Zod", "tRPC", "Storybook", "MSW"],
+			},
+			{
+				id: "chatbot",
+				name: "AI chatbot",
+				metrics: [
+					{
+						value: 40,
+						prefix: "+",
+						suffix: "%",
+						label: "AI-integrated engagement",
+					},
+				],
+				summary:
+					"Designed chatbot experiences on LLM APIs and predictive analytics to increase engagement and speed up support responses.",
+				stack: ["LLM APIs", "Predictive analytics"],
 			},
 		],
 	},

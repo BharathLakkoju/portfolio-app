@@ -10,7 +10,7 @@
 **Type:** Static-first developer portfolio with Git-driven MDX blogging
 
 **Description:**
-A modern, high-performance personal portfolio website that showcases developer information, projects, work experience, and blogs. Blog content is managed through Git by adding/updating `.mdx` files, which automatically rebuild and deploy the site.
+A modern, high-performance personal portfolio website that showcases Software Engineer Information, projects, work experience, and blogs. Blog content is managed through Git by adding/updating `.mdx` files, which automatically rebuild and deploy the site.
 
 ---
 

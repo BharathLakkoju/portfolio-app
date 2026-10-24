@@ -30,7 +30,7 @@ No particles, no cursor trail, no tilt, no parallax, no typewriter, no scroll-ja
 1. **Resume first.** The resume is one click away from every page, at every breakpoint, in every state: header button, hero CTA, top result in `Ctrl/⌘ K`, footer. It never hides behind a menu.
 2. **Facts before flourish.** Role, status, and numbers render in the first paint, as HTML text, before any animation runs. Animation decorates content that's already readable. It never holds back content.
 3. **One signature, used with restraint.** Signal is the identity. Everything else is quiet: hairlines, mono labels, neutral surfaces, one accent color.
-4. **Every number has a source.** Stats carry a short context line (where, what, how it was measured). "69%" alone reads as a claim. "69% engagement lift: health-tracking app with a reward system" reads as evidence. The component requires a context line; the four confirmed lines are in §4.6.
+4. **Every number has a source.** Stats carry a short context line (where, what, how it was measured). "69%" alone reads as a claim. "69% engagement increase: health-tracking app with a reward system" reads as evidence. The component requires a context line; the four confirmed lines are in §4.6.
 5. **Big targets, whole surfaces.** If something looks like a card, the whole card is the link. The minimum hit target is 44×44px.
 6. **Accessible by token, not by audit.** Text tokens are AA-safe on the surfaces they're allowed on. If a token pair isn't in the contrast table (§2.1.4), it isn't allowed.
 7. **Motion is under 600ms, transform and opacity only, and runs once.** The only exceptions are the three ambient loops (hero Signal, marquee, status halo). Each one is pausable and stops off-screen.
@@ -325,19 +325,19 @@ MARQUEE strip (full container width, 48px tall, pause button on the right)
 
 02 IMPACT (bento, 12 columns, 2 rows)
 ┌──────────────────────┬────────────┬────────────┐
-│ 69% engagement lift  │ 113% data  │ 86% less   │
+│ 69% engagement increase  │ 113% data  │ 86% less   │
 │ (6 cols × 2 rows)    │ intake     │ manual     │
 │ health-tracking app  ├────────────┴────────────┤
 │ with a reward system │ 99% uptime · CI/CD      │
 └──────────────────────┴─────────────────────────┘
 
 03 STACK (four groups, 2 × 2; each group is a row of neutral chips)
-04 EXPERIENCE (UST Global · Developer I (SDE-1) · Sep 2024–present, cols 1–8; "Currently" card in cols 10–12)
+04 EXPERIENCE (UST Global · Software Engineer I · Sep 2024–present, cols 1–8; "Currently" card in cols 10–12)
 05 GET IN TOUCH (copy + direct links in cols 1–7; form in cols 8–12)
 FOOTER
 ```
 
-Bento rule: the biggest tile goes to the strongest number with the clearest story. 69% engagement lift leads by default because it's a user outcome. Swap it if another stat has a better story behind it.
+Bento rule: the biggest tile goes to the strongest number with the clearest story. 69% engagement increase leads by default because it's a user outcome. Swap it if another stat has a better story behind it.
 
 ---
 
@@ -503,14 +503,14 @@ The primary link goes to the internal **project detail page** (`/projects/[slug]
 | Hover | `translateY(-2px)`, border → `border-strong`, `shadow-2`, title arrow nudges 2px in its direction, and **the flow line draws and one dot crosses it once** (M-07). Pointer cursor over the whole card |
 | Focus (title link focused) | Ring around the **whole card** via `.card:has(.card-link:focus-visible)`, plus the hover treatment. Secondary links get their own ring when focused |
 | Active | `translateY(0) scale(0.995)`, 100ms |
-| Disabled | Not used. A project with no public link renders as a static card: no arrow, no lift, label "PRIVATE · CASE STUDY ON REQUEST" |
+| Disabled | Not used. A project with no public link renders as a static card: no arrow, no increase, label "PRIVATE · CASE STUDY ON REQUEST" |
 | Loading | Skeleton card (§4.15) at the same height |
 
 **Usage:** three equal featured cards on Home, the full grid on /projects. One paragraph per card at most. Cards in a row share a height: title and outcome clamp, chips wrap to 2 lines at most.
 
 ### 4.6 Stat / bento card
 
-**Anatomy:** tile (radius-lg, `surface`, `border`, 24px padding, 32px on the lead tile) → mono label naming what was measured ("USER ENGAGEMENT") → **number** (`stat`, tabular, `fg`; the "%" at 60% size in `fg-secondary`) → verb line ("lift") → context line (`sm`, `fg-secondary`, 1–2 lines: where and how) → optional source chip, only when the source is confirmed.
+**Anatomy:** tile (radius-lg, `surface`, `border`, 24px padding, 32px on the lead tile) → mono label naming what was measured ("USER ENGAGEMENT") → **number** (`stat`, tabular, `fg`; the "%" at 60% size in `fg-secondary`) → verb line ("increase") → context line (`sm`, `fg-secondary`, 1–2 lines: where and how) → optional source chip, only when the source is confirmed.
 
 **Sizes:** `lead` (6 columns × 2 rows at `lg`, with a small Signal sparkline: a static line of nodes that a pulse crosses once on reveal), `standard` (3 × 1), `wide` (6 × 1).
 
@@ -519,7 +519,7 @@ The primary link goes to the internal **project detail page** (`/projects/[slug]
 | State | Spec |
 |---|---|
 | Default | The final number is in the HTML for assistive tech; the animated digits are `aria-hidden` |
-| Hover | Border → `border-strong`. No lift; tiles aren't links |
+| Hover | Border → `border-strong`. No increase; tiles aren't links |
 | Focus | Not focusable unless the tile links to a case study; then it follows the project card focus rule |
 | Active / Disabled / Loading | Not applicable (static content) |
 
@@ -529,7 +529,7 @@ The primary link goes to the internal **project detail page** (`/projects/[slug]
 
 | Tile | Size | Label | Number | Verb line | Context line |
 |---|---|---|---|---|---|
-| 1 | `lead` (6×2) | USER ENGAGEMENT | 69% | lift | Health-tracking app with a reward system |
+| 1 | `lead` (6×2) | USER ENGAGEMENT | 69% | increase | Health-tracking app with a reward system |
 | 2 | `standard` (3×1) | DATA INTAKE | 113% | increase | Data intake |
 | 3 | `standard` (3×1) | MANUAL PROCESSING | 86% | less | WCS data-pipeline automation |
 | 4 | `wide` (6×1) | DEPLOYMENT UPTIME | 99% | uptime | CI/CD |
@@ -596,7 +596,7 @@ The result count is announced through a polite live region: "Showing 6 AI & Agen
 
 **Usage:** the full timeline on About; the current role only on Home, with "Full experience →". UST Global comes first.
 
-**Current role (confirmed):** rail "SEP 2024 — PRESENT"; role "Developer I (SDE-1)"; company line "UST Global · Hyderabad, India"; filled node with halo. Outcome bullets aren't confirmed yet, so until they are, the row shows role, company and dates only. Don't borrow the Impact numbers as bullets unless Bharath confirms they came from this role.
+**Current role (confirmed):** rail "SEP 2024 — PRESENT"; role "Software Engineer I"; company line "UST Global · Hyderabad, India"; filled node with halo. Outcome bullets aren't confirmed yet, so until they are, the row shows role, company and dates only. Don't borrow the Impact numbers as bullets unless Bharath confirms they came from this role.
 
 ### 4.11 Contact form
 
@@ -676,11 +676,11 @@ Next to the form, always show the **email address as text** with a copy button. 
 | `--dur-instant` | 100ms | Press feedback |
 | `--dur-fast` | 150ms | Hover color, focus ring |
 | `--dur-base` | 200ms | Buttons, tab indicator, toast exit, palette open |
-| `--dur-moderate` | 300ms | Card lift, page enter, toast enter |
+| `--dur-moderate` | 300ms | Card increase, page enter, toast enter |
 | `--dur-slow` | 450ms | Scroll reveal, theme reveal |
 | `--dur-slower` | 560ms | Hero name, count-up, flow-line dot. **The ceiling.** |
 | `--ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` | All entrances |
-| `--ease-out-soft` | `cubic-bezier(0.22, 1, 0.36, 1)` | Hover lifts, count-up |
+| `--ease-out-soft` | `cubic-bezier(0.22, 1, 0.36, 1)` | Hover increases, count-up |
 | `--ease-in` | `cubic-bezier(0.4, 0, 1, 1)` | Exits only |
 | `--ease-in-out` | `cubic-bezier(0.65, 0, 0.35, 1)` | Theme reveal, indicator slides, page morph |
 | `--ease-linear` | `linear` | Marquee, pulse travel |
@@ -689,7 +689,7 @@ Next to the form, always show the **email address as text** with a copy button. 
 | Stagger cap | 6 items | Item 7 and later start with item 6 |
 | `--distance-sm` | 8px | Default reveal travel (up from today's 6px) |
 | `--distance-md` | 16px | Toasts |
-| `--hover-lift` | −2px | Card hover |
+| `--hover-increase` | −2px | Card hover |
 
 **Framer Motion equivalents.** Define these once in `lib/motion.ts` and import them everywhere: `ease.out = [0.16, 1, 0.3, 1]`, `ease.outSoft = [0.22, 1, 0.36, 1]`, `ease.in = [0.4, 0, 1, 1]`, `ease.inOut = [0.65, 0, 0.35, 1]`. For the tab indicator, a spring is fine: `{ type: "spring", stiffness: 500, damping: 40 }`, which settles in about 250ms.
 
@@ -717,7 +717,7 @@ Every animation on the site is in this table. If it isn't here, it doesn't ship.
 | **M-04** | Section heading reveal | Section header is 30% in view | Index label: `opacity`. `h2`: `opacity 0→1`, `translateY 8px→0`, `blur(6px)→blur(0)` | 450ms | `ease-out` | Label 0ms, h2 60ms, description 120ms | Opacity only, 120ms |
 | **M-05** | Content reveal (cards, rows, chips) | Group is 30% in view | `opacity 0→1`, `translateY 8px→0` | 400ms | `ease-out` | Cards 60ms, chips and rows 40ms, capped at 6 | Opacity only, 120ms, no stagger |
 | **M-06** | Stat count-up | Bento tile is 50% in view | Number text counts from 0 to the target (JS, tabular numbers). The tile itself uses M-05 | 560ms | `ease-out-soft` | Tiles 60ms apart | Final value shown, no counting |
-| **M-07** | Card hover: lift + flow line | Pointer enters the card, or its title link gets focus | Card: `translateY 0→−2px`; border color; shadow via a pseudo-element's `opacity`. Flow line: `scaleX 0→1` from the left. Dot: `translateX 0→100%` once. Arrow: 2px nudge | Lift 300ms; line 300ms; dot 560ms starting at 100ms | `ease-out-soft`; dot `linear` | — | Border color change only; flow line shown static; no lift, no dot |
+| **M-07** | Card hover: increase + flow line | Pointer enters the card, or its title link gets focus | Card: `translateY 0→−2px`; border color; shadow via a pseudo-element's `opacity`. Flow line: `scaleX 0→1` from the left. Dot: `translateX 0→100%` once. Arrow: 2px nudge | increase 300ms; line 300ms; dot 560ms starting at 100ms | `ease-out-soft`; dot `linear` | — | Border color change only; flow line shown static; no increase, no dot |
 | **M-08** | Press | Pointer down on a button or card | `scale 1→0.98` (cards 0.995) | 100ms | `ease-out` | — | None |
 | **M-09** | Page transition | Client-side navigation | Old page: `opacity 1→0`. New page: `opacity 0→1`, `translateY 8px→0`. Card → detail: the card title and figure morph into the detail header through a shared `view-transition-name` | Exit 150ms; enter 300ms; morph 300ms | Exit `ease-in`; enter `ease-out`; morph `ease-in-out` | Enter follows exit | Opacity cross-fade 120ms, no morph |
 | **M-10** | Theme toggle circular reveal | Theme toggle click, or `T` | View Transition: the new theme is revealed by `clip-path: circle(0 → 150vmax)` centered on the toggle (on the viewport center for `T`) | 450ms | `ease-in-out` | — | Instant swap |
@@ -737,7 +737,7 @@ Every animation on the site is in this table. If it isn't here, it doesn't ship.
 - **Count-up (M-06).** Count from 0; all four current stats are under 120, so 560ms is enough to read as motion without dragging. Keep the final format the whole way ("69%", never "69.0"). Tabular numbers keep the width fixed.
 - **Page transitions (M-09).** Prefer the **View Transitions API** through React's `<ViewTransition>` in Next (enable `experimental.viewTransition` in `next.config`; on older Next versions, the `next-view-transitions` package). It provides the card → detail morph with little code. Browsers without support just navigate instantly, which is acceptable. Use Framer `AnimatePresence` only if View Transitions is ruled out; in the App Router, exit animations need a `template.tsx` and a frozen-router workaround, which is fragile. Never run both.
 - **Theme reveal (M-10).** Wrap the theme change in `document.startViewTransition()`, then animate `::view-transition-new(root)` with `clip-path` from the toggle's coordinates and disable the default root cross-fade. Without View Transitions support, swap instantly. During the swap, set `transition: none` on everything so hundreds of hover transitions don't fire at once.
-- **Marquee (M-11).** Content: "69% engagement lift · 113% data intake · 86% less manual processing · 99% deployment uptime · 11+ projects shipped · Developer I at UST Global · Based in Hyderabad". IBM Plex Mono at 14px, `fg-secondary`, numbers in `fg`. 48px edge fade masks. A pause button (icon + visually hidden "Pause marquee", 44px target) sits at the right edge; hover and focus inside the strip also pause it. The paused state is saved in `localStorage`. The pause control is required by WCAG 2.2.2 because the strip moves for more than 5 seconds.
+- **Marquee (M-11).** Content: "69% engagement increase · 113% data intake · 86% less manual processing · 99% deployment uptime · 11+ projects shipped · Software Engineer I at UST Global · Based in Hyderabad". IBM Plex Mono at 14px, `fg-secondary`, numbers in `fg`. 48px edge fade masks. A pause button (icon + visually hidden "Pause marquee", 44px target) sits at the right edge; hover and focus inside the strip also pause it. The paused state is saved in `localStorage`. The pause control is required by WCAG 2.2.2 because the strip moves for more than 5 seconds.
 - **Signal canvas (M-02).** About 18 nodes in fixed, hand-placed positions (not random, so the composition is designed and stable across loads). Node radius 2px, hub 4px ring around the avatar, edges 1px in `accent-graphic` at 35% opacity, pulse dot 3px at full `accent-graphic` with a 6px `accent-glow` halo. Lines and nodes read their colors from CSS variables, so they follow the theme without a redraw rule. The `requestAnimationFrame` loop stops completely when the figure is off-screen.
 
 ### 5.4 Reduced motion
@@ -755,7 +755,7 @@ Every animation on the site is in this table. If it isn't here, it doesn't ship.
 
 **Order:** Hero → Marquee → 01 Selected Work → 02 Impact → 03 Stack → 04 Experience → 05 Get in touch → Footer.
 
-Experience is new on Home: one timeline row ("Developer I (SDE-1) · UST Global · Sep 2024–present") plus "Full experience →". After "what can you build", a recruiter's next question is "where have you worked", and today the only answer on Home is the stats line.
+Experience is new on Home: one timeline row ("Software Engineer I · UST Global · Sep 2024–present") plus "Full experience →". After "what can you build", a recruiter's next question is "where have you worked", and today the only answer on Home is the stats line.
 
 | Section | Layout (`lg`) | Mobile | Motion |
 |---|---|---|---|
@@ -960,7 +960,7 @@ The test case: a recruiter on a phone, between calls, with 30 seconds.
 - [ ] **Location and work mode** are stated: Hyderabad, India; open to remote and to relocating anywhere in India. Shown in the hero, on Contact, and in JSON-LD.
 - [ ] **Fast on mobile data.** LCP under 2.0s on 4G, total Home JS under 150KB gzipped, CLS under 0.05.
 - [ ] **Nothing floats over content.** No chat bubbles, "hire me" pop-ups, or banners covering the page or the Resume button.
-- [ ] **Search engines.** `Person` JSON-LD with name, jobTitle ("Developer I (SDE-1)"), worksFor (UST Global), address (Hyderabad, Telangana, IN), sameAs (GitHub, LinkedIn), and url.
+- [ ] **Search engines.** `Person` JSON-LD with name, jobTitle ("Software Engineer I"), worksFor (UST Global), address (Hyderabad, Telangana, IN), sameAs (GitHub, LinkedIn), and url.
 - [ ] **Real-person test.** Hand someone the URL on a phone and ask them to get the resume and open the best project. Target: under 15 seconds.
 
 ---
@@ -990,7 +990,7 @@ Phases are ordered by recruiter impact per hour of work. Each phase ships on its
 | 2.3 | Section header component with indices, applied to every section | All sections use it |
 | 2.4 | Impact bento with the four confirmed stats and context lines (§4.6) | Every stat has its context line |
 | 2.5 | Stack: neutral chips with group dots | Chip text at 5.8:1 or better in both themes |
-| 2.6 | Experience: teaser on Home, full timeline on About (Developer I (SDE-1), UST Global, Sep 2024–present; outcome bullets: **Bharath**) | UST Global role visible on Home |
+| 2.6 | Experience: teaser on Home, full timeline on About (Software Engineer I, UST Global, Sep 2024–present; outcome bullets: **Bharath**) | UST Global role visible on Home |
 | 2.7 | Contact section and page: form with every state, email with copy | All form states can be demoed; a failed submit keeps the values |
 
 ### Phase 3 — Navigation speed and depth (3–4 days)
@@ -1056,7 +1056,7 @@ What we took from each reviewed portfolio, and how it changed to fit Bharath.
 |---|---|---|
 | Typeface | IBM Plex Sans + IBM Plex Mono (replaces Geist / Inter / JetBrains Mono) | §2.2, tokens file |
 | Location and work mode | Hyderabad, India; open to remote and to relocating anywhere in India | Hero (§4.4), marquee, Contact (§6.6), JSON-LD, recruiter checklist |
-| Current role | Developer I (SDE-1), UST Global, Sep 2024 – present | Timeline (§4.10), Home experience row, JSON-LD |
+| Current role | Software Engineer I, UST Global, Sep 2024 – present | Timeline (§4.10), Home experience row, JSON-LD |
 | Impact stats | 69% / 113% / 86% / 99% confirmed, with context lines | Bento (§4.6), marquee |
 | Display face | Instrument Serif approved for name + rotating phrase | §2.2, tokens file |
 | Photo | Existing image: GitHub avatar referenced in `src/lib/data.ts` (`public/` holds only `favicon.ico`); self-host as `public/images/bharath-avatar.jpg` | §4.4 |

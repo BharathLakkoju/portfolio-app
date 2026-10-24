@@ -8,12 +8,12 @@ import { ContributionHeatmap } from "~/components/shared/ContributionHeatmap";
 import { SwapAvatar } from "~/components/shared/SwapAvatar";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { Button } from "~/components/ui/button";
+import { buildCodingProfiles } from "~/lib/coding-profiles";
 import { experience, profile, site } from "~/lib/data";
 import { getGfgStats } from "~/lib/geeksforgeeks";
 import { getContributions } from "~/lib/github";
 import { getHackerRankStats } from "~/lib/hackerrank";
 import { getLeetCodeStats } from "~/lib/leetcode";
-import { buildCodingProfiles } from "~/lib/coding-profiles";
 import { formatTenure } from "~/lib/utils";
 
 export const revalidate = 3600;
@@ -74,9 +74,10 @@ export default async function AboutPage() {
 							them in front of people.
 						</p>
 						<p>
-							At work that has meant a health-tracking app whose reward system
-							lifted engagement 69%, automation that removed 86% of manual data
-							processing, and CI/CD that holds 99% deployment uptime.
+							At work that has meant a rewards-driven health-tracking app
+							(+60% engagement), a multi-tenant healthcare portal in an Nx
+							monorepo, and contract-driven UI and API layers that cut
+							integration effort 40%.
 						</p>
 						<p>
 							On my own time I ship complete products: a compliance review

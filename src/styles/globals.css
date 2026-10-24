@@ -289,8 +289,8 @@ html[data-vt="theme"]::view-transition-new(root) {
 	html[data-vt]::view-transition-group(*),
 	html[data-vt]::view-transition-old(*),
 	html[data-vt]::view-transition-new(*) {
-		animation-duration: 120ms !important;
-		animation-delay: 0ms !important;
+		animation-duration: 120ms;
+		animation-delay: 0ms;
 	}
 	html[data-vt="page"]::view-transition-new(root) {
 		animation-name: vt-fade-out;
@@ -306,7 +306,7 @@ html[data-vt="theme"]::view-transition-new(root) {
 	.animate-drift,
 	.animate-drift-slow,
 	.animate-caret {
-		animation: none !important;
+		animation: none;
 	}
 	.animate-halo {
 		display: none;
@@ -326,7 +326,7 @@ html[data-vt="theme"]::view-transition-new(root) {
 	.marquee-track {
 		animation: none;
 		flex-wrap: wrap;
-		width: auto !important;
+		width: auto;
 	}
 	.marquee-dup {
 		display: none;

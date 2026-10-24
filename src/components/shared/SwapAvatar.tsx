@@ -6,7 +6,8 @@ import { useRef, useState } from "react";
 import { useFinePointer, useReducedMotion } from "~/hooks/use-media-query";
 import { springs } from "~/lib/motion";
 import { cn } from "~/lib/utils";
-import avatar from "../../../public/images/bharath-avatar.jpg";
+
+const avatarSrc = "/images/bharath-avatar.jpg";
 
 /**
  * Portrait with a second "blueprint" state: cross-fades on hover or focus with a
@@ -58,17 +59,16 @@ export function SwapAvatar({
 				alt=""
 				className="object-cover"
 				fill
-				placeholder="blur"
 				priority={priority}
 				sizes={sizes}
-				src={avatar}
+				src={avatarSrc}
 			/>
 			<Image
 				alt=""
 				className="object-cover transition-opacity duration-[250ms] ease-standard [filter:invert(1)_sepia(1)_saturate(4)_hue-rotate(150deg)]"
 				fill
 				sizes={sizes}
-				src={avatar}
+				src={avatarSrc}
 				style={{ opacity: alt ? 1 : 0 }}
 			/>
 		</motion.button>

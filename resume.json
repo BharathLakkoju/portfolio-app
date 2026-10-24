@@ -22,7 +22,7 @@
 		"experience": [
 			{
 				"dates": "Sep 2024 - Present",
-				"title": "Developer I",
+				"title": "Software Engineer I",
 				"bullets": [
 					"Architected and deployed a full-stack health tracking application using React Native, Node.js, and PostgreSQL, implementing a reward system that increased user engagement by 60% and improved data intake by 98%.",
 					"Engineered a scalable Angular and Node.js microservices architecture with WCS data integration, deploying an automated digitization banner that reduced manual processing overhead by 75% and streamlined RESTful API workflows.",
@@ -386,7 +386,7 @@
 			"experience": [
 				{
 					"company": "UST Global",
-					"title": "Developer I",
+					"title": "Software Engineer I",
 					"dates": "Sep 2024 - Present",
 					"location": "Hyderabad, India",
 					"bullets": [
