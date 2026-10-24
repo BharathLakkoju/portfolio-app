@@ -11,7 +11,6 @@ import { CodingSnapshot } from "~/components/shared/CodingSnapshot";
 import { TransitionLink as Link } from "~/components/shared/TransitionLink";
 import { experience, impactStats, projects, stackGroups } from "~/lib/data";
 import { getLatestCommit } from "~/lib/github";
-import { formatTenure } from "~/lib/utils";
 
 export const revalidate = 600;
 
@@ -96,7 +95,6 @@ export default async function HomePage() {
 					<ExperienceShowcase
 						key={`${role.org}-${role.title}`}
 						role={role}
-						tenure={formatTenure(role.start)}
 					/>
 				))}
 			</section>

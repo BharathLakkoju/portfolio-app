@@ -21,7 +21,19 @@ export function formatDate(date: string) {
 	});
 }
 
-/** "2024-09" -> "2 yrs 1 mo" (counts the start month, so it never reads 0). */
+/** "2024-09" → "Sep 2024" */
+export function formatMonthYear(startMonth: string) {
+	const [y = 0, m = 1] = startMonth.split("-").map(Number);
+	return new Date(y, m - 1, 1).toLocaleDateString("en-US", {
+		month: "short",
+		year: "numeric",
+	});
+}
+
+/**
+ * Calendar months in role from `startMonth` (YYYY-MM) through `now`.
+ * Counts the start month, so tenure never reads zero on day one.
+ */
 export function formatTenure(startMonth: string, now: Date = new Date()) {
 	const [y = 0, m = 1] = startMonth.split("-").map(Number);
 	const total = Math.max(
@@ -31,10 +43,15 @@ export function formatTenure(startMonth: string, now: Date = new Date()) {
 	const years = Math.floor(total / 12);
 	const months = total % 12;
 	const parts = [
-		years > 0 && `${years} yr${years === 1 ? "" : "s"}`,
-		months > 0 && `${months} mo`,
+		years > 0 && `${years} year${years === 1 ? "" : "s"}`,
+		months > 0 && `${months} month${months === 1 ? "" : "s"}`,
 	].filter(Boolean);
 	return parts.join(" ");
+}
+
+/** "Sep 2024 — Present · 2 years 1 month" for a current role. */
+export function formatCurrentRoleDates(startMonth: string, now: Date = new Date()) {
+	return `${formatMonthYear(startMonth)} — Present · ${formatTenure(startMonth, now)}`;
 }
 
 export function estimateReadTime(content: string): number {

@@ -14,7 +14,6 @@ import { getGfgStats } from "~/lib/geeksforgeeks";
 import { getContributions } from "~/lib/github";
 import { getHackerRankStats } from "~/lib/hackerrank";
 import { getLeetCodeStats } from "~/lib/leetcode";
-import { formatTenure } from "~/lib/utils";
 
 export const revalidate = 3600;
 
@@ -107,7 +106,6 @@ export default async function AboutPage() {
 					<ExperienceShowcase
 						key={`${role.org}-${role.title}`}
 						role={role}
-						tenure={formatTenure(role.start)}
 					/>
 				))}
 			</section>
